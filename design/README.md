@@ -20,7 +20,7 @@
 
 - Github
 - [husky lint-staged prettier](https://create-react-app.dev/docs/setting-up-your-editor/)
-- Github
+- Github pull requests
 - docker
 - npm proxy
 - [Kind](https://kind.sigs.k8s.io/)
@@ -36,11 +36,10 @@
 
 - Node
 - Express
-- Typescript
 - s3?
 
 ```shell
-npx express-generator-typescript . --no-view --git
+npx express-generator . --no-view --git
 ```
 
 ### database
@@ -63,7 +62,6 @@ npx express-generator-typescript . --no-view --git
   - functional
   - suspend
 - Create-React-App
-- Typescript
 - Relay
   - [Adding Relay](https://create-react-app.dev/docs/adding-relay/)
 - [xstate?](https://github.com/davidkpiano/xstate)
@@ -74,5 +72,5 @@ npx express-generator-typescript . --no-view --git
 - Storybook
 
 ```shell
-npx create-react-app . --template cra-template-pwa-typescript
+npx create-react-app . --template cra-template-pwa
 ```
