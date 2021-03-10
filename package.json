@@ -4,7 +4,8 @@
   "description": "",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "install-all": "find . -name 'package.json' ! -path '*/node_modules/*' -execdir npm install \\;"
   },
   "repository": {
     "type": "git",
@@ -18,7 +19,6 @@
   "homepage": "https://github.com/brycemcl/Pattr-Chat#readme",
   "devDependencies": {
     "husky": "^5.1.3",
-    "lint-staged": "^10.5.4",
     "prettier": "^2.2.1",
     "standard": "^16.0.3"
   }
