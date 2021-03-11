@@ -1,15 +1,15 @@
 version: '3.4'
 
 services:
-  pattrfrontend:
-    image: pattrfrontend
+  pattr-frontend:
+    image: brycemclachlan/pattr-frontend
     build:
       context: services/frontend/service
       dockerfile: ./Dockerfile
     ports:
       - 3000:3000
-  pattrbackend:
-    image: pattrbackend
+  pattr-backend:
+    image: brycemclachlan/pattr-backend
     build:
       context: services/backend/service
       dockerfile: ./Dockerfile
