@@ -3,7 +3,7 @@
 
 npx prettier --single-quote --write **/*.js
 npx standard --fix --env jest
-find ./*/ -name "package.json" ! -path "*/node_modules/*" -execdir npm test -- --watchAll=false \;
+find ./*/ -name "package.json" ! -path "*/node_modules/*" ! -path '*/auth/service/functions/*' -execdir npm test -- --watchAll=false \;
 
 (git --no-pager diff --name-only --cached | while read line || [[ -n $line ]];
 do
