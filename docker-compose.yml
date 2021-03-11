@@ -1,0 +1,28 @@
+version: '3.4'
+
+services:
+  pattr-frontend:
+    image: brycemclachlan/pattr-frontend
+    build:
+      context: services/frontend/service
+      dockerfile: ./Dockerfile
+    ports:
+      - 3000:3000
+  pattr-backend:
+    image: brycemclachlan/pattr-backend
+    build:
+      context: services/backend/service
+      dockerfile: ./Dockerfile
+    environment:
+      NODE_ENV: production
+    ports:
+      - 3000:3000
+  firebase-emulator:
+    image: firebase-emulator
+    build:
+      context: services/auth/service
+      dockerfile: ./Dockerfile
+    ports:
+      - 9099:9099
+      - 8001:8001
+      - 8002:8002
