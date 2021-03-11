@@ -8,4 +8,4 @@ find ./*/ -name "package.json" ! -path "*/node_modules/*" -execdir npm test -- -
 (git --no-pager diff --name-only --cached | while read line || [[ -n $line ]];
 do
   git add $line
-done)  > /dev/null 2>&1
+done)  > /dev/null 2>&1 | true
