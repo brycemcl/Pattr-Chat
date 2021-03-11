@@ -1,0 +1,56 @@
+{
+	"name": "Web Dev",
+	"dockerComposeFile": "docker-compose.yml",
+	"service": "app",
+	"workspaceFolder": "/workspace/",
+	// Use this environment variable if you need to bind mount your local source code into a new container.
+	"remoteEnv": {
+		"LOCAL_WORKSPACE_FOLDER": "${localWorkspaceFolder}"
+	},
+	// Set *default* container specific settings.json values on container create.
+	"settings": {
+		"terminal.integrated.shell.linux": "/bin/bash"
+	},
+	//	"runArgs": [
+	//		"--env-file",
+	//		"./.devcontainer/secrets.env"
+	//	],
+	// "postCreateCommand": "find . -type f -print0 | xargs -0 dos2unix -- ",
+	// Add the IDs of extensions you want installed when the container is created.
+	"extensions": [
+		"MS-vsliveshare.vsliveshare-pack",
+		"mgmcdermott.vscode-language-babel",
+		"streetsidesoftware.code-spell-checker",
+		"ms-azuretools.vscode-docker",
+		"oderwat.indent-rainbow",
+		"CoenraadS.bracket-pair-colorizer-2",
+		"oderwat.indent-rainbow",
+		"ms-vsliveshare.vsliveshare",
+		"ritwickdey.liveserver",
+		"syler.sass-indented",
+		"ritwickdey.live-sass",
+		"yzhang.markdown-all-in-one",
+		"davidanson.vscode-markdownlint",
+		"esbenp.prettier-vscode",
+		"spoonscen.es6-mocha-snippets",
+		"eg2.vscode-npm-script",
+		"christian-kohler.npm-intellisense",
+		"mechatroner.rainbow-csv",
+		"joaompinto.vscode-graphviz",
+		"mhutchie.git-graph",
+		"bierner.lit-html",
+		"bradlc.vscode-tailwindcss",
+		"riazxrazor.html-to-jsx",
+		"formulahendry.auto-rename-tag",
+		"humao.rest-client",
+		"hridoy.rails-snippets",
+		"wingrunr21.vscode-ruby",
+		"github.vscode-pull-request-github"
+	],
+	// Use 'forwardPorts' to make a list of ports inside the container available locally.
+	// "forwardPorts": [],
+	// Use 'postCreateCommand' to run commands after the container is created.
+	// "postCreateCommand": "docker --version",
+	// Comment out connect as root instead. More info: https://aka.ms/vscode-remote/containers/non-root.
+	"remoteUser": "vscode"
+}
