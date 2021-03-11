@@ -7,3 +7,10 @@ RUN npm install --production
 COPY . .
 EXPOSE 3000
 CMD ["npm", "start"]
+
+FROM build as test
+ENV NODE_ENV=development
+RUN npm install
+CMD npm test -- --watchAll=false
+
+FROM build

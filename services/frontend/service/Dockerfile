@@ -11,3 +11,10 @@ COPY --from=build /usr/src/app/build/ /usr/share/nginx/html
 RUN chmod -R 555 /usr/share/nginx/html
 COPY nginx.conf /etc/nginx/nginx.conf
 EXPOSE 3001
+
+FROM build as test
+ENV NODE_ENV=development
+RUN npm install
+CMD npm test -- --watchAll=false
+
+FROM build
