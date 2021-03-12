@@ -1,10 +1,10 @@
 import { makeStyles } from '@material-ui/core/styles'
-import Avatar from '../Avatar'
-import MessageMetadata from '../MessageMetadata'
-import Message from '../Message'
-
+import Avatar from './Avatar'
+import MessageMetadata from './MessageMetadata'
+import Message from './Message'
 import Paper from '@material-ui/core/Paper'
 
+// style MessageInThread component
 const useStyles = makeStyles({
   root: {
     minWidth: 275,
@@ -32,7 +32,6 @@ const MessageInThead = () => {
       <div>
         <Avatar name='Bob' />
       </div>
-
       <div>
         <div>
           <MessageMetadata name='Bob' date={date} />
