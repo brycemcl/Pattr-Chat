@@ -5,4 +5,8 @@ module.exports = {
     '@storybook/addon-essentials',
     '@storybook/preset-create-react-app',
   ],
+  reactOptions: {
+    fastRefresh: true,
+    strictMode: true,
+  },
 };
