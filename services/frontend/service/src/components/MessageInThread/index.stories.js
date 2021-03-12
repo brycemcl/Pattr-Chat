@@ -5,7 +5,7 @@ const story = {
   title: 'MessageInThead',
   component: MessageInThead
 }
-const Message = () => <MessageInThead>Hello Button</MessageInThead>
+const Message = () => <MessageInThead />
 
 export default story
 export { Message }

@@ -1,9 +1,14 @@
 import { makeStyles } from '@material-ui/core/styles'
+import Avatar from '../Avatar'
+import MessageMetadata from '../MessageMetadata'
+import Message from '../Message'
 
-import Card from '@material-ui/core/Card'
+import Paper from '@material-ui/core/Paper'
+
 const useStyles = makeStyles({
   root: {
-    minWidth: 275
+    minWidth: 275,
+    padding: '1rem'
   },
   bullet: {
     display: 'inline-block',
@@ -17,15 +22,28 @@ const useStyles = makeStyles({
     marginBottom: 12
   }
 })
+
+// MessageinThread component
 const MessageInThead = () => {
   const classes = useStyles()
+  const date = new Date()
   return (
-    <Card className={classes.root}>
+    <Paper className={classes.root}>
       <div>
-        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Incidunt,
-        fugiat? Quo quaerat illum sit omnis dolor? Quo alias maxime repellendus!
+        <Avatar name='Bob' />
       </div>
-    </Card>
+
+      <div>
+        <div>
+          <MessageMetadata name='Bob' date={date} />
+        </div>
+        <Message>
+          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Incidunt,
+          fugiat? Quo quaerat illum sit omnis dolor? Quo alias maxime
+          repellendus!
+        </Message>
+      </div>
+    </Paper>
   )
 }
 
