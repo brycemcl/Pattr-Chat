@@ -152,27 +152,27 @@ RUN sudo curl -o /.eslintrc.json https://gist.githubusercontent.com/kvirani/6cdb
 USER root
 RUN sudo apt-get update && sudo apt-get -y install vmtouch
 
-# ####install rvm(ruby version manager) from upstream
-# USER vscode
-# RUN gpg2 --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3 7D2BAF1CF37B13E2069D6956105BD0E739499BDB
-# # RUN curl -sSL https://get.rvm.io | bash -s stable --without-gems="rvm rubygems-bundler bundler"
-# RUN curl -sSL https://get.rvm.io | bash -s stable
-# RUN echo "source $HOME/.rvm/scripts/rvm" >> ~/.bash_profile
-# RUN echo "source $HOME/.rvm/scripts/rvm" >> ~/.bashrc
-# #Install ruby
-# # RUN rvm install ruby
-# # RUN rvm use --default ruby
-# RUN rvm install ruby-2.7
-# RUN rvm use --default ruby-2.7
-# RUN rvm @global do gem uninstall bundler
-# RUN gem install bundler:1.16.1
-# RUN gem install rails -v 4.2.6
-# RUN gem install rubocop  -v 0.81
-# # RUN gem install erb_lint -v 0.81
-# # RUN gem install erb_lint
-# # RUN rvm @global do gem install rufo
-# # RUN gem install rufo
-# USER root
+####install rvm(ruby version manager) from upstream
+USER vscode
+RUN gpg2 --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3 7D2BAF1CF37B13E2069D6956105BD0E739499BDB
+# RUN curl -sSL https://get.rvm.io | bash -s stable --without-gems="rvm rubygems-bundler bundler"
+RUN curl -sSL https://get.rvm.io | bash -s stable
+RUN echo "source $HOME/.rvm/scripts/rvm" >> ~/.bash_profile
+RUN echo "source $HOME/.rvm/scripts/rvm" >> ~/.bashrc
+#Install ruby
+# RUN rvm install ruby
+# RUN rvm use --default ruby
+RUN rvm install ruby-2.7
+RUN rvm use --default ruby-2.7
+RUN rvm @global do gem uninstall bundler
+RUN gem install bundler:1.16.1
+RUN gem install rails -v 4.2.6
+RUN gem install rubocop  -v 0.81
+# RUN gem install erb_lint -v 0.81
+# RUN gem install erb_lint
+# RUN rvm @global do gem install rufo
+# RUN gem install rufo
+USER root
 
 # Setting the ENTRYPOINT to docker-init.sh will configure non-root access to 
 # the Docker socket if "overrideCommand": false is set in devcontainer.json. 
