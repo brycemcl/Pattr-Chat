@@ -5,6 +5,7 @@ const story = {
   title: 'Button',
   component: Header
 }
+
 const Text = () => <Header>Hello hot reload</Header>
 
 export default story
