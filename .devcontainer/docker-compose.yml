@@ -2,10 +2,10 @@ version: '3'
 
 services:
   app:
-    image: brycemclachlan/pattr-devcontainer
-    # build:
-    #   context: .
-    #   dockerfile: Dockerfile
+    # image: brycemclachlan/pattr-devcontainer
+    build:
+      context: .
+      dockerfile: Dockerfile
       # args:
       #   # On Linux, you may need to update USER_UID and USER_GID below if not your local UID is not 1000.
       #   USER_UID: 1000

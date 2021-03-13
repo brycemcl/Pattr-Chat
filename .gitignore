@@ -177,3 +177,4 @@ typings/
 # next.js build output
 .next
 *secret-env-configmap.yaml
+*secret.env
