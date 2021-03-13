@@ -5,19 +5,19 @@ export function messagesForClickedUser (userid) {
    * fake data mocked from our server which will emulate each message when amy is clicked in sidebar */
   const messages = [
     {
-      sender_id: 1,
+      senderId: 1,
       date: new Date('Sat Mar 13 2021 09:41:29 GMT-0800 (Pacific Standard Time)'),
       name: 'bob',
       text: 'Hmm, not sure if I like cats'
     },
     {
-      sender_id: 1,
+      senderId: 1,
       date: new Date('Sat Mar 13 2021 09:44:10 GMT-0800 (Pacific Standard Time)'),
       name: 'bob',
       text: 'I love cars'
     },
     {
-      sender_id: 2,
+      senderId: 2,
       date: new Date('Sat Mar 13 2021 09:48:11 GMT-0800 (Pacific Standard Time)'),
       name: 'Amy',
       text: 'hey there! how was your day?'
@@ -26,9 +26,9 @@ export function messagesForClickedUser (userid) {
 
   // do tha filter - tempoary method
   const filteredMessagesArr = messages.filter(obj => {
-    if (obj.sender_id === userid) {
+    if (obj.senderId === userid) {
       return obj
-    };
+    }
 
     return null
   })
@@ -42,15 +42,15 @@ export function showUsersInCompany () {
   * fake data mocked from our server which will emulate each companyUsers when amy is clicked in sidebar */
   const companyUsers = [
     {
-      sender_id: 1,
+      senderId: 1,
       name: 'Amy'
     },
     {
-      sender_id: 2,
+      senderId: 2,
       name: 'peter'
     },
     {
-      sender_id: 3,
+      senderId: 3,
       name: 'bob'
     }
   ]
@@ -64,15 +64,15 @@ export function showChannelsInCompany () {
   * fake data mocked from our server which will emulate each companyChannels when amy is clicked in sidebar */
   const companyChannels = [
     {
-      channel_id: 1,
+      channelId: 1,
       name: 'General'
     },
     {
-      channel_id: 2,
+      channelId: 2,
       name: 'Memes'
     },
     {
-      channel_id: 3,
+      channelId: 3,
       name: 'Warzone'
     }
   ]
