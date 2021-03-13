@@ -1,11 +1,11 @@
 // import { action } from '@storybook/addon-actions';
-import MessageInThead from '.'
+import MessageInThread from '.'
 
 const story = {
-  title: 'MessageInThead',
-  component: MessageInThead
+  title: 'MessageInThread',
+  component: MessageInThread
 }
-const Message = () => <MessageInThead />
+const Message = () => <MessageInThread />
 
 export default story
 export { Message }
