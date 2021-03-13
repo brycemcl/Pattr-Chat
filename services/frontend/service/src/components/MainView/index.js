@@ -1,6 +1,3 @@
-// import React from 'react';
-import './styles.scss'
-
 /* mainview component - acts as the gateway into our application is split into the:
  * sidebar, containing a header, orgswitcher, sidebar header etc...
  * main body , containing a title of currently selected chat, message text, composer etc... */
