@@ -6,16 +6,19 @@ export function messagesForClickedUser (userid) {
   const messages = [
     {
       sender_id: 1,
+      date: new Date('Sat Mar 13 2021 09:41:29 GMT-0800 (Pacific Standard Time)'),
       name: 'bob',
       text: 'Hmm, not sure if I like cats'
     },
     {
       sender_id: 1,
+      date: new Date('Sat Mar 13 2021 09:44:10 GMT-0800 (Pacific Standard Time)'),
       name: 'bob',
       text: 'I love cars'
     },
     {
       sender_id: 2,
+      date: new Date('Sat Mar 13 2021 09:48:11 GMT-0800 (Pacific Standard Time)'),
       name: 'Amy',
       text: 'hey there! how was your day?'
     }

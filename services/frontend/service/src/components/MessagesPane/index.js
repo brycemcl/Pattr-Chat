@@ -14,7 +14,7 @@ function MessagesPane () {
   const mappedMessages = filteredMessages.map((message) => {
     return (
       <MessageInThead
-        key={message.sender_id}
+        key={`${message.sender_id}${message.date}${message.name}${message.text}`}
         messageText={message.text}
         messageName={message.name}
       />
