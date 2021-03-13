@@ -49,9 +49,6 @@ const Sidebar = ({ conversations }) => {
   const usersInCompany = showUsersInCompany()
   const channelsInCompany = showChannelsInCompany()
 
-  // console.log("usersInCompany: ", usersInCompany);
-  // console.log("channelsInCompany: ", channelsInCompany);
-
   // return the component to render the sidebar & when a sidebar option is clicked, update the current state to record the last
   // clicked button
   return (
@@ -66,23 +63,23 @@ const Sidebar = ({ conversations }) => {
         anchor='left'
       >
         <List>
-          {channelsInCompany.map((obj) => (
-            <ListItem button key={obj.name} onClick={() => setClickedSidebarOption(obj.channel_id)}>
+          {channelsInCompany.map(({ name, channelId }) => (
+            <ListItem button key={name} onClick={() => setClickedSidebarOption(channelId)}>
               <ListItemIcon>
                 <AssessmentIcon />
               </ListItemIcon>
-              <ListItemText primary={obj.name} />
+              <ListItemText primary={name} />
             </ListItem>
           ))}
         </List>
         <Divider />
         <List>
-          {usersInCompany.map((obj) => (
-            <ListItem button key={obj.name}>
+          {usersInCompany.map(({ name }) => (
+            <ListItem button key={name}>
               <ListItemIcon>
                 <FaceIcon />
               </ListItemIcon>
-              <ListItemText primary={obj.name} />
+              <ListItemText primary={name} />
             </ListItem>
           ))}
         </List>

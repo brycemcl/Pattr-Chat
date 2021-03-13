@@ -1,4 +1,4 @@
-import MessageInThead from '../MessageInThread'
+import MessageInThread from '../MessageInThread'
 import { messagesForClickedUser } from '../../helpers/selectors'
 
 // component to handle all the messages in the message pane
@@ -11,12 +11,13 @@ function MessagesPane () {
 
   /* map out filtered messages, then loop through them and make new messages for each one
    * passing down props when necessary */
-  const mappedMessages = filteredMessages.map((message) => {
+  const mappedMessages = filteredMessages.map(({ senderId, date, text, name }) => {
     return (
-      <MessageInThead
-        key={`${message.sender_id}${message.date}${message.name}${message.text}`}
-        messageText={message.text}
-        messageName={message.name}
+      <MessageInThread
+        key={`${senderId}${date}${name}${text}`}
+        date={date}
+        messageText={text}
+        messageName={name}
       />
     )
   })
