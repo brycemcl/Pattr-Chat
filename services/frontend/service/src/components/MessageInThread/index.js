@@ -7,8 +7,11 @@ import Paper from '@material-ui/core/Paper'
 // style MessageInThread component
 const useStyles = makeStyles({
   root: {
-    minWidth: 275,
-    padding: '1rem'
+    maxWidth: 475,
+    padding: '1rem',
+    marginTop: '20px',
+    marginBottom: '15px',
+    marginLeft: '275px'
   },
   bullet: {
     display: 'inline-block',
@@ -24,7 +27,7 @@ const useStyles = makeStyles({
 })
 
 // MessageinThread component
-const MessageInThread = ({ messageName, messageText }) => {
+const MessageInThread = ({ messageName, messageText = "Test message" }) => {
   const classes = useStyles()
   const date = new Date()
   return (

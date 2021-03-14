@@ -1,24 +1,31 @@
-// import { useEffect, useState } from 'react'
+import { makeStyles } from '@material-ui/core/styles'
+import TextField from '@material-ui/core/TextField'
 
-// helper function to log what the user inputs in the input field to the console
-// const currentVal = (event) => {
-//   console.log(event.target.value)
-// }
+// style text field in composer component
+const useStyles = makeStyles((theme) => ({
+  root: {
+    margin: theme.spacing(2),
+    '& .MuiTextField-root': {
+      width: '55ch'
+    },
+    marginLeft: '275px'
+  }
+}))
 
-// composer component
+// composer component - uses material ui's multiline text/input field
+// https://material-ui.com/components/text-fields/#multiline
 const Composer = ({ value, setValue }) => {
-  // manage our controlled components state here
+  const classes = useStyles()
 
-  /* https://reactjs.org/docs/hooks-reference.html#useref - if there is a button somewhere else
-     in our component tree, it would use "inputEl" to access the text stored in this components state */
-
-  // link the reference to this input DOM element to our useRef above
-  // return <input ref={inputEl} onChange={currentVal} type='text'></input>;
   return (
-    <input
+    <TextField
+      id='outlined-multiline-static'
+      multiline
+      rows={4}
       value={value}
+      className={classes.root}
       onChange={(event) => setValue(event.target.value)}
-      type='text'
+      variant='outlined'
     />
   )
 }
