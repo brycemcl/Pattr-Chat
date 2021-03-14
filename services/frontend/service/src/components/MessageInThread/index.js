@@ -37,7 +37,7 @@ const MessageInThread = ({ messageName, messageText }) => {
           <MessageMetadata name={messageName} date={date} />
         </div>
         <Message>
-          {messageText}
+          {messageText || 'Test message'}
         </Message>
       </div>
     </Paper>

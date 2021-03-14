@@ -4,7 +4,7 @@
 function MainView ({ children }) {
   return (
     <>
-      <div>{children}</div>
+
       {/* <Header />
       <Sidebar>
         <SidebarHeader>

@@ -2,7 +2,7 @@
 import Header from '.'
 
 const story = {
-  title: 'Button',
+  title: 'Header',
   component: Header
 }
 
