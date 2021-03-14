@@ -27,7 +27,7 @@ const useStyles = makeStyles({
 })
 
 // MessageinThread component
-const MessageInThread = ({ messageName, messageText = "Test message" }) => {
+const MessageInThread = ({ messageName, messageText = 'Test message' }) => {
   const classes = useStyles()
   const date = new Date()
   return (
