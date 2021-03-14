@@ -1,12 +1,13 @@
 const resetSchema = (db) => {
   return db.query(`
+  CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
   DROP TABLE IF EXISTS "users_channels" CASCADE;
   DROP TABLE IF EXISTS "users_conversations" CASCADE;
   DROP TABLE IF EXISTS "conversations" CASCADE;
   DROP TABLE IF EXISTS "channels" CASCADE;
   DROP TABLE IF EXISTS "messages" CASCADE;
   DROP TABLE IF EXISTS "users" CASCADE;
-  CREATE TABLE "users"( "id" SERIAL PRIMARY KEY NOT NULL, "user_uuid" UUID NOT NULL, "display_name" VARCHAR(255) NOT NULL );
+  CREATE TABLE "users"( "id" SERIAL PRIMARY KEY NOT NULL, "user_uuid" uuid DEFAULT uuid_generate_v4 () NOT NULL, "display_name" VARCHAR(255) NOT NULL );
   CREATE TABLE "messages"( "id" SERIAL PRIMARY KEY NOT NULL, "conversation_id" INTEGER NOT NULL, "user_id" INTEGER NOT NULL, "message" JSON NOT NULL, "date_sent" DATE NOT NULL );
   CREATE TABLE "channels"( "id" SERIAL PRIMARY KEY NOT NULL, "conversation_id" INTEGER NOT NULL, "user_id" INTEGER NOT NULL, "name" VARCHAR(255) NOT NULL );
   CREATE TABLE "conversations"( "id" SERIAL PRIMARY KEY NOT NULL, "name" VARCHAR(255) NOT NULL, "public" BOOLEAN NOT NULL );
@@ -20,7 +21,7 @@ const resetSchema = (db) => {
   ALTER TABLE "users_channels" ADD CONSTRAINT "users_channels_channels_id" FOREIGN KEY("channels_id") REFERENCES "channels"("id");
   ALTER TABLE "users_conversations" ADD CONSTRAINT "users_conversations_user_id" FOREIGN KEY("user_id") REFERENCES "users"("id");
   ALTER TABLE "users_conversations" ADD CONSTRAINT "users_conversations_conversation_id" FOREIGN KEY("conversation_id") REFERENCES "conversations"("id");
-  `)
-}
+  `);
+};
 
-module.exports = { resetSchema }
+module.exports = { resetSchema };

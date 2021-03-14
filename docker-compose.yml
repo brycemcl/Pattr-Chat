@@ -31,15 +31,16 @@ services:
       - db.secret.env
     ports:
       - 3002:3000
-  # graphql-engine:
-  #   image: hasura/graphql-engine
-  #   ports:
-  #     - 8080:8080
-  #   depends_on:
-  #     - 'postgres'
-  #   env_file:
-  #     - db.secret.env
-  #     - hasura.secret.env
+  graphql-engine:
+    restart: always
+    image: hasura/graphql-engine:v2.0.0-alpha.4
+    ports:
+      - 8080:8080
+    depends_on:
+      - 'postgres'
+    env_file:
+      - db.secret.env
+      - hasura.secret.env
   postgres:
     image: postgres
     ports:

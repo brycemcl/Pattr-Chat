@@ -1,0 +1,4 @@
+Created a reset db service by copying the express backend
+https://node-postgres.com/features/native
+npm install pg pg-native
+
