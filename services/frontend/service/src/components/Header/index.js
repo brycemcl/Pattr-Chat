@@ -8,6 +8,7 @@ import {
 } from '@material-ui/core'
 import MenuIcon from '@material-ui/icons/Menu'
 
+// style our component
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1

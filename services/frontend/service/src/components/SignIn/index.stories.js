@@ -6,7 +6,7 @@ const story = {
 }
 
 // function that will render out our imported Composer component as a story in storybook
-const Text = () => <SignIn />
+const SignInForm = () => <SignIn />
 
 export default story
-export { Text }
+export { SignInForm }

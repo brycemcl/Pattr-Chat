@@ -6,7 +6,7 @@ const story = {
   component: Header
 }
 
-const Text = () => <Header>Hello hot reload</Header>
+const navBar = () => <Header>Hello hot reload</Header>
 
 export default story
-export { Text }
+export { navBar }

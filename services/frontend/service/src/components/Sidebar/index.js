@@ -27,7 +27,9 @@ const useStyles = makeStyles((theme) => ({
     flexShrink: 0
   },
   drawerPaper: {
-    width: drawerWidth
+    width: drawerWidth,
+    marginTop: '80px',
+    marginLeft: '16px'
   },
   // necessary for content to be below app bar
   toolbar: theme.mixins.toolbar,
