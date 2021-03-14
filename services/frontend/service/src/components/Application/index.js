@@ -4,11 +4,12 @@ import SignIn from '../SignIn'
 import SignUp from '../Signup'
 
 /* application component which acts as a window into our application
- * conditonally renders the login page and ChatRoom application based on if a userToken is true or not */
+ * conditonally renders the login page and ChatRoom application based on if a userToken is true or not
+ * https://reactjs.org/docs/conditional-rendering.html */
 const Application = () => {
   // mock tokens from firebase to indicate if the user is logged in or not & to render the register component or not
-  const userToken = false
-  const register = true
+  const userToken = true
+  const register = false
 
   // conditonally render components of our app here
   if (!userToken && !register) {

@@ -1,4 +1,3 @@
-import React from 'react'
 import MessagesPane from '../MessagesPane/index'
 import SendMessageForm from '../SendMessageForm'
 

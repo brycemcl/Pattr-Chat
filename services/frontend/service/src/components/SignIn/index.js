@@ -1,4 +1,3 @@
-import React from 'react'
 import Avatar from '@material-ui/core/Avatar'
 import Button from '@material-ui/core/Button'
 import CssBaseline from '@material-ui/core/CssBaseline'
@@ -33,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-export default function SignIn () {
+const SignIn = () => {
   const classes = useStyles()
 
   return (
@@ -100,3 +99,5 @@ export default function SignIn () {
     </Container>
   )
 }
+
+export default SignIn;
