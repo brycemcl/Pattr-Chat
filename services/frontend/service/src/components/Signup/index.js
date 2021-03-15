@@ -1,3 +1,4 @@
+/* global localStorage */
 import Avatar from '@material-ui/core/Avatar'
 import Button from '@material-ui/core/Button'
 import CssBaseline from '@material-ui/core/CssBaseline'
@@ -8,7 +9,10 @@ import Box from '@material-ui/core/Box'
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined'
 import Typography from '@material-ui/core/Typography'
 import { makeStyles } from '@material-ui/core/styles'
+import { ToastContainer, toast } from 'react-toastify'
 import Container from '@material-ui/core/Container'
+import firebase from '../../firebase'
+import { useState } from 'react'
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -30,12 +34,42 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-const SignUp = () => {
+// helper function that can render the login component conditonally when the "need an account?" link is clicked
+const renderLogin = function (event, setRegister) {
+  event.preventDefault()
+  setRegister(false)
+}
+
+const registerAuth = function (email, password, setUserToken, setUid) {
+  console.log('inside register auth function')
+  firebase.auth().createUserWithEmailAndPassword(email, password)
+    .then((userCredential) => {
+      const user = userCredential.user
+      setUserToken(true)
+      setUid(user.uid)
+      localStorage.setItem('Uid', user.uid)
+    })
+    .catch((error) => {
+      const errorMessage = error.message
+      toast.error(errorMessage)
+    })
+}
+
+const SignUp = ({ setRegister, setUserToken, setUid }) => {
   const classes = useStyles()
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
 
   return (
     <Container component='main' maxWidth='xs'>
       <CssBaseline />
+
+      <div>
+        <ToastContainer
+          position='bottom-center'
+        />
+      </div>
+
       <div className={classes.paper}>
         <Avatar className={classes.avatar}>
           <LockOutlinedIcon />
@@ -77,6 +111,8 @@ const SignUp = () => {
                 label='Email Address'
                 name='email'
                 autoComplete='email'
+                value={email}
+                onChange={(event) => { setEmail(event.target.value) }}
               />
             </Grid>
             <Grid item xs={12}>
@@ -89,21 +125,27 @@ const SignUp = () => {
                 type='password'
                 id='password'
                 autoComplete='current-password'
+                value={password}
+                onChange={(event) => { setPassword(event.target.value) }}
               />
             </Grid>
           </Grid>
           <Button
-            type='submit'
             fullWidth
             variant='contained'
             color='primary'
             className={classes.submit}
+            onClick={() => registerAuth(email, password, setUserToken, setUid)}
           >
             Sign Up
           </Button>
           <Grid container justify='flex-end'>
             <Grid item>
-              <Link href='#' variant='body2'>
+              <Link
+                href='#'
+                variant='body2'
+                onClick={(e) => renderLogin(e, setRegister)}
+              >
                 Already have an account? Sign in
               </Link>
             </Grid>
