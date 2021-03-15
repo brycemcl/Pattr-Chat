@@ -12,7 +12,7 @@ const reloadMetadata = async () => {
 }
 
 const trackTable = async (table) => {
-  const jsonObjectToPost = {
+  const objectToPost = {
     type: 'bulk',
     args: [
       {
@@ -25,54 +25,20 @@ const trackTable = async (table) => {
       }
     ]
   }
-  jsonObjectToPost.args[0].args.table.name = table
-  return metadataApi.post('/', jsonObjectToPost)
+  objectToPost.args[0].args.table.name = table
+  return metadataApi.post('/', objectToPost)
 }
-const trackFkRelationship = async ({
-  foreign_table_name,
-  table_schema,
-  foreign_table_schema,
-  table_name,
-  column_name
-}) => {
-  const query = {
-    type: 'bulk',
-    source: 'default',
-    args: [
-      {
-        type: 'pg_create_array_relationship',
-        args: {
-          name: 'placeholder',
-          table: { name: 'placeholder', schema: 'placeholder}' },
-          using: {
-            foreign_key_constraint_on: {
-              table: { name: 'placeholder', schema: 'placeholder}' },
-              column: 'placeholder'
-            }
-          },
-          source: 'default'
-        }
-      }
-    ]
-  }
-  query.args[0].args.name = table_name
-  query.args[0].args.table.name = foreign_table_name
-  query.args[0].args.table.schema = table_schema
-  query.args[0].args.using.foreign_key_constraint_on.table.name = table_name
-  query.args[0].args.using.foreign_key_constraint_on.table.schema = foreign_table_schema
-  query.args[0].args.using.foreign_key_constraint_on.column = column_name
-  return await metadataApi.post('/', query)
+const trackFkRelationship = async () => {
+  return await metadataApi.post('/', require('./hasuraFkRelationships'))
 }
 
-const setupHasura = async (tables, fks) => {
+const setupHasura = async (tables) => {
   await reloadMetadata()
 
   for (const table of tables) {
     await trackTable(table)
   }
-  for (const fk of fks) {
-    await trackFkRelationship(fk)
-  }
+  await trackFkRelationship()
 }
 module.exports = { setupHasura }
 
