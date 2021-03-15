@@ -1,3 +1,4 @@
+/* global localStorage */
 import { makeStyles } from '@material-ui/core/styles'
 import {
   AppBar,
@@ -30,6 +31,7 @@ const buttonClick = function (buttonStatus, setUserToken, setRegister) {
     firebase.auth().signOut().then(() => {
       setUserToken(false)
       setRegister(false)
+      localStorage.removeItem('Uid')
     }).catch((error) => {
       console.log('error inside header.js for logout feature', error)
     })

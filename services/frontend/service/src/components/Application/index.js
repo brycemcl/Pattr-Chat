@@ -1,4 +1,5 @@
-import { useState } from 'react'
+/* global localStorage */
+import { useState, useEffect } from 'react'
 import Header from '../Header'
 import ChatRoom from '../ChatRoom'
 import SignIn from '../SignIn'
@@ -16,6 +17,16 @@ const Application = () => {
 
   // make auto linter happy lmao
   console.log('Yee: ', uid)
+
+  // useeffect
+  useEffect(() => {
+    const sessionUid = localStorage.getItem('Uid')
+
+    if (sessionUid) {
+      setUserToken(true)
+      setUid(sessionUid)
+    }
+  }, [])
 
   // conditonally render components of our app here
   if (!userToken && !register) {
