@@ -1,6 +1,5 @@
 // import the scale constants
 const { numberOfChannels, fakerSeed } = require('../../scale')
-// const { users } = require('./users');
 // setup faker
 const faker = require('faker')
 faker.seed(fakerSeed)
