@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import Header from '../Header'
 import ChatRoom from '../ChatRoom'
 import SignIn from '../SignIn'
@@ -7,24 +8,36 @@ import SignUp from '../Signup'
  * conditonally renders the login page and ChatRoom application based on if a userToken is true or not
  * https://reactjs.org/docs/conditional-rendering.html */
 const Application = () => {
-  // mock tokens from firebase to indicate if the user is logged in or not & to render the register component or not
-  const userToken = true
+  // store our currently logged in username and password in this components state to keep track
+  // of currenty logged in and authnticated user
   const register = false
+  const [userToken, setUserToken] = useState(false)
+  const [uid, setUid] = useState('')
+
+  console.log('userToken val: ', userToken)
+  console.log('userToken uid: ', uid)
 
   // conditonally render components of our app here
   if (!userToken && !register) {
     return (
       <div>
-        <Header />
+        <Header
+          buttonStatus='Register'
+        />
         <section>
-          <SignIn />
+          <SignIn
+            setUserToken={setUserToken}
+            setUid={setUid}
+          />
         </section>
       </div>
     )
   } else if (!userToken && register) {
     return (
       <div>
-        <Header />
+        <Header
+          buttonStatus='Login'
+        />
         <section>
           <SignUp />
         </section>
@@ -33,7 +46,9 @@ const Application = () => {
   } else {
     return (
       <div>
-        <Header />
+        <Header
+          buttonStatus='Logout'
+        />
         <section>
           <ChatRoom />
         </section>

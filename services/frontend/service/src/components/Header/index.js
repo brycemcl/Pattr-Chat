@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-function Header () {
+function Header ({ buttonStatus }) {
   const classes = useStyles()
   return (
     <>
@@ -38,7 +38,7 @@ function Header () {
           <Typography variant='h6' className={classes.title}>
             Pattr
           </Typography>
-          <Button color='inherit'>Login</Button>
+          <Button color='inherit'>{buttonStatus}</Button>
         </Toolbar>
       </AppBar>
     </>
