@@ -80,18 +80,23 @@ module.exports = {
     {
       type: 'pg_create_object_relationship',
       args: {
-        name: 'conversation',
+        name: 'user',
         table: { name: 'channels', schema: 'public' },
-        using: { foreign_key_constraint_on: 'conversation_id' },
+        using: { foreign_key_constraint_on: 'user_id' },
         source: 'default'
       }
     },
     {
-      type: 'pg_create_object_relationship',
+      type: 'pg_create_array_relationship',
       args: {
-        name: 'user',
+        name: 'conversations',
         table: { name: 'channels', schema: 'public' },
-        using: { foreign_key_constraint_on: 'user_id' },
+        using: {
+          foreign_key_constraint_on: {
+            table: { name: 'conversations', schema: 'public' },
+            column: 'channel_id'
+          }
+        },
         source: 'default'
       }
     },
@@ -110,16 +115,11 @@ module.exports = {
       }
     },
     {
-      type: 'pg_create_array_relationship',
+      type: 'pg_create_object_relationship',
       args: {
-        name: 'channels',
+        name: 'channel',
         table: { name: 'conversations', schema: 'public' },
-        using: {
-          foreign_key_constraint_on: {
-            table: { name: 'channels', schema: 'public' },
-            column: 'conversation_id'
-          }
-        },
+        using: { foreign_key_constraint_on: 'channel_id' },
         source: 'default'
       }
     },
