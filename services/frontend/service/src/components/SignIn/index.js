@@ -14,13 +14,20 @@ import Container from '@material-ui/core/Container'// Firebase App (the core Fir
 import { useState } from 'react'
 import firebase from '../../firebase'
 
+// helper function that can render the register component conditonally when the "need an account?" link is clicked
+const renderRegister = function (event, setRegister) {
+  event.preventDefault()
+  setRegister(true)
+}
+
 // helper function that will be called when the user submits the form for the sign in button with email + pw info
+// Firebase auth to sign in then set the userToken in the parent component to true
+// otherwise catch and display errors - using material UI?
 const loginAuth = function (email, password, setUserToken, setUid) {
-  /* Firebase auth to sign in then set the userToken in the parent component to true
-    * otherwise catch and display errors - using material UI? */
   firebase.auth().signInWithEmailAndPassword(email, password)
     .then((userCredential) => {
       const user = userCredential.user
+      console.log('user: ', user)
       setUserToken(true)
       setUid(user.uid)
     })
@@ -56,7 +63,7 @@ const useStyles = makeStyles((theme) => ({
 /* render sign in component this uses firebase to authenticate and login a user with firebase with their inputted
  * email and password we need to store the email and password in state in this grandparent component to do this
  * https://stackoverflow.com/questions/57810595/material-ui-how-to-extract-the-value-of-the-text-field */
-const SignIn = ({ setUserToken, setUid }) => {
+const SignIn = ({ setUserToken, setUid, setRegister }) => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
 
@@ -120,7 +127,11 @@ const SignIn = ({ setUserToken, setUid }) => {
               </Link>
             </Grid>
             <Grid item>
-              <Link href='#' variant='body2'>
+              <Link
+                onClick={(e) => renderRegister(e, setRegister)}
+                href='#'
+                variant='body2'
+              >
                 Don't have an account? Sign Up
               </Link>
             </Grid>

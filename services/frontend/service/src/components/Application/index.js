@@ -10,12 +10,12 @@ import SignUp from '../Signup'
 const Application = () => {
   // store our currently logged in username and password in this components state to keep track
   // of currenty logged in and authnticated user
-  const register = false
   const [userToken, setUserToken] = useState(false)
   const [uid, setUid] = useState('')
+  const [register, setRegister] = useState(false)
 
-  console.log('userToken val: ', userToken)
-  console.log('userToken uid: ', uid)
+  // make auto linter happy lmao
+  console.log('Yee: ', uid)
 
   // conditonally render components of our app here
   if (!userToken && !register) {
@@ -23,11 +23,14 @@ const Application = () => {
       <div>
         <Header
           buttonStatus='Register'
+          setUserToken={setUserToken}
+          setRegister={setRegister}
         />
         <section>
           <SignIn
             setUserToken={setUserToken}
             setUid={setUid}
+            setRegister={setRegister}
           />
         </section>
       </div>
@@ -37,9 +40,15 @@ const Application = () => {
       <div>
         <Header
           buttonStatus='Login'
+          setUserToken={setUserToken}
+          setRegister={setRegister}
         />
         <section>
-          <SignUp />
+          <SignUp
+            setUserToken={setUserToken}
+            setUid={setUid}
+            setRegister={setRegister}
+          />
         </section>
       </div>
     )
@@ -48,6 +57,8 @@ const Application = () => {
       <div>
         <Header
           buttonStatus='Logout'
+          setUserToken={setUserToken}
+          setRegister={setRegister}
         />
         <section>
           <ChatRoom />
