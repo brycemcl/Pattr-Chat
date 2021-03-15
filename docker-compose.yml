@@ -1,28 +1,65 @@
 version: '3.4'
 
 services:
-  pattr-frontend:
-    image: brycemclachlan/pattr-frontend
+  # pattr-frontend:
+  #   image: brycemclachlan/pattr-frontend
+  #   build:
+  #     context: services/frontend/service
+  #     dockerfile: ./Dockerfile
+  #   ports:
+  #     - 3001:3001
+  # pattr-backend:
+  #   image: brycemclachlan/pattr-backend
+  #   build:
+  #     context: services/backend/service
+  #     dockerfile: ./Dockerfile
+  #   environment:
+  #     NODE_ENV: production
+  #   env_file:
+  #     - db.secret.env
+  #   ports:
+  #     - 3000:3000
+  reset-db:
+    restart: always
+    image: brycemclachlan/pattr-resetdb
     build:
-      context: services/frontend/service
-      dockerfile: ./Dockerfile
-    ports:
-      - 3000:3000
-  pattr-backend:
-    image: brycemclachlan/pattr-backend
-    build:
-      context: services/backend/service
+      context: services/reset-db/service
       dockerfile: ./Dockerfile
     environment:
       NODE_ENV: production
+    env_file:
+      - db.secret.env
     ports:
-      - 3000:3000
-  firebase-emulator:
-    image: firebase-emulator
-    build:
-      context: services/auth/service
-      dockerfile: ./Dockerfile
+      - 3002:3000
+  graphql-engine:
+    restart: always
+    image: hasura/graphql-engine:v2.0.0-alpha.4
     ports:
-      - 9099:9099
-      - 8001:8001
-      - 8002:8002
+      - 8080:8080
+    depends_on:
+      - 'postgres'
+    env_file:
+      - db.secret.env
+      - hasura.secret.env
+  postgres:
+    image: postgres
+    ports:
+      - 5432:5432
+    env_file:
+      - db.secret.env
+    tmpfs:
+      - /var/lib/postgresql/data
+    # volumes:
+    #   - postgres_volume:/var/lib/postgresql/data
+  # firebase-emulator:
+  #   image: firebase-emulator
+  #   build:
+  #     context: services/auth/service
+  #     dockerfile: ./Dockerfile
+  #   ports:
+  #     - 9099:9099
+  #     - 8001:8001
+  #     - 8002:8002
+
+volumes:
+  postgres_volume:

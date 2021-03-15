@@ -16,7 +16,6 @@ ALTER TABLE
     "messages" ADD PRIMARY KEY("id");
 CREATE TABLE "channels"(
     "id" INTEGER NOT NULL,
-    "conversation_id" INTEGER NOT NULL,
     "user_id" INTEGER NOT NULL,
     "name" VARCHAR(255) NOT NULL
 );
@@ -25,7 +24,8 @@ ALTER TABLE
 CREATE TABLE "conversations"(
     "id" INTEGER NOT NULL,
     "name" VARCHAR(255) NOT NULL,
-    "public" BOOLEAN NOT NULL
+    "public" BOOLEAN NOT NULL,
+    "channel_id" INTEGER NOT NULL
 );
 ALTER TABLE
     "conversations" ADD PRIMARY KEY("id");
@@ -48,9 +48,9 @@ ALTER TABLE
 ALTER TABLE
     "messages" ADD CONSTRAINT "messages_user_id_foreign" FOREIGN KEY("user_id") REFERENCES "users"("id");
 ALTER TABLE
-    "users_channels" ADD CONSTRAINT "users_channels_users_id_foreign" FOREIGN KEY("users_id") REFERENCES "users"("id");
+    "conversations" ADD CONSTRAINT "conversations_channel_id_foreign" FOREIGN KEY("channel_id") REFERENCES "channels"("id");
 ALTER TABLE
-    "channels" ADD CONSTRAINT "channels_conversation_id_foreign" FOREIGN KEY("conversation_id") REFERENCES "conversations"("id");
+    "users_channels" ADD CONSTRAINT "users_channels_users_id_foreign" FOREIGN KEY("users_id") REFERENCES "users"("id");
 ALTER TABLE
     "channels" ADD CONSTRAINT "channels_user_id_foreign" FOREIGN KEY("user_id") REFERENCES "users"("id");
 ALTER TABLE

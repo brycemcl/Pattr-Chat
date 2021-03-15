@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    keel.sh/policy: all
+    keel.sh/trigger: poll
+  labels:
+    service: quiz-app-backend
+  name: quiz-app-backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      service: quiz-app-backend
+  template:
+    metadata:
+      labels:
+        service: quiz-app-backend
+    spec:
+      containers:
+        - env:
+            - name: NODE_ENV
+              value: production
+            - name: NODE_PORT
+              value: "8080"
+            - name: POSTGRES_DB
+              valueFrom:
+                configMapKeyRef:
+                  key: POSTGRES_DB
+                  name: secret-env
+            - name: POSTGRES_HOST
+              value: postgres
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                configMapKeyRef:
+                  key: POSTGRES_PASSWORD
+                  name: secret-env
+            - name: POSTGRES_PORT
+              value: "5432"
+            - name: POSTGRES_USER
+              valueFrom:
+                configMapKeyRef:
+                  key: POSTGRES_USER
+                  name: secret-env
+          image: brycemclachlan/quiz-app-backend
+          name: quiz-app-backend
+          ports:
+            - containerPort: 8080
+      restartPolicy: Always

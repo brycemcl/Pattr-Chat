@@ -1,0 +1,23 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: quiz-app-backend
+  annotations:
+    cert-manager.io/cluster-issuer: "letsencrypt-issuer"
+spec:
+  ingressClassName: "nginx"
+  tls:
+    - hosts:
+        - quiz-app.brycemclachlan.me
+      secretName: quiz-app-frontend-tls
+  rules:
+    - host: quiz-app.brycemclachlan.me
+      http:
+        paths:
+          - path: /api/
+            pathType: Prefix
+            backend:
+              service:
+                name: quiz-app-backend
+                port:
+                  number: 8080
