@@ -21,7 +21,7 @@ const resetSchema = (db) => {
   ALTER TABLE "users_channels" ADD CONSTRAINT "users_channels_channels_id" FOREIGN KEY("channels_id") REFERENCES "channels"("id");
   ALTER TABLE "users_conversations" ADD CONSTRAINT "users_conversations_user_id" FOREIGN KEY("user_id") REFERENCES "users"("id");
   ALTER TABLE "users_conversations" ADD CONSTRAINT "users_conversations_conversation_id" FOREIGN KEY("conversation_id") REFERENCES "conversations"("id");
-  `);
-};
+  `)
+}
 
-module.exports = { resetSchema };
+module.exports = { resetSchema }

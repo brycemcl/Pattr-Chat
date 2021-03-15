@@ -1,24 +1,15 @@
-const axios = require('axios');
-const xHasuraAdminSecret = process.env.HASURA_GRAPHQL_ADMIN_SECRET;
-
-const metadataApi = axios.create({
-  baseURL: 'http://graphql-engine:8080/v1/metadata/',
-  timeout: 1000,
-  headers: {
-    'Content-Type': 'application/json',
-    'x-hasura-admin-secret': xHasuraAdminSecret,
-  },
-});
+/* eslint-disable camelcase */
+const { metadataApi } = require('../apiConnection')
 
 const reloadMetadata = async () => {
   const jsonObjectToPost = {
     type: 'reload_metadata',
     args: {
-      reload_remote_schemas: true,
-    },
-  };
-  return metadataApi.post('/', jsonObjectToPost);
-};
+      reload_remote_schemas: true
+    }
+  }
+  return metadataApi.post('/', jsonObjectToPost)
+}
 
 const trackTable = async (table) => {
   const jsonObjectToPost = {
@@ -28,25 +19,61 @@ const trackTable = async (table) => {
         type: 'pg_track_table',
         args: {
           table: {
-            name: 'users_channels',
+            name: 'users_channels'
+          }
+        }
+      }
+    ]
+  }
+  jsonObjectToPost.args[0].args.table.name = table
+  return metadataApi.post('/', jsonObjectToPost)
+}
+const trackFkRelationship = async ({
+  foreign_table_name,
+  table_schema,
+  foreign_table_schema,
+  table_name,
+  column_name
+}) => {
+  const query = {
+    type: 'bulk',
+    source: 'default',
+    args: [
+      {
+        type: 'pg_create_array_relationship',
+        args: {
+          name: 'placeholder',
+          table: { name: 'placeholder', schema: 'placeholder}' },
+          using: {
+            foreign_key_constraint_on: {
+              table: { name: 'placeholder', schema: 'placeholder}' },
+              column: 'placeholder'
+            }
           },
-        },
-      },
-    ],
-  };
-  jsonObjectToPost.args[0].args.table.name = table;
-  return metadataApi.post('/', jsonObjectToPost);
-};
+          source: 'default'
+        }
+      }
+    ]
+  }
+  query.args[0].args.name = table_name
+  query.args[0].args.table.name = foreign_table_name
+  query.args[0].args.table.schema = table_schema
+  query.args[0].args.using.foreign_key_constraint_on.table.name = table_name
+  query.args[0].args.using.foreign_key_constraint_on.table.schema = foreign_table_schema
+  query.args[0].args.using.foreign_key_constraint_on.column = column_name
+  return await metadataApi.post('/', query)
+}
 
+const setupHasura = async (tables, fks) => {
+  await reloadMetadata()
 
+  for (const table of tables) {
+    await trackTable(table)
+  }
+  for (const fk of fks) {
+    await trackFkRelationship(fk)
+  }
+}
+module.exports = { setupHasura }
 
-
-
-const setupHasura = async (tables) => {
-  await reloadMetadata();
-  tables.map((table) => trackTable(table));
-  await Promise.all(tables);
-
-};
-
-module.exports = { setupHasura };
+/* eslint-disable camelcase */
