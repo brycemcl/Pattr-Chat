@@ -11,14 +11,31 @@ import Typography from '@material-ui/core/Typography'
 import { makeStyles } from '@material-ui/core/styles'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
-import Container from '@material-ui/core/Container'// Firebase App (the core Firebase SDK) is always required and must be listed first
-import React, { useState } from 'react'
+import Container from '@material-ui/core/Container'
+import { useState } from 'react'
 import firebase from '../../firebase'
 
 // helper function that can render the register component conditonally when the "need an account?" link is clicked
 const renderRegister = function (event, setRegister) {
   event.preventDefault()
   setRegister(true)
+}
+
+/* helper function that will be called when the user submits the form for the sign in button with email + pw info
+* Firebase auth to sign in then set the userToken in the parent component to true
+* otherwise catch and display errors - using material UI? */
+const loginAuth = function (email, password, setUserToken, setUid, setOpen, setSnackError) {
+  firebase.auth().signInWithEmailAndPassword(email, password)
+    .then((userCredential) => {
+      const user = userCredential.user
+      setUserToken(true)
+      setUid(user.uid)
+      localStorage.setItem('Uid', user.uid)
+    })
+    .catch((error) => {
+      const errorMessage = error.message
+      toast.error(errorMessage)
+    })
 }
 
 // style our component
@@ -55,23 +72,6 @@ const useStyles = makeStyles((theme) => ({
 const SignIn = ({ setUserToken, setUid, setRegister }) => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-
-  /* helper function that will be called when the user submits the form for the sign in button with email + pw info
-  * Firebase auth to sign in then set the userToken in the parent component to true
-  * otherwise catch and display errors - using material UI? */
-  const loginAuth = function (email, password, setUserToken, setUid, setOpen, setSnackError) {
-    firebase.auth().signInWithEmailAndPassword(email, password)
-      .then((userCredential) => {
-        const user = userCredential.user
-        setUserToken(true)
-        setUid(user.uid)
-        localStorage.setItem('Uid', user.uid)
-      })
-      .catch((error) => {
-        const errorMessage = error.message
-        toast.error(errorMessage)
-      })
-  }
 
   const classes = useStyles()
 
