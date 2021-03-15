@@ -3,6 +3,7 @@ const db = require('./dbConnection')
 const { resetSchema } = require('./schema')
 const { seedUsers } = require('./seeds/users')
 const { seedChannels } = require('./seeds/channels')
+const { seedConversations } = require('./seeds/conversations')
 const { setupHasura } = require('./seeds/hasura')
 
 const getTables = async () => {
@@ -24,6 +25,7 @@ const resetDb = async (databaseStatus) => {
     await setupHasura(tables)
     await seedUsers()
     await seedChannels()
+    await seedConversations()
     databaseStatus.active = true
   } catch {
     process.exit(1)
