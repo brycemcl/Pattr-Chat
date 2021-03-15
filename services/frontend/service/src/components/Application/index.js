@@ -9,8 +9,8 @@ import SignUp from '../Signup'
  * conditonally renders the login page and ChatRoom application based on if a userToken is true or not
  * https://reactjs.org/docs/conditional-rendering.html */
 const Application = () => {
-  // store our currently logged in username and password in this components state to keep track
-  // of currenty logged in and authnticated user
+  /* store our currently logged in username and password in this components state to keep track
+   * of currenty logged in and authnticated user */
   const [userToken, setUserToken] = useState(false)
   const [uid, setUid] = useState('')
   const [register, setRegister] = useState(false)

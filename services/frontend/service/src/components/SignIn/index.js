@@ -68,10 +68,7 @@ const SignIn = ({ setUserToken, setUid, setRegister }) => {
         localStorage.setItem('Uid', user.uid)
       })
       .catch((error) => {
-        const errorCode = error.code
         const errorMessage = error.message
-        console.log('errorCode', errorCode)
-        console.log('errorMessage', errorMessage)
         toast.error(errorMessage)
       })
   }

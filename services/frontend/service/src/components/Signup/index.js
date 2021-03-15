@@ -1,3 +1,4 @@
+/* global localStorage */
 import Avatar from '@material-ui/core/Avatar'
 import Button from '@material-ui/core/Button'
 import CssBaseline from '@material-ui/core/CssBaseline'
@@ -8,6 +9,7 @@ import Box from '@material-ui/core/Box'
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined'
 import Typography from '@material-ui/core/Typography'
 import { makeStyles } from '@material-ui/core/styles'
+import { ToastContainer, toast } from 'react-toastify'
 import Container from '@material-ui/core/Container'
 import firebase from '../../firebase'
 import { useState } from 'react'
@@ -43,15 +45,13 @@ const registerAuth = function (email, password, setUserToken, setUid) {
   firebase.auth().createUserWithEmailAndPassword(email, password)
     .then((userCredential) => {
       const user = userCredential.user
-      console.log('user inside sign up is: ', user)
       setUserToken(true)
       setUid(user.uid)
+      localStorage.setItem('Uid', user.uid)
     })
     .catch((error) => {
-      const errorCode = error.code
       const errorMessage = error.message
-      console.log('errorCode', errorCode)
-      console.log('errorCode', errorMessage)
+      toast.error(errorMessage)
     })
 }
 
@@ -63,6 +63,13 @@ const SignUp = ({ setRegister, setUserToken, setUid }) => {
   return (
     <Container component='main' maxWidth='xs'>
       <CssBaseline />
+
+      <div>
+        <ToastContainer
+          position='bottom-center'
+        />
+      </div>
+
       <div className={classes.paper}>
         <Avatar className={classes.avatar}>
           <LockOutlinedIcon />
