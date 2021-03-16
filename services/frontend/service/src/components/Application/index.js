@@ -5,32 +5,19 @@ import ChatRoom from '../ChatRoom'
 import SignIn from '../SignIn'
 import SignUp from '../Signup'
 
-import { useQuery, gql } from '@apollo/client'
-
-const schema = gql`
-  query {
-    users_by_pk(id: 10) {
-      id
-      display_name
-    }
-  }
-`
-
 /* application component which acts as a window into our application
  * conditionally renders the login page and ChatRoom application based on if a userToken is true or not
  * https://reactjs.org/docs/conditional-rendering.html */
 const Application = () => {
-  const { loading, error, data } = useQuery(schema)
+  // const { loading, error, data } = useQuery(schema)
   /* store our currently logged in username and password in this components state to keep track
    * of currently logged in and authenticated user */
   const [userToken, setUserToken] = useState(false)
-  const [uid, setUid] = useState('')
+  const [, setUid] = useState('')
+  const [currentUser, setCurrentUser] = useState('')
   const [register, setRegister] = useState(false)
-  // if (!loading) {
-  // }
 
-  // make auto linter happy lmao
-  console.log('Yee: ', uid)
+  console.log('currentUser: ', currentUser)
 
   // useeffect
   useEffect(() => {
@@ -41,9 +28,11 @@ const Application = () => {
       setUid(sessionUid)
     }
   }, [])
-  if (loading) return <p>Loading...</p>
-  if (error) return <p>Error :(</p>
-  console.log('here: ', data)
+
+  // if (loading) return <p>Loading...</p>
+  // if (error) return <p>Error :(</p>
+  // console.log('here: ', data)
+
   // conditionally render components of our app here
   if (!userToken && !register) {
     return (
@@ -74,6 +63,7 @@ const Application = () => {
           <SignUp
             setUserToken={setUserToken}
             setUid={setUid}
+            setCurrentUser={setCurrentUser}
             setRegister={setRegister}
           />
         </section>

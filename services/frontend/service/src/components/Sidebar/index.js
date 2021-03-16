@@ -9,7 +9,10 @@ import ListItemIcon from '@material-ui/core/ListItemIcon'
 import ListItemText from '@material-ui/core/ListItemText'
 import FaceIcon from '@material-ui/icons/Face'
 import AssessmentIcon from '@material-ui/icons/Assessment'
-import { showUsersInCompany, showChannelsInCompany } from '../../helpers/selectors'
+import {
+  showUsersInCompany,
+  showChannelsInCompany
+} from '../../helpers/selectors'
 
 const drawerWidth = 240
 
@@ -42,8 +45,7 @@ const useStyles = makeStyles((theme) => ({
 
 const Sidebar = ({ conversations }) => {
   // usestate in this component that will keep track of the menu option in the left hand panel which is clicked on
-  const [clickedSidebarOption, setClickedSidebarOption] = useState('')
-  console.log('clickedSidebarOption: ', clickedSidebarOption)
+  const [, setClickedSidebarOption] = useState(null)
 
   const classes = useStyles()
 
@@ -66,7 +68,11 @@ const Sidebar = ({ conversations }) => {
       >
         <List>
           {channelsInCompany.map(({ name, channelId }) => (
-            <ListItem button key={name} onClick={() => setClickedSidebarOption(channelId)}>
+            <ListItem
+              button
+              key={name}
+              onClick={() => setClickedSidebarOption(channelId)}
+            >
               <ListItemIcon>
                 <AssessmentIcon />
               </ListItemIcon>

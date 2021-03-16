@@ -7,17 +7,17 @@ faker.seed(fakerSeed)
 const { graphqlApi } = require('../apiConnection')
 // we are going to be exporting this
 const users = []
-const createUser = async (displayName) => {
+const createUser = async (displayname) => {
   const objectToPost = {
-    query: `mutation($displayName: String!) {
-      insert_users_one(object: {display_name: $displayName}) {
+    query: `mutation($displayname: String!) {
+      insert_users_one(object: {display_name: $displayname}) {
         id
         display_name
         user_uuid
       }
     }
     `,
-    variables: { displayName }
+    variables: { displayname }
   }
   const user = await graphqlApi
     .post('/', objectToPost)
