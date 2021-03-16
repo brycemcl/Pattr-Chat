@@ -22,16 +22,26 @@ const renderRegister = function (event, setRegister) {
 }
 
 /* helper function that will be called when the user submits the form for the sign in button with email + pw info
-* Firebase auth to sign in then set the userToken in the parent component to true
-* otherwise catch and display errors - using material UI? */
-const loginAuth = function (email, password, setUserToken, setUid, setOpen, setSnackError) {
-  firebase.auth().signInWithEmailAndPassword(email, password)
+ * Firebase auth to sign in then set the userToken in the parent component to true
+ * otherwise catch and display errors - using material UI? */
+const loginAuth = function (
+  email,
+  password,
+  setUserToken,
+  setUid,
+  setCurrentUser
+) {
+  firebase
+    .auth()
+    .signInWithEmailAndPassword(email, password)
     .then((userCredential) => {
       const user = userCredential.user
       setUserToken(true)
       setUid(user.uid)
+      setCurrentUser({ user_uuid: user.uid })
       localStorage.setItem('Uid', user.uid)
     })
+
     .catch((error) => {
       const errorMessage = error.message
       toast.error(errorMessage)
@@ -69,7 +79,7 @@ const useStyles = makeStyles((theme) => ({
  * email and password we need to store the email and password in state in this grandparent component to do this
  * https://stackoverflow.com/questions/57810595/material-ui-how-to-extract-the-value-of-the-text-field
  * https://stackoverflow.com/questions/56387947/access-promise-resolve-in-on-click-handler-in-react */
-const SignIn = ({ setUserToken, setUid, setRegister }) => {
+const SignIn = ({ setUserToken, setUid, setRegister, setCurrentUser }) => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
 
@@ -80,9 +90,7 @@ const SignIn = ({ setUserToken, setUid, setRegister }) => {
       <CssBaseline />
 
       <div>
-        <ToastContainer
-          position='bottom-center'
-        />
+        <ToastContainer position='bottom-center' />
       </div>
 
       <div className={classes.paper}>
@@ -103,7 +111,9 @@ const SignIn = ({ setUserToken, setUid, setRegister }) => {
             name='Email'
             autoComplete='email'
             value={email}
-            onChange={(event) => { setEmail(event.target.value) }}
+            onChange={(event) => {
+              setEmail(event.target.value)
+            }}
             autoFocus
           />
           <TextField
@@ -117,7 +127,9 @@ const SignIn = ({ setUserToken, setUid, setRegister }) => {
             id='password'
             autoComplete='current-password'
             value={password}
-            onChange={(event) => { setPassword(event.target.value) }}
+            onChange={(event) => {
+              setPassword(event.target.value)
+            }}
           />
           <Button
             // type='submit'
@@ -125,7 +137,8 @@ const SignIn = ({ setUserToken, setUid, setRegister }) => {
             variant='contained'
             color='primary'
             className={classes.submit}
-            onClick={() => loginAuth(email, password, setUserToken, setUid)}
+            onClick={() =>
+              loginAuth(email, password, setUserToken, setUid, setCurrentUser)}
           >
             Sign In
           </Button>

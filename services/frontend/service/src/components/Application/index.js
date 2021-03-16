@@ -13,8 +13,8 @@ const Application = () => {
   /* store our currently logged in username and password in this components state to keep track
    * of currently logged in and authenticated user */
   const [userToken, setUserToken] = useState(false)
-  const [, setUid] = useState('')
-  const [currentUser, setCurrentUser] = useState('')
+  const [uuid, setUid] = useState('')
+  const [currentUser, setCurrentUser] = useState({})
   const [register, setRegister] = useState(false)
 
   console.log('currentUser: ', currentUser)
@@ -29,8 +29,6 @@ const Application = () => {
     }
   }, [])
 
-  // if (loading) return <p>Loading...</p>
-  // if (error) return <p>Error :(</p>
   // console.log('here: ', data)
 
   // conditionally render components of our app here
@@ -47,6 +45,7 @@ const Application = () => {
             setUserToken={setUserToken}
             setUid={setUid}
             setRegister={setRegister}
+            setCurrentUser={setCurrentUser}
           />
         </section>
       </div>
@@ -78,7 +77,7 @@ const Application = () => {
           setRegister={setRegister}
         />
         <section>
-          <ChatRoom />
+          <ChatRoom uuid={uuid} currentUser={currentUser} setCurrentUser={setCurrentUser} />
         </section>
       </div>
     )
