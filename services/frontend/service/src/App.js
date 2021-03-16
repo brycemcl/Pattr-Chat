@@ -2,14 +2,23 @@ import React from 'react'
 import Application from './components/Application'
 
 import { WebSocketLink } from '@apollo/client/link/ws'
-import { split, HttpLink, ApolloClient, InMemoryCache, gql } from '@apollo/client'
+import {
+  split,
+  HttpLink,
+  ApolloClient,
+  InMemoryCache,
+  ApolloProvider
+} from '@apollo/client'
 import { getMainDefinition } from '@apollo/client/utilities'
 
 // import { setContext } from '@apollo/client/link/context';
 
+/* https://github.com/hasura/nodejs-graphql-subscriptions-boilerplate/issues/3
+ * this is establishing urls to graphql from react for http & (full duplex) web sockets */
 const HTTPS_URL = `http${process.env.REACT_APP_GRAPHQL_URL}`
 const WSS_URL = `ws${process.env.REACT_APP_GRAPHQL_URL}`
 
+// provides parameters for react to establish a http link to graphql later on
 const httpsLink = new HttpLink({
   uri: HTTPS_URL,
   headers: {
@@ -17,6 +26,7 @@ const httpsLink = new HttpLink({
   }
 })
 
+// provides parameters for react to establish a full duplex web socket link to graphql later on
 const wssLink = new WebSocketLink({
   uri: WSS_URL,
   options: {
@@ -29,6 +39,7 @@ const wssLink = new WebSocketLink({
   }
 })
 
+// this is the splitter that decides if a link being made will be http or a web socket link
 const link = split(
   ({ query }) => {
     const definition = getMainDefinition(query)
@@ -41,6 +52,7 @@ const link = split(
   httpsLink
 )
 
+// establishes/declares apollo client in our react app
 const createApolloClient = () => {
   return new ApolloClient({
     cache: new InMemoryCache(),
@@ -48,23 +60,30 @@ const createApolloClient = () => {
   })
 }
 
+// creates apollo client in our react app
 const client = createApolloClient()
 
-client
-  .query({
-    query: gql`
-      query {
-        users_by_pk(id: 10) {
-          id
-          display_name
-        }
-      }
-    `
-  })
-  .then((result) => console.log(result.data))
+/* take client from above, and perform the desired query for graphql to fetch whatever we desire from our postgress db
+ * it then returns the result from that query to react in "result" */
+// client
+//   .query({
+//     query: gql`
+//       query {
+//         users_by_pk(id: 10) {
+//           id
+//           display_name
+//         }
+//       }
+//     `,
+//   })
+//   .then((result) => console.log(result.data));
 
 function App () {
-  return <Application />
+  return (
+    <ApolloProvider client={client}>
+      <Application />
+    </ApolloProvider>
+  )
 }
 
 export default App
