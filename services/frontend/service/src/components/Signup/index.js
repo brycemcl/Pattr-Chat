@@ -78,7 +78,6 @@ const registerAuth = function (
       })
     })
     .then(({ data }) => {
-      console.log('line 88: ', data)
       setCurrentUser(data.insert_users_one)
       localStorage.setItem('Uid', data.insert_users_one.user_uuid)
     })
@@ -102,11 +101,9 @@ const SignUp = ({ setRegister, setCurrentUser }) => {
   return (
     <Container component='main' maxWidth='xs'>
       <CssBaseline />
-
       <div>
         <ToastContainer position='bottom-center' />
       </div>
-
       <div className={classes.paper}>
         <Avatar className={classes.avatar}>
           <LockOutlinedIcon />

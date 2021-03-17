@@ -59,7 +59,6 @@ const Application = () => {
         />
         <section>
           <ChatRoom
-            uuid={currentUser.user_uuid}
             currentUser={currentUser}
             setCurrentUser={setCurrentUser}
           />

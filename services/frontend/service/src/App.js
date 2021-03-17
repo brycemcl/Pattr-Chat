@@ -63,21 +63,6 @@ const createApolloClient = () => {
 // creates apollo client in our react app
 const client = createApolloClient()
 
-/* take client from above, and perform the desired query for graphql to fetch whatever we desire from our postgress db
- * it then returns the result from that query to react in "result" */
-// client
-//   .query({
-//     query: gql`
-//       query {
-//         users_by_pk(id: 10) {
-//           id
-//           display_name
-//         }
-//       }
-//     `,
-//   })
-//   .then((result) => console.log(result.data));
-
 function App () {
   return (
     <ApolloProvider client={client}>
