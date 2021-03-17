@@ -13,8 +13,25 @@ import {
   showUsersInCompany,
   showChannelsInCompany
 } from '../../helpers/selectors'
+import { gql, useSubscription } from '@apollo/client'
 
 const drawerWidth = 240
+
+const GET_CHANNELS = gql`
+  subscription ($id: Int!) {
+    users_by_pk(id: $id) {
+      channels {
+        name
+        id
+        conversations {
+          id
+          name
+          public
+        }
+      }
+    }
+  }
+`
 
 // style this component
 const useStyles = makeStyles((theme) => ({
@@ -43,15 +60,66 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-const Sidebar = ({ conversations }) => {
+// sidebar component
+const Sidebar = ({ currentUser, currentState, setCurrentState }) => {
   // usestate in this component that will keep track of the menu option in the left hand panel which is clicked on
   const [, setClickedSidebarOption] = useState(null)
-
   const classes = useStyles()
 
+  // hook which stores the data back from graphql with live data of users current channels and convos
+  const { loading, error, data } = useSubscription(GET_CHANNELS, {
+    variables: { id: currentUser.id }
+  })
+
+  // error checking
+  if (loading) return <p>Loading...</p>
+  if (error) return <p>Error :(</p>
+  const jsonDom = JSON.stringify(data.users_by_pk.channels)
+
   // call showUsersInCompany & showChannelsInCompany helper functions to get users and channels in company
+  // default state for selected conversation in sidebar
+  console.log('data.users_by_pk.channels in sidebar component: ', data.users_by_pk.channels)
   const usersInCompany = showUsersInCompany()
   const channelsInCompany = showChannelsInCompany()
+
+  /* check to see if a user is removed from any channels, if they are on this component re render reflect that
+  * map through entire array of data.users_by_pk.channels, for each channel in this array, return each channel id
+  * includes goes through this entire array of returned channel ids + checks if this entire array includes the currentState.channel
+  * in our state passed as props into this component */
+  if (!data.users_by_pk.channels.map((channel) => {
+    return channel.id
+  }).includes(currentState.channel)) {
+    if (data.users_by_pk.channels.length > 0) {
+      currentState.channel = data.users_by_pk.channels[0]
+    } else {
+      // if a user is removed from their last channel
+      currentState.channel = null
+    }
+  }
+
+  let currentConversations
+  try {
+    // this filters a channel in our data returned from graphql to match with the currently selected channel in our currentStates .channel
+    currentConversations = data.users_by_pk.channels
+      .filter((channel) => {
+        return channel.id === currentState.channel
+      })[0].conversations
+
+    if (!currentConversations.map((conversation) => {
+      return conversation.id
+    }).includes(currentState.conversation)
+    ) {
+      if (currentConversations.length > 0) {
+        currentState.conversation = currentConversations[0].id
+      } else {
+        currentState.conversation = null
+      }
+    }
+  } catch {
+    currentState.conversation = null
+  }
+
+  // setCurrentState(()=>{})
 
   // return the component to render the sidebar & when a sidebar option is clicked, update the current state to record the last
   // clicked button
@@ -67,6 +135,12 @@ const Sidebar = ({ conversations }) => {
         anchor='left'
       >
         <List>
+          <ListItem>
+            <ListItemIcon>
+              <AssessmentIcon />
+            </ListItemIcon>
+            <ListItemText primary={jsonDom} />
+          </ListItem>
           {channelsInCompany.map(({ name, channelId }) => (
             <ListItem
               button
@@ -79,6 +153,7 @@ const Sidebar = ({ conversations }) => {
               <ListItemText primary={name} />
             </ListItem>
           ))}
+
         </List>
         <Divider />
         <List>
