@@ -1,63 +1,49 @@
 /* global localStorage */
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import Header from '../Header'
 import ChatRoom from '../ChatRoom'
 import SignIn from '../SignIn'
 import SignUp from '../Signup'
 
 /* application component which acts as a window into our application
- * conditonally renders the login page and ChatRoom application based on if a userToken is true or not
+ * conditionally renders the login page and ChatRoom application based on if a userToken is true or not
  * https://reactjs.org/docs/conditional-rendering.html */
+const sessionUid = localStorage.getItem('Uid')
+
 const Application = () => {
   /* store our currently logged in username and password in this components state to keep track
-   * of currenty logged in and authnticated user */
-  const [userToken, setUserToken] = useState(false)
-  const [uid, setUid] = useState('')
+   * of currently logged in and authenticated user */
+  const [currentUser, setCurrentUser] = useState({ user_uuid: sessionUid || null })
   const [register, setRegister] = useState(false)
 
-  // make auto linter happy lmao
-  console.log('Yee: ', uid)
-
-  // useeffect
-  useEffect(() => {
-    const sessionUid = localStorage.getItem('Uid')
-
-    if (sessionUid) {
-      setUserToken(true)
-      setUid(sessionUid)
-    }
-  }, [])
-
-  // conditonally render components of our app here
-  if (!userToken && !register) {
+  // conditionally render components of our app here
+  if (!currentUser.user_uuid && !register) {
     return (
       <div>
         <Header
           buttonStatus='Register'
-          setUserToken={setUserToken}
           setRegister={setRegister}
+          setCurrentUser={setCurrentUser}
         />
         <section>
           <SignIn
-            setUserToken={setUserToken}
-            setUid={setUid}
             setRegister={setRegister}
+            setCurrentUser={setCurrentUser}
           />
         </section>
       </div>
     )
-  } else if (!userToken && register) {
+  } else if (!currentUser.user_uuid && register) {
     return (
       <div>
         <Header
           buttonStatus='Login'
-          setUserToken={setUserToken}
           setRegister={setRegister}
+          setCurrentUser={setCurrentUser}
         />
         <section>
           <SignUp
-            setUserToken={setUserToken}
-            setUid={setUid}
+            setCurrentUser={setCurrentUser}
             setRegister={setRegister}
           />
         </section>
@@ -68,11 +54,14 @@ const Application = () => {
       <div>
         <Header
           buttonStatus='Logout'
-          setUserToken={setUserToken}
           setRegister={setRegister}
+          setCurrentUser={setCurrentUser}
         />
         <section>
-          <ChatRoom />
+          <ChatRoom
+            currentUser={currentUser}
+            setCurrentUser={setCurrentUser}
+          />
         </section>
       </div>
     )
