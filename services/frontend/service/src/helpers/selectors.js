@@ -24,7 +24,7 @@ export function messagesForClickedUser (userid) {
     }
   ]
 
-  // do tha filter - tempoary method
+  // do tha filter - temp method
   const filteredMessagesArr = messages.filter(obj => {
     if (obj.senderId === userid) {
       return obj

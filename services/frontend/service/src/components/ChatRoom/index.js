@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import Sidebar from '../Sidebar'
 import MessagesBody from '../MessagesBody'
 import { makeStyles } from '@material-ui/core/styles'
@@ -32,6 +32,12 @@ const useStyles = makeStyles(() => ({
 /* chatroom component
  * also has a useQuery hook which uses our above graphql query we wrote */
 function ChatRoom ({ currentUser, setCurrentUser }) {
+  // usestate hook which will keep track of the currently selected conversation
+  const [currentState, setCurrentState] = useState({
+    channel: null,
+    conversation: null
+  })
+
   const classes = useStyles()
   const { loading, error, data } = useQuery(FETCH_USER, {
     variables: { uuid: currentUser.user_uuid }
@@ -39,7 +45,7 @@ function ChatRoom ({ currentUser, setCurrentUser }) {
 
   // this useeffect on this component will only fire off when the value of "data" from our useQuery changes
   useEffect(() => {
-    if (data && Array.isArray(data.users) && data.length > 0) {
+    if (data && Array.isArray(data.users) && data.users.length > 0) {
       setCurrentUser(data.users[0])
     }
   }, [data])
@@ -47,15 +53,29 @@ function ChatRoom ({ currentUser, setCurrentUser }) {
   // error checking
   if (loading) return <p>Loading...</p>
   if (error) return <p>Error :(</p>
-  if (data && Array.isArray(data.users) && data.users.length === 0) return <p>I cant verify who you are man :(</p>
+  if (data && Array.isArray(data.users) && data.users.length === 0) { return <p>I cant verify who you are man :(</p> }
 
   return (
     <section>
       <div>
-        <Sidebar className={classes.sidebar} display='flex' />
+        {currentUser.id && (
+          <Sidebar
+            className={classes.sidebar}
+            currentUser={currentUser}
+            display='flex'
+            currentState={currentState}
+            setCurrentState={setCurrentState}
+          />
+        )}
       </div>
       <div>
-        <MessagesBody className={classes.messagesBody} display='flex' />
+        <MessagesBody
+          className={classes.messagesBody}
+          display='flex'
+          currentState={currentState}
+          setCurrentState={setCurrentState}
+          currentUser={currentUser}
+        />
       </div>
     </section>
   )

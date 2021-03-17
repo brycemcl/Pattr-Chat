@@ -1,0 +1,39 @@
+// insert new channels mutation for a new user
+mutation ($channelName: String!, $userId: Int!) {
+  insert_users_channels_one(object: {users_id: $userId, channel: {data: {name: $channelName, user_id: $userId}}}) {
+    channel {
+      id
+      user_id
+      name
+    }
+  }
+}
+
+// query variables 
+{ "channelName": "One", "userId": 11 }
+
+// insert new channels into our db
+mutation ($conversationName: String!, $conversationPublic: Boolean!, $channelId: Int!, $userId: Int!) {
+  insert_users_conversations_one(object: {conversation: {data: {name: $conversationName, public: $conversationPublic, channel_id: $channelId}}, user_id: $userId}) {
+    conversation {
+      id
+      name
+      public
+      channel_id
+    }
+  }
+}
+
+// query variables
+{ "conversationName": "Warzone", "conversationPublic": true, "channelId": 9, "userId": 11 }
+
+// make messages 
+mutation ($conversationId:Int!, $userId: Int!, $message: json!) {
+  insert_messages_one(object: {conversation_id: $conversationId, message: $message, user_id: $userId}) {
+    id
+    message
+  }
+}
+
+// query variables
+{ "conversationId": 501, "userId":11, "message": {"text":"Hey there dude!"} }  
