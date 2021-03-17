@@ -33,7 +33,10 @@ const useStyles = makeStyles(() => ({
  * also has a useQuery hook which uses our above graphql query we wrote */
 function ChatRoom ({ currentUser, setCurrentUser }) {
   // usestate hook which will keep track of the currently selected conversation
-  const [currentState, setCurrentState] = useState({ channel: null, conversation: null })
+  const [currentState, setCurrentState] = useState({
+    channel: null,
+    conversation: null
+  })
 
   const classes = useStyles()
   const { loading, error, data } = useQuery(FETCH_USER, {
@@ -50,18 +53,20 @@ function ChatRoom ({ currentUser, setCurrentUser }) {
   // error checking
   if (loading) return <p>Loading...</p>
   if (error) return <p>Error :(</p>
-  if (data && Array.isArray(data.users) && data.users.length === 0) return <p>I cant verify who you are man :(</p>
+  if (data && Array.isArray(data.users) && data.users.length === 0) { return <p>I cant verify who you are man :(</p> }
 
   return (
     <section>
       <div>
-        {currentUser.id && <Sidebar
-          className={classes.sidebar}
-          currentUser={currentUser}
-          display='flex'
-          currentState={currentState}
-          setCurrentState={setCurrentState}
-                           />}
+        {currentUser.id && (
+          <Sidebar
+            className={classes.sidebar}
+            currentUser={currentUser}
+            display='flex'
+            currentState={currentState}
+            setCurrentState={setCurrentState}
+          />
+        )}
       </div>
       <div>
         <MessagesBody
@@ -69,6 +74,7 @@ function ChatRoom ({ currentUser, setCurrentUser }) {
           display='flex'
           currentState={currentState}
           setCurrentState={setCurrentState}
+          currentUser={currentUser}
         />
       </div>
     </section>
@@ -76,100 +82,3 @@ function ChatRoom ({ currentUser, setCurrentUser }) {
 }
 
 export default ChatRoom
-
-/*
-[
-    {
-        "name": "Test",
-        "id": 6,
-        "conversations": [],
-        "__typename": "channels"
-    },
-    {
-        "name": "Test",
-        "id": 7,
-        "conversations": [],
-        "__typename": "channels"
-    },
-    {
-        "name": "Test",
-        "id": 8,
-        "conversations": [],
-        "__typename": "channels"
-    },
-    {
-        "name": "Test",
-        "id": 9,
-        "conversations": [],
-        "__typename": "channels"
-    },
-    {
-        "name": "Test",
-        "id": 10,
-        "conversations": [],
-        "__typename": "channels"
-    },
-    {
-        "name": "test2",
-        "id": 11,
-        "conversations": [],
-        "__typename": "channels"
-    },
-    {
-        "name": "test2",
-        "id": 12,
-        "conversations": [],
-        "__typename": "channels"
-    },
-    {
-        "name": "test2",
-        "id": 13,
-        "conversations": [],
-        "__typename": "channels"
-    },
-    {
-        "name": "test2",
-        "id": 14,
-        "conversations": [],
-        "__typename": "channels"
-    },
-    {
-        "name": "here is a test",
-        "id": 15,
-        "conversations": [],
-        "__typename": "channels"
-    }
-]
-
-currentConversations =
-
-    {
- [],
-    },
-    {
-        "conversations": [],
-    },
-[]
-
-[
-    {
-        "name": "test2",
-        "id": 13,
-        "conversations": [],
-        "__typename": "channels"
-    },
-    {
-        "name": "test2",
-        "id": 14,
-        "conversations": [],
-        "__typename": "channels"
-    },
-    {
-        "name": "here is a test",
-        "id": 15,
-        "conversations": [],
-        "__typename": "channels"
-    }
-]
-
-*/

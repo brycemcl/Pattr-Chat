@@ -26,3 +26,14 @@ mutation ($conversationName: String!, $conversationPublic: Boolean!, $channelId:
 
 // query variables
 { "conversationName": "Warzone", "conversationPublic": true, "channelId": 9, "userId": 11 }
+
+// make messages 
+mutation ($conversationId:Int!, $userId: Int!, $message: json!) {
+  insert_messages_one(object: {conversation_id: $conversationId, message: $message, user_id: $userId}) {
+    id
+    message
+  }
+}
+
+// query variables
+{ "conversationId": 501, "userId":11, "message": {"text":"Hey there dude!"} }  

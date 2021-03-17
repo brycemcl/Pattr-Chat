@@ -27,9 +27,8 @@ const useStyles = makeStyles({
 })
 
 // MessageinThread component
-const MessageInThread = ({ messageName, messageText = 'Test message' }) => {
+const MessageInThread = ({ date, messageName, messageText = 'Test message' }) => {
   const classes = useStyles()
-  const date = new Date()
   return (
     <Paper className={classes.root}>
       <div>
