@@ -141,4 +141,35 @@ export default ChatRoom
     }
 ]
 
+currentConversations =
+
+    {
+ [],
+    },
+    {
+        "conversations": [],
+    },
+[]
+
+[
+    {
+        "name": "test2",
+        "id": 13,
+        "conversations": [],
+        "__typename": "channels"
+    },
+    {
+        "name": "test2",
+        "id": 14,
+        "conversations": [],
+        "__typename": "channels"
+    },
+    {
+        "name": "here is a test",
+        "id": 15,
+        "conversations": [],
+        "__typename": "channels"
+    }
+]
+
 */
