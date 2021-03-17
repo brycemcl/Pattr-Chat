@@ -1,5 +1,5 @@
 /* global localStorage */
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import Header from '../Header'
 import ChatRoom from '../ChatRoom'
 import SignIn from '../SignIn'
@@ -8,60 +8,41 @@ import SignUp from '../Signup'
 /* application component which acts as a window into our application
  * conditionally renders the login page and ChatRoom application based on if a userToken is true or not
  * https://reactjs.org/docs/conditional-rendering.html */
+const sessionUid = localStorage.getItem('Uid')
+
 const Application = () => {
-  // const { loading, error, data } = useQuery(schema)
   /* store our currently logged in username and password in this components state to keep track
    * of currently logged in and authenticated user */
-  const [userToken, setUserToken] = useState(false)
-  const [uuid, setUid] = useState('')
-  const [currentUser, setCurrentUser] = useState({})
+  const [currentUser, setCurrentUser] = useState({ user_uuid: sessionUid || null })
   const [register, setRegister] = useState(false)
 
-  console.log('currentUser: ', currentUser)
-
-  // useeffect
-  useEffect(() => {
-    const sessionUid = localStorage.getItem('Uid')
-
-    if (sessionUid) {
-      setUserToken(true)
-      setUid(sessionUid)
-    }
-  }, [])
-
-  // console.log('here: ', data)
-
   // conditionally render components of our app here
-  if (!userToken && !register) {
+  if (!currentUser.user_uuid && !register) {
     return (
       <div>
         <Header
           buttonStatus='Register'
-          setUserToken={setUserToken}
           setRegister={setRegister}
+          setCurrentUser={setCurrentUser}
         />
         <section>
           <SignIn
-            setUserToken={setUserToken}
-            setUid={setUid}
             setRegister={setRegister}
             setCurrentUser={setCurrentUser}
           />
         </section>
       </div>
     )
-  } else if (!userToken && register) {
+  } else if (!currentUser.user_uuid && register) {
     return (
       <div>
         <Header
           buttonStatus='Login'
-          setUserToken={setUserToken}
           setRegister={setRegister}
+          setCurrentUser={setCurrentUser}
         />
         <section>
           <SignUp
-            setUserToken={setUserToken}
-            setUid={setUid}
             setCurrentUser={setCurrentUser}
             setRegister={setRegister}
           />
@@ -73,11 +54,15 @@ const Application = () => {
       <div>
         <Header
           buttonStatus='Logout'
-          setUserToken={setUserToken}
           setRegister={setRegister}
+          setCurrentUser={setCurrentUser}
         />
         <section>
-          <ChatRoom uuid={uuid} currentUser={currentUser} setCurrentUser={setCurrentUser} />
+          <ChatRoom
+            uuid={currentUser.user_uuid}
+            currentUser={currentUser}
+            setCurrentUser={setCurrentUser}
+          />
         </section>
       </div>
     )

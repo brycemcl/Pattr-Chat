@@ -60,8 +60,6 @@ const renderLogin = function (event, setRegister) {
 const registerAuth = function (
   email,
   password,
-  setUserToken,
-  setUid,
   displayname,
   setCurrentUser,
   makeUser
@@ -71,8 +69,7 @@ const registerAuth = function (
     .createUserWithEmailAndPassword(email, password)
     .then((userCredential) => {
       const user = userCredential.user
-      setUserToken(true)
-      setUid(user.uid)
+
       return makeUser({
         variables: {
           displayName: displayname,
@@ -92,7 +89,7 @@ const registerAuth = function (
 }
 
 // sign up component in this app
-const SignUp = ({ setRegister, setUserToken, setUid, setCurrentUser }) => {
+const SignUp = ({ setRegister, setCurrentUser }) => {
   const classes = useStyles()
   const [email, setEmail] = useState('')
   const [displayname, setDisplayname] = useState('')
@@ -101,8 +98,6 @@ const SignUp = ({ setRegister, setUserToken, setUid, setCurrentUser }) => {
   // makeUser/mutation hook which uses our above mutation and stores it in our components state
   // makeUser is a function we destructure from useMutation(), its a function that returns a promise
   const [makeUser] = useMutation(MAKE_USER)
-
-  // console.log('makeuser data after submitting register: ', data);
 
   return (
     <Container component='main' maxWidth='xs'>
@@ -178,8 +173,6 @@ const SignUp = ({ setRegister, setUserToken, setUid, setCurrentUser }) => {
               registerAuth(
                 email,
                 password,
-                setUserToken,
-                setUid,
                 displayname,
                 setCurrentUser,
                 makeUser

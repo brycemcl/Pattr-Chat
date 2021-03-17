@@ -14,6 +14,7 @@ const FETCH_USER = gql`
     }
   }
 `
+
 const useStyles = makeStyles(() => ({
   sidebar: {
     display: 'flex',
@@ -28,25 +29,26 @@ const useStyles = makeStyles(() => ({
   }
 }))
 
-function ChatRoom ({ uuid, currentUser, setCurrentUser }) {
+/* chatroom component
+ * also has a useQuery hook which uses our above graphql query we wrote */
+function ChatRoom ({ currentUser, setCurrentUser }) {
   const classes = useStyles()
-  // useQuery hook which uses our above graphql query we wrote
-  // const [fetchUser] = useMutation(FETCH_USER)
   const { loading, error, data } = useQuery(FETCH_USER, {
-    variables: { uuid }
+    variables: { uuid: currentUser.user_uuid }
   })
 
   // this useeffect on this component will only fire off when the value of "data" from our useQuery changes
   useEffect(() => {
-    // console.log('here123', data);
-    if (data && Array.isArray(data.users)) {
+    if (data && Array.isArray(data.users) && data.length > 0) {
       setCurrentUser(data.users[0])
     }
   }, [data])
 
+  // error checking
   if (loading) return <p>Loading...</p>
   if (error) return <p>Error :(</p>
-  console.log('chatroom: ', currentUser)
+  if (data && Array.isArray(data.users) && data.users.length === 0) return <p>I cant verify who you are man :(</p>
+
   return (
     <section>
       <div>

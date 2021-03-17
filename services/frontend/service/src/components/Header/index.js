@@ -26,25 +26,23 @@ const useStyles = makeStyles((theme) => ({
 /* helper function - takes in button status and setUserToken setter
  * has a saftey check - the trigger for the firebase SignOut can only be called if the current buttonStatus == logout
  * also handle button clicks for switching between login and register pages */
-const buttonClick = function (buttonStatus, setUserToken, setRegister) {
+const buttonClick = function (buttonStatus, setRegister, setCurrentUser) {
   if (buttonStatus === 'Logout') {
     firebase.auth().signOut().then(() => {
-      setUserToken(false)
+      setCurrentUser({ user_uuid: null })
       setRegister(false)
       localStorage.removeItem('Uid')
     }).catch((error) => {
       console.log('error inside header.js for logout feature', error)
     })
   } else if (buttonStatus === 'Login') {
-    setUserToken(false)
     setRegister(false)
   } else if (buttonStatus === 'Register') {
-    setUserToken(false)
     setRegister(true)
   }
 }
 
-function Header ({ buttonStatus, setUserToken, setRegister }) {
+function Header ({ buttonStatus, setRegister, setCurrentUser }) {
   const classes = useStyles()
   return (
     <>
@@ -63,7 +61,7 @@ function Header ({ buttonStatus, setUserToken, setRegister }) {
           </Typography>
           <Button
             color='inherit'
-            onClick={() => buttonClick(buttonStatus, setUserToken, setRegister)}
+            onClick={() => buttonClick(buttonStatus, setRegister, setCurrentUser)}
           >{buttonStatus}
           </Button>
         </Toolbar>

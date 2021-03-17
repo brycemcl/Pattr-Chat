@@ -27,8 +27,6 @@ const renderRegister = function (event, setRegister) {
 const loginAuth = function (
   email,
   password,
-  setUserToken,
-  setUid,
   setCurrentUser
 ) {
   firebase
@@ -36,12 +34,9 @@ const loginAuth = function (
     .signInWithEmailAndPassword(email, password)
     .then((userCredential) => {
       const user = userCredential.user
-      setUserToken(true)
-      setUid(user.uid)
       setCurrentUser({ user_uuid: user.uid })
       localStorage.setItem('Uid', user.uid)
     })
-
     .catch((error) => {
       const errorMessage = error.message
       toast.error(errorMessage)
@@ -79,20 +74,17 @@ const useStyles = makeStyles((theme) => ({
  * email and password we need to store the email and password in state in this grandparent component to do this
  * https://stackoverflow.com/questions/57810595/material-ui-how-to-extract-the-value-of-the-text-field
  * https://stackoverflow.com/questions/56387947/access-promise-resolve-in-on-click-handler-in-react */
-const SignIn = ({ setUserToken, setUid, setRegister, setCurrentUser }) => {
+const SignIn = ({ setRegister, setCurrentUser }) => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-
   const classes = useStyles()
 
   return (
     <Container component='main' maxWidth='xs'>
       <CssBaseline />
-
       <div>
         <ToastContainer position='bottom-center' />
       </div>
-
       <div className={classes.paper}>
         <Avatar className={classes.avatar}>
           <LockOutlinedIcon />
@@ -132,13 +124,12 @@ const SignIn = ({ setUserToken, setUid, setRegister, setCurrentUser }) => {
             }}
           />
           <Button
-            // type='submit'
             fullWidth
             variant='contained'
             color='primary'
             className={classes.submit}
             onClick={() =>
-              loginAuth(email, password, setUserToken, setUid, setCurrentUser)}
+              loginAuth(email, password, setCurrentUser)}
           >
             Sign In
           </Button>
