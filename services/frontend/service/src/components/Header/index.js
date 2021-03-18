@@ -12,7 +12,8 @@ import ChannelNavigator from '../ChannelNavigator'
 // style our component
 const useStyles = makeStyles((theme) => ({
   root: {
-    position: 'fixed'
+    position: 'fixed',
+    zIndex: 1201
   },
   menuButton: {
     marginRight: theme.spacing(2)
