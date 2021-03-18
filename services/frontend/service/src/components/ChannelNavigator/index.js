@@ -29,7 +29,6 @@ export default function ChannelNavigator ({
   setCurrentState,
   currentState
 }) {
-  console.log('current user in the channel navigator is: ', currentUser)
   // use the styles for our component
   const classes = useStyles()
 

@@ -153,7 +153,7 @@ const Sidebar = ({
         }
       })
     }
-  }, [data, currentState])
+  }, [data, currentState, error, loading, setChannels, setCurrentState])
 
   // error checking
   if (loading) return <p>Loading...</p>

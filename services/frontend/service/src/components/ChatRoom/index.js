@@ -31,7 +31,13 @@ const useStyles = makeStyles(() => ({
 
 /* chatroom component
  * also has a useQuery hook which uses our above graphql query we wrote */
-function ChatRoom ({ currentUser, setCurrentUser, setChannels, currentState, setCurrentState }) {
+function ChatRoom ({
+  currentUser,
+  setCurrentUser,
+  setChannels,
+  currentState,
+  setCurrentState
+}) {
   const classes = useStyles()
   const { loading, error, data } = useQuery(FETCH_USER, {
     variables: { uuid: currentUser.user_uuid }
@@ -42,12 +48,14 @@ function ChatRoom ({ currentUser, setCurrentUser, setChannels, currentState, set
     if (data && Array.isArray(data.users) && data.users.length > 0) {
       setCurrentUser(data.users[0])
     }
-  }, [data])
+  }, [data, setCurrentUser])
 
   // error checking
   if (loading) return <p>Loading...</p>
   if (error) return <p>Error :(</p>
-  if (data && Array.isArray(data.users) && data.users.length === 0) { return <p>I cant verify who you are man :(</p> }
+  if (data && Array.isArray(data.users) && data.users.length === 0) {
+    return <p>I cant verify who you are man :(</p>
+  }
 
   return (
     <section>
@@ -64,14 +72,15 @@ function ChatRoom ({ currentUser, setCurrentUser, setChannels, currentState, set
         )}
       </div>
       <div>
-        {(currentState.channel && currentState.conversation) &&
+        {currentState.channel && currentState.conversation && (
           <MessagesBody
             className={classes.messagesBody}
             display='flex'
             currentState={currentState}
             setCurrentState={setCurrentState}
             currentUser={currentUser}
-          />}
+          />
+        )}
       </div>
     </section>
   )

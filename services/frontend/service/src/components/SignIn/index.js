@@ -1,4 +1,3 @@
-/* global localStorage */
 import Avatar from '@material-ui/core/Avatar'
 import Button from '@material-ui/core/Button'
 import CssBaseline from '@material-ui/core/CssBaseline'
@@ -35,7 +34,7 @@ const loginAuth = function (
     .then((userCredential) => {
       const user = userCredential.user
       setCurrentUser({ user_uuid: user.uid })
-      localStorage.setItem('Uid', user.uid)
+      window.localStorage.setItem('Uid', user.uid)
     })
     .catch((error) => {
       const errorMessage = error.message

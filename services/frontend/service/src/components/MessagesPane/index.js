@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import MessageInThread from '../MessageInThread'
 import { gql, useSubscription } from '@apollo/client'
 
@@ -50,17 +51,16 @@ function MessagesPane ({ currentState, currentUser }) {
     messages = data.users_by_pk.channels[0].conversations[0].messages.map(
       (message) => {
         message.user.currentUser = message.user.id === currentUser.id
+        console.log(message.date_sent)
         message.date_sent = new Date(message.date_sent)
         return message
       }
     )
-  } catch {
-    console.log(':((((')
-  }
+  } catch {}
 
   /* map out filtered messages, then loop through them and make new messages for each one
    * passing down props when necessary */
-  const mappedMessages = messages.map(({ user, message, date_sent, id }) => { // eslint-disable-line camelcase
+  const mappedMessages = messages.map(({ user, message, date_sent, id }) => {
     return (
       <MessageInThread
         key={id}

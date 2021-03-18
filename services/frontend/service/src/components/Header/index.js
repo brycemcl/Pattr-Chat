@@ -1,4 +1,3 @@
-/* global localStorage */
 import { makeStyles } from '@material-ui/core/styles'
 import {
   AppBar,
@@ -34,10 +33,10 @@ const buttonClick = function (buttonStatus, setRegister, setCurrentUser) {
       .then(() => {
         setCurrentUser({ user_uuid: null })
         setRegister(false)
-        localStorage.removeItem('Uid')
+        window.localStorage.removeItem('Uid')
       })
       .catch((error) => {
-        console.log('error inside header.js for logout feature', error)
+        console.error('error inside header.js for logout feature', error)
       })
   } else if (buttonStatus === 'Login') {
     setRegister(false)
