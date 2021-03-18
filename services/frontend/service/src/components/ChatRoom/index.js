@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import Sidebar from '../Sidebar'
 import MessagesBody from '../MessagesBody'
 import { makeStyles } from '@material-ui/core/styles'
@@ -31,13 +31,7 @@ const useStyles = makeStyles(() => ({
 
 /* chatroom component
  * also has a useQuery hook which uses our above graphql query we wrote */
-function ChatRoom ({ currentUser, setCurrentUser }) {
-  // usestate hook which will keep track of the currently selected conversation
-  const [currentState, setCurrentState] = useState({
-    channel: null,
-    conversation: null
-  })
-
+function ChatRoom ({ currentUser, setCurrentUser, setChannels, currentState, setCurrentState }) {
   const classes = useStyles()
   const { loading, error, data } = useQuery(FETCH_USER, {
     variables: { uuid: currentUser.user_uuid }
@@ -65,17 +59,18 @@ function ChatRoom ({ currentUser, setCurrentUser }) {
             display='flex'
             currentState={currentState}
             setCurrentState={setCurrentState}
+            setChannels={setChannels}
           />
         )}
       </div>
       <div>
-        <MessagesBody
+        {(currentState.channel && currentState.conversation) && <MessagesBody
           className={classes.messagesBody}
           display='flex'
           currentState={currentState}
           setCurrentState={setCurrentState}
           currentUser={currentUser}
-        />
+                                                                />}
       </div>
     </section>
   )

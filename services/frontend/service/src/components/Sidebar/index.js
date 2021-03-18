@@ -10,9 +10,9 @@ import ListItemText from '@material-ui/core/ListItemText'
 import FaceIcon from '@material-ui/icons/Face'
 import AssessmentIcon from '@material-ui/icons/Assessment'
 import { gql, useSubscription } from '@apollo/client'
-
 const drawerWidth = 240
 
+// grab this
 const GET_CHANNELS = gql`
   subscription($id: Int!) {
     users_by_pk(id: $id) {
@@ -65,9 +65,10 @@ const setClickedSidebarOption = (id, setCurrentState) => {
   })
 }
 // sidebar component
-const Sidebar = ({ currentUser, currentState, setCurrentState }) => {
+const Sidebar = ({ currentUser, currentState, setCurrentState, setChannels }) => {
   const classes = useStyles()
 
+  // grab this hook
   // hook which stores the data back from graphql with live data of users current channels and conversations
   const { loading, error, data } = useSubscription(GET_CHANNELS, {
     variables: { id: currentUser.id }
@@ -78,6 +79,8 @@ const Sidebar = ({ currentUser, currentState, setCurrentState }) => {
    * TODO refactor includes to be find */
   useEffect(() => {
     if (!loading && !error) {
+      setChannels(data)
+
       /* use setCurrentState setter we passed down from props to update the currentState, we use a callback to modify this
        * check to see if a user is removed from any channels, if they are on this component re render reflect that
        * map through entire array of data.users_by_pk.channels, for each channel in this array, return each channel id
