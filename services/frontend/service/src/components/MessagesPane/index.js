@@ -6,7 +6,9 @@ import { gql, useSubscription } from '@apollo/client'
 const GET_MESSAGES = gql`
   subscription($userId: Int!, $channelId: Int!, $conversationId: Int!) {
     users_by_pk(id: $userId) {
+      id
       channels(where: { id: { _eq: $channelId } }) {
+        id
         conversations(
           where: { id: { _eq: $conversationId }, messages: { user: {} } }
         ) {

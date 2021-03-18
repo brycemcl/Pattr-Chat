@@ -17,6 +17,7 @@ const drawerWidth = 240
 const GET_CHANNELS = gql`
   subscription($id: Int!) {
     users_by_pk(id: $id) {
+      id
       channels(order_by: { id: desc }) {
         name
         id
