@@ -15,11 +15,13 @@ const Application = () => {
   const [currentUser, setCurrentUser] = useState({ user_uuid: sessionUid || null })
   const [register, setRegister] = useState(false)
   const [channels, setChannels] = useState(null)
-  // usestate hook which will keep track of the currently selected conversation
+
+  // usestate hook - keeps track of the currently selected channels + conversations
   const [currentState, setCurrentState] = useState({
     channel: null,
     conversation: null
   })
+
   // conditionally render components of our app here
   if (!currentUser.user_uuid && !register) {
     return (
