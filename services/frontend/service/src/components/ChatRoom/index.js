@@ -64,13 +64,14 @@ function ChatRoom ({ currentUser, setCurrentUser, setChannels, currentState, set
         )}
       </div>
       <div>
-        {(currentState.channel && currentState.conversation) && <MessagesBody
-          className={classes.messagesBody}
-          display='flex'
-          currentState={currentState}
-          setCurrentState={setCurrentState}
-          currentUser={currentUser}
-                                                                />}
+        {(currentState.channel && currentState.conversation) &&
+          <MessagesBody
+            className={classes.messagesBody}
+            display='flex'
+            currentState={currentState}
+            setCurrentState={setCurrentState}
+            currentUser={currentUser}
+          />}
       </div>
     </section>
   )

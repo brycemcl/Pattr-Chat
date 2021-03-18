@@ -23,7 +23,6 @@ const useStyles = makeStyles({
 
 // this is our ChannelNavigator component
 export default function ChannelNavigator ({ currentUser, channels, setCurrentState, currentState }) {
-  // console.log("YEE CHANNELS:", channels.users_by_pk.channels[0].name);
   console.log('current user in the channel navigator is: ', currentUser)
   // use the styles for our component
   const classes = useStyles()
@@ -39,9 +38,10 @@ export default function ChannelNavigator ({ currentUser, channels, setCurrentSta
   }
   let mapOfChannels = null
 
+  /* create mapped channels, on a render tbd. this defaults to the catch, because our channels
+  * don't exist in state yet (passed as a prop from somehwere else in our app from a different component), when this  eventually re-renders
+  * with the 'channel' prop finally, the code in the try block gets executed sucessfuly */
   try {
-  // console.table(channels.users_by_pk.channels)
-  // create mapped channels
     mapOfChannels = channels.users_by_pk.channels.map((channel) => (
       <ListItem
         button key={channel.id}
