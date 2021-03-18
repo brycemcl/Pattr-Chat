@@ -1,4 +1,3 @@
-/* global localStorage */
 import { useState } from 'react'
 import Header from '../Header'
 import ChatRoom from '../ChatRoom'
@@ -8,7 +7,7 @@ import SignUp from '../Signup'
 /* application component which acts as a window into our application
  * conditionally renders the login page and ChatRoom application based on if a userToken is true or not
  * https://reactjs.org/docs/conditional-rendering.html */
-const sessionUid = localStorage.getItem('Uid')
+const sessionUid = window.localStorage.getItem('Uid')
 
 const Application = () => {
   /* store our currently logged in username and password in this components state to keep track

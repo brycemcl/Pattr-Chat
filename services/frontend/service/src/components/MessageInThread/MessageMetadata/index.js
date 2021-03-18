@@ -5,7 +5,7 @@ const formatRelativeToNow = (date) => {
   if (!date) {
     return null
   }
-  return formatRelative(new Date(date), new Date())
+  return formatRelative(date, new Date())
 }
 
 /* MessageMetadata child component which renders out the date and time for a message

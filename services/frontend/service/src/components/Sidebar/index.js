@@ -17,6 +17,7 @@ const drawerWidth = 240
 const GET_CHANNELS = gql`
   subscription($id: Int!) {
     users_by_pk(id: $id) {
+      id
       channels(order_by: { id: desc }) {
         name
         id
@@ -66,7 +67,12 @@ const setClickedSidebarOption = (id, setCurrentState) => {
   })
 }
 // sidebar component
-const Sidebar = ({ currentUser, currentState, setCurrentState, setChannels }) => {
+const Sidebar = ({
+  currentUser,
+  currentState,
+  setCurrentState,
+  setChannels
+}) => {
   const classes = useStyles()
 
   // grab this hook
@@ -148,7 +154,7 @@ const Sidebar = ({ currentUser, currentState, setCurrentState, setChannels }) =>
         }
       })
     }
-  }, [data, currentState])
+  }, [data, currentState, error, loading, setChannels, setCurrentState])
 
   // error checking
   if (loading) return <p>Loading...</p>
@@ -195,7 +201,7 @@ const Sidebar = ({ currentUser, currentState, setCurrentState, setChannels }) =>
             <CreateTextSingleLine
               currentUser={currentUser}
               currentState={currentState}
-              placeholder='New Channel'
+              placeholder='New Thread'
             />
           </ListItem>
           {conversationsPublic.map(({ name, id }) => (
@@ -236,6 +242,7 @@ const Sidebar = ({ currentUser, currentState, setCurrentState, setChannels }) =>
             </ListItem>
           ))}
         </List>
+        <Divider />
       </Drawer>
     </>
   )

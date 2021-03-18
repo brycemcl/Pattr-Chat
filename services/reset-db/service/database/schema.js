@@ -9,7 +9,7 @@ const resetSchema = (db) => {
   DROP TABLE IF EXISTS "users" CASCADE;
 
   CREATE TABLE "users"( "id" SERIAL PRIMARY KEY NOT NULL, "user_uuid" VARCHAR(255) DEFAULT uuid_generate_v4 () NOT NULL, "display_name" VARCHAR(255) NOT NULL );
-  CREATE TABLE "messages"( "id" SERIAL PRIMARY KEY NOT NULL, "conversation_id" INTEGER NOT NULL, "user_id" INTEGER NOT NULL, "message" JSON NOT NULL, "date_sent" DATE NOT NULL DEFAULT CURRENT_DATE);
+  CREATE TABLE "messages"( "id" SERIAL PRIMARY KEY NOT NULL, "conversation_id" INTEGER NOT NULL, "user_id" INTEGER NOT NULL, "message" JSON NOT NULL, "date_sent" TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP);
   CREATE TABLE "channels"( "id" SERIAL PRIMARY KEY NOT NULL, "user_id" INTEGER NOT NULL, "name" VARCHAR(255) NOT NULL );
   CREATE TABLE "conversations"( "id" SERIAL PRIMARY KEY NOT NULL, "name" VARCHAR(255) NOT NULL, "public" BOOLEAN NOT NULL, "channel_id" INTEGER NOT NULL );
   CREATE TABLE "users_conversations"( "id" SERIAL PRIMARY KEY NOT NULL, "user_id" INTEGER NOT NULL, "conversation_id" INTEGER NOT NULL );

@@ -1,13 +1,13 @@
 version: '3.4'
 
 services:
-  # pattr-frontend:
-  #   image: brycemclachlan/pattr-frontend
-  #   build:
-  #     context: services/frontend/service
-  #     dockerfile: ./Dockerfile
-  #   ports:
-  #     - 3001:3001
+  pattr-frontend:
+    image: brycemclachlan/pattr-frontend
+    build:
+      context: services/frontend/service
+      dockerfile: ./Dockerfile
+    ports:
+      - 80:3001
   # pattr-backend:
   #   image: brycemclachlan/pattr-backend
   #   build:
@@ -33,7 +33,7 @@ services:
       - 3002:3000
   graphql-engine:
     restart: always
-    image: hasura/graphql-engine:v2.0.0-alpha.4
+    image: hasura/graphql-engine:v2.0.0-alpha.5
     ports:
       - 8080:8080
     depends_on:
