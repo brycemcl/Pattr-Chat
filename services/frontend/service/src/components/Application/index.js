@@ -15,7 +15,12 @@ const Application = () => {
    * of currently logged in and authenticated user */
   const [currentUser, setCurrentUser] = useState({ user_uuid: sessionUid || null })
   const [register, setRegister] = useState(false)
-
+  const [channels, setChannels] = useState(null)
+  // usestate hook which will keep track of the currently selected conversation
+  const [currentState, setCurrentState] = useState({
+    channel: null,
+    conversation: null
+  })
   // conditionally render components of our app here
   if (!currentUser.user_uuid && !register) {
     return (
@@ -24,6 +29,10 @@ const Application = () => {
           buttonStatus='Register'
           setRegister={setRegister}
           setCurrentUser={setCurrentUser}
+          currentUser={currentUser}
+          channels={channels}
+          setCurrentState={setCurrentState}
+          currentState={currentState}
         />
         <section>
           <SignIn
@@ -40,6 +49,10 @@ const Application = () => {
           buttonStatus='Login'
           setRegister={setRegister}
           setCurrentUser={setCurrentUser}
+          currentUser={currentUser}
+          channels={channels}
+          setCurrentState={setCurrentState}
+          currentState={currentState}
         />
         <section>
           <SignUp
@@ -56,11 +69,18 @@ const Application = () => {
           buttonStatus='Logout'
           setRegister={setRegister}
           setCurrentUser={setCurrentUser}
+          currentUser={currentUser}
+          channels={channels}
+          setCurrentState={setCurrentState}
+          currentState={currentState}
         />
         <section>
           <ChatRoom
             currentUser={currentUser}
             setCurrentUser={setCurrentUser}
+            setChannels={setChannels}
+            currentState={currentState}
+            setCurrentState={setCurrentState}
           />
         </section>
       </div>
