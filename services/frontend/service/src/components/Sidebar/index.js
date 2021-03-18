@@ -241,6 +241,7 @@ const Sidebar = ({
             </ListItem>
           ))}
         </List>
+        <Divider />
       </Drawer>
     </>
   )
