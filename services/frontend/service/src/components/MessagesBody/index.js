@@ -1,7 +1,7 @@
 import MessagesPane from '../MessagesPane/index'
 import SendMessageForm from '../SendMessageForm'
 
-function MessagesBody ({ currentState, setCurrentState, currentUser }) {
+function MessagesBody ({ currentState, currentUser }) {
   return (
     <div>
       <div>
@@ -10,7 +10,12 @@ function MessagesBody ({ currentState, setCurrentState, currentUser }) {
           currentUser={currentUser}
         />
       </div>
-      <div><SendMessageForm /></div>
+      <div>
+        <SendMessageForm
+          currentUser={currentUser}
+          currentState={currentState}
+        />
+      </div>
     </div>
   )
 }
