@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useEffect } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import Drawer from '@material-ui/core/Drawer'
 import CssBaseline from '@material-ui/core/CssBaseline'
@@ -56,10 +56,16 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
+const setClickedSidebarOption = (id, setCurrentState) => {
+  setCurrentState((cs) => {
+    return {
+      ...cs,
+      conversation: id
+    }
+  })
+}
 // sidebar component
 const Sidebar = ({ currentUser, currentState, setCurrentState }) => {
-  // usestate in this component that will keep track of the menu option in the left hand panel which is clicked on
-  const [, setClickedSidebarOption] = useState(null)
   const classes = useStyles()
 
   // hook which stores the data back from graphql with live data of users current channels and conversations
@@ -123,7 +129,7 @@ const Sidebar = ({ currentUser, currentState, setCurrentState }) => {
               mutatedState.conversation = null
             }
           }
-        // if they don't have any channels
+          // if they don't have any channels
         } catch {
           mutatedState.conversation = null
         }
@@ -151,16 +157,18 @@ const Sidebar = ({ currentUser, currentState, setCurrentState }) => {
   // filter messages and push them to the private or public arrays based on their status
   try {
     // show our conversation for a users selected channel
-    data.users_by_pk.channels.find((channel) => {
-      return channel.id === currentState.channel
-    }).conversations.forEach((conversation) => {
-      // if the conversation is public push to public array, else it is private, push to private array
-      if (conversation.public) {
-        conversationsPublic.push(conversation)
-      } else {
-        conversationsPrivate.push(conversation)
-      }
-    })
+    data.users_by_pk.channels
+      .find((channel) => {
+        return channel.id === currentState.channel
+      })
+      .conversations.forEach((conversation) => {
+        // if the conversation is public push to public array, else it is private, push to private array
+        if (conversation.public) {
+          conversationsPublic.push(conversation)
+        } else {
+          conversationsPrivate.push(conversation)
+        }
+      })
   } catch {
     // user doesn't have any conversations in the selected channel
   }
@@ -179,11 +187,12 @@ const Sidebar = ({ currentUser, currentState, setCurrentState }) => {
         anchor='left'
       >
         <List>
-          {conversationsPublic.map(({ name, channelId }) => (
+          {conversationsPublic.map(({ name, id }) => (
             <ListItem
               button
               key={name}
-              onClick={() => setClickedSidebarOption(channelId)}
+              selected={currentState.conversation === id}
+              onClick={() => setClickedSidebarOption(id, setCurrentState)}
             >
               <ListItemIcon>
                 <AssessmentIcon />
@@ -194,8 +203,13 @@ const Sidebar = ({ currentUser, currentState, setCurrentState }) => {
         </List>
         <Divider />
         <List>
-          {conversationsPrivate.map(({ name }) => (
-            <ListItem button key={name}>
+          {conversationsPrivate.map(({ name, id }) => (
+            <ListItem
+              button
+              key={name}
+              onClick={() => setClickedSidebarOption(id, setCurrentState)}
+              selected={currentState.conversation === id}
+            >
               <ListItemIcon>
                 <FaceIcon />
               </ListItemIcon>
