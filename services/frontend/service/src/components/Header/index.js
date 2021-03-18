@@ -28,13 +28,17 @@ const useStyles = makeStyles((theme) => ({
  * also handle button clicks for switching between login and register pages */
 const buttonClick = function (buttonStatus, setRegister, setCurrentUser) {
   if (buttonStatus === 'Logout') {
-    firebase.auth().signOut().then(() => {
-      setCurrentUser({ user_uuid: null })
-      setRegister(false)
-      localStorage.removeItem('Uid')
-    }).catch((error) => {
-      console.log('error inside header.js for logout feature', error)
-    })
+    firebase
+      .auth()
+      .signOut()
+      .then(() => {
+        setCurrentUser({ user_uuid: null })
+        setRegister(false)
+        localStorage.removeItem('Uid')
+      })
+      .catch((error) => {
+        console.log('error inside header.js for logout feature', error)
+      })
   } else if (buttonStatus === 'Login') {
     setRegister(false)
   } else if (buttonStatus === 'Register') {
@@ -43,32 +47,44 @@ const buttonClick = function (buttonStatus, setRegister, setCurrentUser) {
 }
 
 // component for our header
-function Header ({ buttonStatus, setRegister, setCurrentUser, currentUser, channels, setCurrentState, currentState }) {
+function Header ({
+  buttonStatus,
+  setRegister,
+  setCurrentUser,
+  currentUser,
+  channels,
+  setCurrentState,
+  currentState
+}) {
   const classes = useStyles()
   return (
     <>
       <AppBar position='static'>
         <Toolbar>
-          <IconButton
-            edge='start'
-            className={classes.menuButton}
-            color='inherit'
-            aria-label='menu'
-          >
-            <ChannelNavigator
-              currentUser={currentUser}
-              channels={channels}
-              setCurrentState={setCurrentState}
-              currentState={currentState}
-            />
-          </IconButton>
+          {currentUser.id && (
+            <IconButton
+              edge='start'
+              className={classes.menuButton}
+              color='inherit'
+              aria-label='menu'
+            >
+              <ChannelNavigator
+                currentUser={currentUser}
+                channels={channels}
+                setCurrentState={setCurrentState}
+                currentState={currentState}
+              />
+            </IconButton>
+          )}
           <Typography variant='h6' className={classes.title}>
             Pattr
           </Typography>
           <Button
             color='inherit'
-            onClick={() => buttonClick(buttonStatus, setRegister, setCurrentUser)}
-          >{buttonStatus}
+            onClick={() =>
+              buttonClick(buttonStatus, setRegister, setCurrentUser)}
+          >
+            {buttonStatus}
           </Button>
         </Toolbar>
       </AppBar>
