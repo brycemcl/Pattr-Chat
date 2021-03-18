@@ -1,3 +1,4 @@
+import CreateTextSingleLine from '../CreateTextSingleLine'
 import { useEffect } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import Drawer from '@material-ui/core/Drawer'
@@ -16,10 +17,10 @@ const drawerWidth = 240
 const GET_CHANNELS = gql`
   subscription($id: Int!) {
     users_by_pk(id: $id) {
-      channels {
+      channels(order_by: { id: desc }) {
         name
         id
-        conversations {
+        conversations(order_by: { id: desc }) {
           id
           name
           public
@@ -190,10 +191,17 @@ const Sidebar = ({ currentUser, currentState, setCurrentState, setChannels }) =>
         anchor='left'
       >
         <List>
+          <ListItem>
+            <CreateTextSingleLine
+              currentUser={currentUser}
+              currentState={currentState}
+              placeholder='New Channel'
+            />
+          </ListItem>
           {conversationsPublic.map(({ name, id }) => (
             <ListItem
               button
-              key={name}
+              key={id}
               selected={currentState.conversation === id}
               onClick={() => setClickedSidebarOption(id, setCurrentState)}
             >
@@ -206,6 +214,14 @@ const Sidebar = ({ currentUser, currentState, setCurrentState, setChannels }) =>
         </List>
         <Divider />
         <List>
+          <ListItem>
+            <CreateTextSingleLine
+              currentUser={currentUser}
+              currentState={currentState}
+              placeholder='New Conversation'
+              conversationPublic={false}
+            />
+          </ListItem>
           {conversationsPrivate.map(({ name, id }) => (
             <ListItem
               button
