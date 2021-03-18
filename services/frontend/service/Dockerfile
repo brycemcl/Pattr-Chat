@@ -11,6 +11,8 @@ COPY --from=build /usr/src/app/build/ /usr/share/nginx/html
 RUN chmod -R 555 /usr/share/nginx/html
 COPY nginx.conf /etc/nginx/nginx.conf
 EXPOSE 3001
+ENV REACT_APP_GRAPHQL_URL='://localhost:8080/v1/graphql'
+ENV REACT_APP_ADMIN_SECRET='myadminsecretkey'
 
 FROM build as test
 ENV NODE_ENV=development
