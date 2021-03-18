@@ -12,7 +12,7 @@ import ListItemText from '@material-ui/core/ListItemText'
 import AccountCircleIcon from '@material-ui/icons/AccountCircle'
 import ForumIcon from '@material-ui/icons/Forum'
 import { gql, useSubscription } from '@apollo/client'
-const drawerWidth = 250
+const drawerWidth = 260
 
 // graphql subscription to grab the current channels - server to client 1 way updating
 const GET_CHANNELS = gql`
