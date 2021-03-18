@@ -12,7 +12,8 @@ import ChannelNavigator from '../ChannelNavigator'
 // style our component
 const useStyles = makeStyles((theme) => ({
   root: {
-    flexGrow: 1
+    flexGrow: 1,
+    position: 'fixed'
   },
   menuButton: {
     marginRight: theme.spacing(2)

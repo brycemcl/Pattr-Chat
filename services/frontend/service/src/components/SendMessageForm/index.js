@@ -42,12 +42,12 @@ function SendMessageForm ({ currentUser, currentState }) {
   const [message, setMessage] = useState('')
   const classes = useStyles()
 
-  // using our mutation to send messages
+  // using our mutation to send messages & store that in state
   const [sendMessage] = useMutation(SEND_MESSAGES)
 
   return (
     <form>
-      <Composer value={message} setValue={setMessage} />
+      <Composer currentState={currentState} value={message} setValue={setMessage} />
       <Button
         onClick={(event) => handleSubmitForm(
           event,
