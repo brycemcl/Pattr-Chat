@@ -1,13 +1,13 @@
 version: '3.4'
 
 services:
-  # pattr-frontend:
-  #   image: brycemclachlan/pattr-frontend
-  #   build:
-  #     context: services/frontend/service
-  #     dockerfile: ./Dockerfile
-  #   ports:
-  #     - 80:3001
+  pattr-frontend:
+    image: brycemclachlan/pattr-frontend
+    build:
+      context: services/frontend/service
+      dockerfile: ./Dockerfile
+    ports:
+      - 80:3001
   # pattr-backend:
   #   image: brycemclachlan/pattr-backend
   #   build:
@@ -60,6 +60,5 @@ services:
   #     - 9099:9099
   #     - 8001:8001
   #     - 8002:8002
-
-volumes:
-  postgres_volume:
+# volumes:
+#   postgres_volume:
