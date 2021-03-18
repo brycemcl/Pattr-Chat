@@ -1,10 +1,20 @@
 import MessagesPane from '../MessagesPane/index'
 import SendMessageForm from '../SendMessageForm'
+import { makeStyles } from '@material-ui/core/styles'
+
+// style our component
+const useStyles = makeStyles((theme) => ({
+  body: {
+    marginTop: '8 0px'
+  }
+}))
 
 function MessagesBody ({ currentState, currentUser }) {
+  const classes = useStyles()
+
   return (
     <div>
-      <div>
+      <div className={classes.body}>
         <MessagesPane
           currentState={currentState}
           currentUser={currentUser}
