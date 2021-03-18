@@ -5,7 +5,7 @@ import { makeStyles } from '@material-ui/core/styles'
 // style our component
 const useStyles = makeStyles((theme) => ({
   body: {
-    marginTop: '8 0px'
+    marginTop: '80px'
   }
 }))
 
