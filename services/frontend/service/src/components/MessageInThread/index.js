@@ -27,7 +27,11 @@ const useStyles = makeStyles({
 })
 
 // MessageinThread component
-const MessageInThread = ({ date, messageName, messageText = 'Test message' }) => {
+const MessageInThread = ({
+  date,
+  messageName,
+  messageText = 'Test message'
+}) => {
   const classes = useStyles()
   return (
     <Paper className={classes.root}>
@@ -38,9 +42,7 @@ const MessageInThread = ({ date, messageName, messageText = 'Test message' }) =>
         <div>
           <MessageMetadata name={messageName} date={date} />
         </div>
-        <Message>
-          {messageText}
-        </Message>
+        <Message>{messageText}</Message>
       </div>
     </Paper>
   )

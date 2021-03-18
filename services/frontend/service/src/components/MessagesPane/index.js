@@ -49,15 +49,29 @@ function MessagesPane ({ currentState, currentUser }) {
    * convert messages date from string to JS date */
   try {
     messages = data.users_by_pk.channels[0].conversations[0].messages.map(
-      (message) => {
+      ({ ...message }) => {
         message.user.currentUser = message.user.id === currentUser.id
-        console.log(message.date_sent)
-        message.date_sent = new Date(message.date_sent)
+        const dateString = String(message.date_sent)
+        const dateStringDelimited = dateString
+          .split(/[-,:.T]+/)
+          .map((s) => Number(s))
+
+        message.date_sent = new Date(
+          Date.UTC(
+            dateStringDelimited[0],
+            dateStringDelimited[1] - 1,
+            dateStringDelimited[2],
+            dateStringDelimited[3],
+            dateStringDelimited[4],
+            dateStringDelimited[5]
+          )
+        )
         return message
       }
     )
-  } catch {}
-
+  } catch {
+    // if conversation doesn't have any messages
+  }
   /* map out filtered messages, then loop through them and make new messages for each one
    * passing down props when necessary */
   const mappedMessages = messages.map(({ user, message, date_sent, id }) => {
