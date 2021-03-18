@@ -1,3 +1,4 @@
+/* eslint-disable multiline-ternary */
 import CreateTextSingleLine from '../CreateTextSingleLine'
 import { useEffect } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
@@ -113,7 +114,7 @@ const Sidebar = ({
         }
 
         /* keep track of a clients valid conversations in their sidebar
-        * filter the conversations a user selects by the organization that is stored for this user in currentState */
+         * filter the conversations a user selects by the organization that is stored for this user in currentState */
         try {
           const currentConversations = data.users_by_pk.channels.find(
             (channel) => {
@@ -139,7 +140,7 @@ const Sidebar = ({
               mutatedState.conversation = null
             }
           }
-        // if they don't have any conversations on inital rendering/loading (or ever), show nothing
+          // if they don't have any conversations on inital rendering/loading (or ever), show nothing
         } catch {
           mutatedState.conversation = null
         }
@@ -147,7 +148,8 @@ const Sidebar = ({
         /* final check to make sure the current states conversations & channels match the mutated states conversations & channels
          * if they do, return the current state as is, if not return the mutates state (to the setCurrentState setter) */
         if (
-          cs.conversation === mutatedState.conversation && cs.channel === mutatedState.channel
+          cs.conversation === mutatedState.conversation &&
+          cs.channel === mutatedState.channel
         ) {
           return cs
         } else {
@@ -183,6 +185,33 @@ const Sidebar = ({
     // user has no conversations in the selected channel
   }
 
+  const publicMessages = conversationsPublic.map(({ name, id }) => (
+    <ListItem
+      button
+      key={id}
+      selected={currentState.conversation === id}
+      onClick={() => setClickedSidebarOption(id, setCurrentState)}
+    >
+      <ListItemIcon>
+        <AssessmentIcon />
+      </ListItemIcon>
+      <ListItemText primary={name} />
+    </ListItem>
+  ))
+
+  const privateMessages = conversationsPrivate.map(({ name, id }) => (
+    <ListItem
+      button
+      key={name}
+      onClick={() => setClickedSidebarOption(id, setCurrentState)}
+      selected={currentState.conversation === id}
+    >
+      <ListItemIcon>
+        <FaceIcon />
+      </ListItemIcon>
+      <ListItemText primary={name} />
+    </ListItem>
+  ))
   // return the component to render the sidebar. when a sidebar option is clicked, update the current state to record the last click
   return (
     <>
@@ -195,53 +224,37 @@ const Sidebar = ({
         }}
         anchor='left'
       >
-        <List>
-          <ListItem>
-            <CreateTextSingleLine
-              currentUser={currentUser}
-              currentState={currentState}
-              placeholder='New Thread'
-            />
-          </ListItem>
-          {conversationsPublic.map(({ name, id }) => (
-            <ListItem
-              button
-              key={id}
-              selected={currentState.conversation === id}
-              onClick={() => setClickedSidebarOption(id, setCurrentState)}
-            >
-              <ListItemIcon>
-                <AssessmentIcon />
-              </ListItemIcon>
-              <ListItemText primary={name} />
-            </ListItem>
-          ))}
-        </List>
-        <Divider />
-        <List>
-          <ListItem>
-            <CreateTextSingleLine
-              currentUser={currentUser}
-              currentState={currentState}
-              placeholder='New Conversation'
-              conversationPublic={false}
-            />
-          </ListItem>
-          {conversationsPrivate.map(({ name, id }) => (
-            <ListItem
-              button
-              key={name}
-              onClick={() => setClickedSidebarOption(id, setCurrentState)}
-              selected={currentState.conversation === id}
-            >
-              <ListItemIcon>
-                <FaceIcon />
-              </ListItemIcon>
-              <ListItemText primary={name} />
-            </ListItem>
-          ))}
-        </List>
-        <Divider />
+        {currentState.channel ? (
+          <>
+            <List>
+              <ListItem>
+                <CreateTextSingleLine
+                  currentUser={currentUser}
+                  currentState={currentState}
+                  placeholder='New Thread'
+                />
+              </ListItem>
+              {publicMessages}
+            </List>
+            <Divider />
+            <List>
+              <ListItem>
+                <CreateTextSingleLine
+                  currentUser={currentUser}
+                  currentState={currentState}
+                  placeholder='New Conversation'
+                  conversationPublic={false}
+                />
+              </ListItem>
+              {privateMessages}
+              {/* private */}
+              {/* currentState.channel && currentState.conversation */}
+            </List>
+            <Divider />
+          </>
+        ) : (
+          <p>You don't have any channels selected.</p>
+        )}
       </Drawer>
     </>
   )
