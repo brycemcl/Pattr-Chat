@@ -13,7 +13,7 @@ const GET_MESSAGES = gql`
           where: { id: { _eq: $conversationId }, messages: { user: {} } }
         ) {
           id
-          messages {
+          messages(order_by: { id: asc }) {
             id
             message
             date_sent
