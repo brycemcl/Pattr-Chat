@@ -59,7 +59,7 @@ function Header ({
   const classes = useStyles()
   return (
     <>
-      <AppBar position='static'>
+      <AppBar position='fixed'>
         <Toolbar>
           {currentUser.id && (
             <IconButton
