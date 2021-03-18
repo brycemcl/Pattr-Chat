@@ -66,7 +66,12 @@ const setClickedSidebarOption = (id, setCurrentState) => {
   })
 }
 // sidebar component
-const Sidebar = ({ currentUser, currentState, setCurrentState, setChannels }) => {
+const Sidebar = ({
+  currentUser,
+  currentState,
+  setCurrentState,
+  setChannels
+}) => {
   const classes = useStyles()
 
   // grab this hook
@@ -195,7 +200,7 @@ const Sidebar = ({ currentUser, currentState, setCurrentState, setChannels }) =>
             <CreateTextSingleLine
               currentUser={currentUser}
               currentState={currentState}
-              placeholder='New Channel'
+              placeholder='New Thread'
             />
           </ListItem>
           {conversationsPublic.map(({ name, id }) => (

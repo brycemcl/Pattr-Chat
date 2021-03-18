@@ -36,6 +36,22 @@ const MAKE_CONVERSATION = gql`
     }
   }
 `
+const MAKE_CHANNEL = gql`
+  mutation($channelName: String!, $userId: Int!) {
+    insert_users_channels_one(
+      object: {
+        users_id: $userId
+        channel: { data: { name: $channelName, user_id: $userId } }
+      }
+    ) {
+      channel {
+        id
+        user_id
+        name
+      }
+    }
+  }
+`
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -54,6 +70,7 @@ const CreateTextSingleLine = ({
   const [text, setText] = useState('')
   const [submitting, setSubmitting] = useState(false)
   const [makeConversation] = useMutation(MAKE_CONVERSATION)
+  const [makeChannel] = useMutation(MAKE_CHANNEL)
   // used for testing without using apollo
   // const makeConversation = async () => {
   //   await new Promise((resolve) => {
@@ -72,6 +89,12 @@ const CreateTextSingleLine = ({
           channelId: currentState.channel,
           userId: currentUser.id
         }
+      })
+    }
+    if (type === 'channel') {
+      // await makeConversation();
+      await makeChannel({
+        variables: { channelName: text, userId: currentUser.id }
       })
     }
     setSubmitting(false)
