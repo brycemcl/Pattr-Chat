@@ -5,6 +5,7 @@ WORKDIR /usr/src/app
 COPY ["package.json", "package-lock.json*", "npm-shrinkwrap.json*", "./"]
 RUN npm install --production
 COPY . .
+RUN chmod -R 777 ./
 RUN npm run build
 FROM nginx
 COPY --from=build /usr/src/app/build/ /usr/share/nginx/html
