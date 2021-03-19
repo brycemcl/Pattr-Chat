@@ -9,10 +9,10 @@ import Divider from '@material-ui/core/Divider'
 import ListItem from '@material-ui/core/ListItem'
 import ListItemIcon from '@material-ui/core/ListItemIcon'
 import ListItemText from '@material-ui/core/ListItemText'
-import FaceIcon from '@material-ui/icons/Face'
-import AssessmentIcon from '@material-ui/icons/Assessment'
+import AccountCircleIcon from '@material-ui/icons/AccountCircle'
+import ForumIcon from '@material-ui/icons/Forum'
 import { gql, useSubscription } from '@apollo/client'
-const drawerWidth = 240
+const drawerWidth = 260
 
 // graphql subscription to grab the current channels - server to client 1 way updating
 const GET_CHANNELS = gql`
@@ -47,8 +47,9 @@ const useStyles = makeStyles((theme) => ({
   },
   drawerPaper: {
     width: drawerWidth,
-    marginTop: '80px',
-    marginLeft: '16px'
+    marginTop: '64px',
+    marginLeft: '0px',
+    paddingLeft: '0px'
   },
   // necessary for content to be below app bar
   toolbar: theme.mixins.toolbar,
@@ -193,7 +194,7 @@ const Sidebar = ({
       onClick={() => setClickedSidebarOption(id, setCurrentState)}
     >
       <ListItemIcon>
-        <AssessmentIcon />
+        <ForumIcon />
       </ListItemIcon>
       <ListItemText primary={name} />
     </ListItem>
@@ -207,7 +208,7 @@ const Sidebar = ({
       selected={currentState.conversation === id}
     >
       <ListItemIcon>
-        <FaceIcon />
+        <AccountCircleIcon />
       </ListItemIcon>
       <ListItemText primary={name} />
     </ListItem>

@@ -27,7 +27,7 @@ const MAKE_USER = gql`
 
 const useStyles = makeStyles((theme) => ({
   paper: {
-    marginTop: theme.spacing(8),
+    marginTop: '120px',
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center'

@@ -12,8 +12,8 @@ import ChannelNavigator from '../ChannelNavigator'
 // style our component
 const useStyles = makeStyles((theme) => ({
   root: {
-    flexGrow: 1,
-    position: 'fixed'
+    position: 'fixed',
+    zIndex: 1201
   },
   menuButton: {
     marginRight: theme.spacing(2)
@@ -59,7 +59,7 @@ function Header ({
   const classes = useStyles()
   return (
     <>
-      <AppBar position='fixed'>
+      <AppBar className={classes.root}>
         <Toolbar>
           {currentUser.id && (
             <IconButton
