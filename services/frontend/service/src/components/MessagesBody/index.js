@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
     overflowY: 'scroll'
   },
   messageForm: {
-
+    width: '96%'
   }
 }))
 

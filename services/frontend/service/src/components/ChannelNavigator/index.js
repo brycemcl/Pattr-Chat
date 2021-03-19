@@ -8,7 +8,7 @@ import Divider from '@material-ui/core/Divider'
 import ListItem from '@material-ui/core/ListItem'
 import ListItemIcon from '@material-ui/core/ListItemIcon'
 import ListItemText from '@material-ui/core/ListItemText'
-import MailIcon from '@material-ui/icons/Mail'
+import WorkIcon from '@material-ui/icons/Work'
 import MenuIcon from '@material-ui/icons/Menu'
 
 // styles for our component
@@ -60,7 +60,7 @@ export default function ChannelNavigator ({
         }}
       >
         <ListItemIcon>
-          <MailIcon />
+          <WorkIcon />
         </ListItemIcon>
         <ListItemText primary={channel.name} />
       </ListItem>
