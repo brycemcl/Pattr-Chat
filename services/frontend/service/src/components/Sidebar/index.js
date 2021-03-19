@@ -3,7 +3,6 @@ import CreateTextSingleLine from '../CreateTextSingleLine'
 import { useEffect } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import Drawer from '@material-ui/core/Drawer'
-import CssBaseline from '@material-ui/core/CssBaseline'
 import List from '@material-ui/core/List'
 import Divider from '@material-ui/core/Divider'
 import ListItem from '@material-ui/core/ListItem'
@@ -216,7 +215,7 @@ const Sidebar = ({
   // return the component to render the sidebar. when a sidebar option is clicked, update the current state to record the last click
   return (
     <>
-      <CssBaseline />
+
       <Drawer
         className={classes.drawer}
         variant='permanent'

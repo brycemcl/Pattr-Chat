@@ -1,5 +1,6 @@
 import React from 'react'
 import Application from './components/Application'
+import CssBaseline from '@material-ui/core/CssBaseline'
 
 import { WebSocketLink } from '@apollo/client/link/ws'
 import {
@@ -66,6 +67,7 @@ const client = createApolloClient()
 function App () {
   return (
     <ApolloProvider client={client}>
+      <CssBaseline />
       <Application />
     </ApolloProvider>
   )
