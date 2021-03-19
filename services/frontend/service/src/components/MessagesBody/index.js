@@ -26,7 +26,8 @@ function MessagesBody ({ currentState, currentUser }) {
   const classes = useStyles()
   const [sendingMessage, setSendingMessage] = useState([])
 
-  // useeffect that triggers whenever our sendingMessage state changes & a message is sent to auto scroll our div to the bottom of the screen
+  /* https://stackoverflow.com/questions/61851659/chat-scroll-to-bottom-when-send-a-message-using-react
+   * useeffect that triggers whenever our sendingMessage state changes & a message is sent to auto scroll our div to the bottom of the screen */
   useEffect(() => {
     document.querySelector('#messages-scrollbar').scrollTop = document.querySelector('#messages-scrollbar').scrollHeight
   }, [sendingMessage])

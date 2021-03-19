@@ -22,12 +22,7 @@ const useStyles = makeStyles({
 })
 
 // this is our ChannelNavigator component
-export default function ChannelNavigator ({
-  currentUser,
-  channels,
-  setCurrentState,
-  currentState
-}) {
+export default function ChannelNavigator ({ currentUser, channels, setCurrentState, currentState }) {
   // use the styles for our component
   const classes = useStyles()
 
