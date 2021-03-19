@@ -2,7 +2,7 @@ import { useEffect } from 'react'
 import Sidebar from '../Sidebar'
 import MessagesBody from '../MessagesBody'
 import { makeStyles } from '@material-ui/core/styles'
-import { gql, useQuery } from '@apollo/client'
+import { gql, useQuery, useMutation } from '@apollo/client'
 
 // fetch graphql query which when used, will retrieve a user who just logged in
 const FETCH_USER = gql`
@@ -14,7 +14,15 @@ const FETCH_USER = gql`
     }
   }
 `
-
+const MAKE_USER = gql`
+  mutation createUser($displayName: String!, $uuid: String!) {
+    insert_users_one(object: { display_name: $displayName, user_uuid: $uuid }) {
+      id
+      display_name
+      user_uuid
+    }
+  }
+`
 const useStyles = makeStyles(() => ({
   sidebar: {
     display: 'flex',
@@ -39,10 +47,10 @@ function ChatRoom ({
   setCurrentState
 }) {
   const classes = useStyles()
-  const { loading, error, data } = useQuery(FETCH_USER, {
+  const { loading, error, data, refetch } = useQuery(FETCH_USER, {
     variables: { uuid: currentUser.user_uuid }
   })
-
+  const [makeUser] = useMutation(MAKE_USER)
   // this useeffect on this component will only fire off when the value of "data" from our useQuery changes
   useEffect(() => {
     if (data && Array.isArray(data.users) && data.users.length > 0) {
@@ -54,7 +62,13 @@ function ChatRoom ({
   if (loading) return <p>Loading...</p>
   if (error) return <p>Error :(</p>
   if (data && Array.isArray(data.users) && data.users.length === 0) {
-    return <p>I cant verify who you are man :(</p>
+    makeUser({
+      variables: {
+        displayName: 'Unknown',
+        uuid: currentUser.user_uuid
+      }
+    }).then(() => refetch())
+    return null
   }
 
   return (
