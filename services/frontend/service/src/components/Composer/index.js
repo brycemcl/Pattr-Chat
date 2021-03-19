@@ -5,10 +5,8 @@ import { useEffect } from 'react'
 // style text field in composer component
 const useStyles = makeStyles((theme) => ({
   root: {
-    // margin: theme.spacing(2),
-    // '& .MuiTextField-root': {},
-    // marginLeft: '275px',
-    // width: '375px'
+    width: '100%',
+    height: '100%'
   }
 }))
 

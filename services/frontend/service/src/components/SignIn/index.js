@@ -40,27 +40,27 @@ const loginAuth = function (email, password, setCurrentUser) {
 // style our component
 const useStyles = makeStyles((theme) => ({
   paper: {
-    // marginTop: '120px',
-    // display: 'flex',
-    // flexDirection: 'column',
-    // alignItems: 'center'
+    marginTop: '120px',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center'
   },
   avatar: {
-    // margin: theme.spacing(1),
-    // backgroundColor: theme.palette.secondary.main
+    margin: theme.spacing(1),
+    backgroundColor: theme.palette.secondary.main
   },
   form: {
-    // width: '100%', // Fix IE 11 issue.
-    // marginTop: theme.spacing(1)
+    width: '100%', // Fix IE 11 issue.
+    marginTop: theme.spacing(1)
   },
   submit: {
-    // margin: theme.spacing(3, 0, 2)
+    margin: theme.spacing(3, 0, 2)
   },
   root: {
-    // width: '100%',
-    // '& > * + *': {
-    //   marginTop: theme.spacing(2)
-    // }
+    width: '100%',
+    '& > * + *': {
+      marginTop: theme.spacing(2)
+    }
   }
 }))
 

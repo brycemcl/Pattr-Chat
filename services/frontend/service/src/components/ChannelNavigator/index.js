@@ -1,25 +1,13 @@
 import CreateTextSingleLine from '../CreateTextSingleLine'
 import { useState, Fragment } from 'react'
-import clsx from 'clsx'
-import { makeStyles } from '@material-ui/core/styles'
 import Drawer from '@material-ui/core/Drawer'
 import List from '@material-ui/core/List'
 import Divider from '@material-ui/core/Divider'
 import ListItem from '@material-ui/core/ListItem'
 import ListItemIcon from '@material-ui/core/ListItemIcon'
 import ListItemText from '@material-ui/core/ListItemText'
-import MailIcon from '@material-ui/icons/Mail'
+import WorkIcon from '@material-ui/icons/Work'
 import MenuIcon from '@material-ui/icons/Menu'
-
-// styles for our component
-const useStyles = makeStyles({
-  list: {
-    // width: 250
-  },
-  fullList: {
-    // width: 'auto'
-  }
-})
 
 // this is our ChannelNavigator component
 export default function ChannelNavigator ({
@@ -28,9 +16,6 @@ export default function ChannelNavigator ({
   setCurrentState,
   currentState
 }) {
-  // use the styles for our component
-  const classes = useStyles()
-
   // state which keeps track of what side the panel drops out of
   const [state, setState] = useState({
     left: false
@@ -60,7 +45,7 @@ export default function ChannelNavigator ({
         }}
       >
         <ListItemIcon>
-          <MailIcon />
+          <WorkIcon />
         </ListItemIcon>
         <ListItemText primary={channel.name} />
       </ListItem>
@@ -69,12 +54,7 @@ export default function ChannelNavigator ({
   // callback function that will
   const list = (anchor) => (
     <List>
-      <div
-        className={clsx(classes.list, {
-          [classes.fullList]: anchor === 'top' || anchor === 'bottom'
-        })}
-        role='presentation'
-      >
+      <div role='presentation'>
         <ListItem>
           <CreateTextSingleLine
             currentUser={currentUser}
@@ -85,9 +65,6 @@ export default function ChannelNavigator ({
         </ListItem>
       </div>
       <div
-        className={clsx(classes.list, {
-          [classes.fullList]: anchor === 'top' || anchor === 'bottom'
-        })}
         role='presentation'
         onClick={toggleDrawer(anchor, false)}
         onKeyDown={toggleDrawer(anchor, false)}

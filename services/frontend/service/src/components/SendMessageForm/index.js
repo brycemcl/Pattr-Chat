@@ -1,19 +1,31 @@
 /* eslint-disable multiline-ternary */
 import { useState } from 'react'
 import Composer from '../Composer'
+import Spinner from '../Spinner'
 import Button from '@material-ui/core/Button'
 import { makeStyles } from '@material-ui/core/styles'
 import { gql, useMutation } from '@apollo/client'
 
 // style our  material UI button
 const useStyles = makeStyles((theme) => ({
+  root: {
+    display: 'flex',
+    padding: theme.spacing(2)
+  },
+
   button: {
-    // margin: theme.spacing(2)
+    width: '100%',
+    height: '100%'
+  },
+  controls: {
+    paddingLeft: theme.spacing(2),
+    width: '100px'
   }
 }))
 
 /* helper function to handle the submission of the form in this controlled componentt
- * clear the controlled component after sending a message with graphql to our db */
+ * clear the controlled component after sending a message with graphql to our db
+ * also handles the sending message status indicator */
 const handleSubmitForm = (
   event,
   message,
@@ -28,6 +40,7 @@ const handleSubmitForm = (
   setSendingMessage((cs) => {
     return [...cs, true]
   })
+  // call setter to actually get graphql to send th emessage to our pg db
   return sendMessage({
     variables: {
       conversationId: currentState.conversation,
@@ -95,27 +108,29 @@ function SendMessageForm ({
       setSendingMessage
     )
   return (
-    <form>
-      {!sendingMessage.length ? (
-        <>
-          <Composer
-            currentState={currentState}
-            value={message}
-            setValue={setMessage}
-            sendMessage={sendMessage}
-          />
-          <Button
-            onClick={(e) => sendMessage(e)}
-            variant='contained'
-            color='primary'
-            className={classes.button}
-          >
-            Send
-          </Button>
-        </>
-      ) : (
-        <p>spinner goes here</p>
-      )}
+    <form className={classes.root}>
+      <Composer
+        currentState={currentState}
+        value={message}
+        setValue={setMessage}
+        sendMessage={sendMessage}
+      />
+      <div className={classes.controls}>
+        {!sendingMessage.length ? (
+          <>
+            <Button
+              onClick={(e) => sendMessage(e)}
+              variant='contained'
+              color='primary'
+              className={classes.button}
+            >
+              Send
+            </Button>
+          </>
+        ) : (
+          <Spinner />
+        )}
+      </div>
     </form>
   )
 }

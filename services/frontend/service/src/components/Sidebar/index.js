@@ -11,7 +11,7 @@ import ListItemText from '@material-ui/core/ListItemText'
 import AccountCircleIcon from '@material-ui/icons/AccountCircle'
 import ForumIcon from '@material-ui/icons/Forum'
 import { gql, useSubscription } from '@apollo/client'
-const drawerWidth = 260
+import Spinner from '../Spinner'
 
 // graphql subscription to grab the current channels - server to client 1 way updating
 const GET_CHANNELS = gql`
@@ -34,26 +34,13 @@ const GET_CHANNELS = gql`
 // style this component
 const useStyles = makeStyles((theme) => ({
   root: {
-    // display: 'flex'
-  },
-  appBar: {
-    // // width: `calc(100% - ${drawerWidth}px)`,
-    // // marginLeft: drawerWidth
+    height: '100%',
+    width: '100%'
   },
   drawer: {
-    // // width: drawerWidth,
-    // minWidth: drawerWidth,
-    // maxWidth: '100vw',
-    // flexShrink: 0
-  },
-  drawerPaper: {
-    top: 'auto'
-    // width: '100%'
-  },
-  content: {
-    // flexGrow: 1,
-    // backgroundColor: theme.palette.background.default,
-    // padding: theme.spacing(3)
+    position: 'relative',
+    height: '100%',
+    width: '100%'
   }
 }))
 
@@ -157,7 +144,7 @@ const Sidebar = ({
     }
   }, [data, currentState, error, loading, setChannels, setCurrentState])
 
-  if (loading) return <p>Loading...</p>
+  if (loading) return <Spinner />
   if (error) return <p>Error :(</p>
 
   // empty arrays to store our users private and public conversations
@@ -212,14 +199,18 @@ const Sidebar = ({
   ))
   // return the component to render the sidebar. when a sidebar option is clicked, update the current state to record the last click
   return (
-    <div>
+    <div className={classes.root}>
       <Drawer
         className={classes.drawer}
         variant='permanent'
-        classes={{
-          paper: classes.drawerPaper
+        PaperProps={{
+          style: { position: 'absolute', height: '100%', width: '100%' }
         }}
-        anchor='left'
+        BackdropProps={{ style: { position: 'absolute' } }}
+        ModalProps={{
+          container: document.getElementById('drawer-container'),
+          style: { position: 'absolute' }
+        }}
       >
         {currentState.channel ? (
           <>
@@ -244,8 +235,6 @@ const Sidebar = ({
                 />
               </ListItem>
               {privateMessages}
-              {/* private */}
-              {/* currentState.channel && currentState.conversation */}
             </List>
             <Divider />
           </>

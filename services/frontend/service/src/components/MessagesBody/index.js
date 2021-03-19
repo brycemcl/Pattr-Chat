@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import MessagesPane from '../MessagesPane/index'
 import SendMessageForm from '../SendMessageForm'
 import { makeStyles } from '@material-ui/core/styles'
@@ -6,22 +6,16 @@ import { makeStyles } from '@material-ui/core/styles'
 // style our components
 const useStyles = makeStyles((theme) => ({
   messageContainer: {
-    // display: 'flex',
-    // flexDirection: 'column',
-    // justifyContent: 'space-between',
-    // width: '100%'
-    // // height: '100vh'
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'space-between'
   },
   body: {
-    // // marginTop: '80px',
-    // // maxHeight: '80vh',
-    // // overflowY: 'scroll'
-    // height: '100%',
-    // flex: 1
+    overflow: 'auto',
+    height: window.innerHeight - 56 - 150
   },
   sendMessageForm: {
-    // maxHeight: '80vh',
-    // minHeight: '80vh'
+    height: '150px'
   }
 }))
 
@@ -29,15 +23,26 @@ const useStyles = makeStyles((theme) => ({
 function MessagesBody ({ currentState, currentUser }) {
   const classes = useStyles()
   const [sendingMessage, setSendingMessage] = useState([])
+
+  /* https://stackoverflow.com/questions/61851659/chat-scroll-to-bottom-when-send-a-message-using-react
+   * useeffect that triggers whenever our sendingMessage state changes & a message is sent to auto scroll our div to the bottom of the screen */
+  useEffect(() => {
+    document.querySelector(
+      '#messages-scrollbar'
+    ).scrollTop = document.querySelector('#messages-scrollbar').scrollHeight
+  }, [sendingMessage])
+
   return (
     <div className={classes.messageContainer}>
-      <div className={classes.body}>
-        <MessagesPane
-          currentState={currentState}
-          currentUser={currentUser}
-          setSendingMessage={setSendingMessage}
-          // sendingMessage={sendingMessage}
-        />
+      <div>
+        <div id='messages-scrollbar' className={classes.body}>
+          <MessagesPane
+            currentState={currentState}
+            currentUser={currentUser}
+            setSendingMessage={setSendingMessage}
+            // sendingMessage={sendingMessage}
+          />
+        </div>
       </div>
       <div className={classes.sendMessageForm}>
         <SendMessageForm

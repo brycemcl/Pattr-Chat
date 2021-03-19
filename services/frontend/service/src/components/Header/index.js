@@ -62,7 +62,7 @@ function Header ({
 }) {
   const classes = useStyles()
   return (
-    <>
+    <div>
       <div className={classes.toolbar} />
       <AppBar className={classes.root}>
         <Toolbar className={classes.toolbar}>
@@ -93,7 +93,7 @@ function Header ({
           </Button>
         </Toolbar>
       </AppBar>
-    </>
+    </div>
   )
 }
 

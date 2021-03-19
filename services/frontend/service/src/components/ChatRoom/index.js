@@ -3,7 +3,7 @@ import Sidebar from '../Sidebar'
 import MessagesBody from '../MessagesBody'
 import { makeStyles } from '@material-ui/core/styles'
 import { gql, useQuery, useMutation } from '@apollo/client'
-
+import Spinner from '../Spinner'
 // fetch graphql query which when used, will retrieve a user who just logged in
 const FETCH_USER = gql`
   query($uuid: String!) {
@@ -25,20 +25,20 @@ const MAKE_USER = gql`
 `
 const useStyles = makeStyles(() => ({
   root: {
-    // display: 'flex'
-    // // flexDirection: 'column',
-    // // alignItems: 'center'
+    display: 'flex',
+    height: '100%'
   },
+
   sidebar: {
+    minWidth: '300px',
+    maxWidth: '200px'
+
     // display: 'flex',
     // flexDirection: 'column',
     // alignItems: 'center'
   },
   body: {
-    // display: 'flex',
-    // flexDirection: 'column',
-    // alignItems: 'center',
-    // marginLeft: '100px'
+    flex: '1 1 auto'
   }
 }))
 
@@ -64,7 +64,7 @@ function ChatRoom ({
   }, [data, setCurrentUser])
 
   // error checking
-  if (loading) return <p>Loading...</p>
+  if (loading) return <Spinner />
   if (error) return <p>Error :(</p>
   if (data && Array.isArray(data.users) && data.users.length === 0) {
     makeUser({

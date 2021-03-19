@@ -1,48 +1,57 @@
 import { makeStyles } from '@material-ui/core/styles'
 import Avatar from './Avatar'
 import MessageMetadata from './MessageMetadata'
-import Message from './Message'
 import Paper from '@material-ui/core/Paper'
-
+import clsx from 'clsx'
 // style MessageInThread component
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
+  messageContainer: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    paddingTop: theme.spacing(2),
+    paddingBottom: theme.spacing(2),
+    width: '100%'
+  },
+  currentUser: { alignSelf: 'flex-end' },
   root: {
-    // maxWidth: 475,
-    // padding: '1rem',
-    // marginTop: '20px',
-    // marginBottom: '15px',
-    // marginLeft: '275px'
+    width: '75%',
+    padding: theme.spacing(2),
+    margin: theme.spacing(2)
   },
   bullet: {
-    // display: 'inline-block',
-    // margin: '0 2px',
-    // transform: 'scale(0.8)'
+    display: 'inline-block',
+    margin: '0 2px',
+    transform: 'scale(0.8)'
   },
   title: {
-    // fontSize: 14
+    fontSize: 14
   },
   pos: {
-    // marginBottom: 12
+    marginBottom: 12
+  },
+  messageContent: {
+    flex: 1,
+    overflow: 'auto',
+    overflowWrap: 'anywhere'
+  },
+  figure: {
+    margin: 1
   }
-})
+}))
 
 // MessageinThread component
-const MessageInThread = ({
-  date,
-  messageName,
-  messageText = 'Test message'
-}) => {
+const MessageInThread = ({ date, messageName, messageText, currentUser }) => {
   const classes = useStyles()
   return (
-    <Paper className={classes.root}>
-      <div>
-        <Avatar name='Bob' />
-      </div>
-      <div>
-        <div>
+    <Paper className={clsx(classes.root, currentUser && classes.currentUser)}>
+      <div className={classes.messageContainer}>
+        <figure className={classes.figure}>
+          <Avatar name={messageName} />
+        </figure>
+        <div className={classes.messageContent}>
           <MessageMetadata name={messageName} date={date} />
+          {messageText}
         </div>
-        <Message>{messageText}</Message>
       </div>
     </Paper>
   )
