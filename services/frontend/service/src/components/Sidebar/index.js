@@ -37,21 +37,19 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex'
   },
   appBar: {
-    width: `calc(100% - ${drawerWidth}px)`,
-    marginLeft: drawerWidth
+    // width: `calc(100% - ${drawerWidth}px)`,
+    // marginLeft: drawerWidth
   },
   drawer: {
-    width: drawerWidth,
+    // width: drawerWidth,
+    minWidth: drawerWidth,
+    maxWidth: '100vw',
     flexShrink: 0
   },
   drawerPaper: {
-    width: drawerWidth,
-    marginTop: '64px',
-    marginLeft: '0px',
-    paddingLeft: '0px'
+    top: 'auto'
+    // width: '100%'
   },
-  // necessary for content to be below app bar
-  toolbar: theme.mixins.toolbar,
   content: {
     flexGrow: 1,
     backgroundColor: theme.palette.background.default,
@@ -214,8 +212,7 @@ const Sidebar = ({
   ))
   // return the component to render the sidebar. when a sidebar option is clicked, update the current state to record the last click
   return (
-    <>
-
+    <div>
       <Drawer
         className={classes.drawer}
         variant='permanent'
@@ -256,7 +253,7 @@ const Sidebar = ({
           <p>You don't have any channels selected.</p>
         )}
       </Drawer>
-    </>
+    </div>
   )
 }
 

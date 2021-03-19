@@ -12,7 +12,9 @@ const sessionUid = window.localStorage.getItem('Uid')
 const Application = () => {
   /* store our currently logged in username and password in this components state to keep track
    * of currently logged in and authenticated user */
-  const [currentUser, setCurrentUser] = useState({ user_uuid: sessionUid || null })
+  const [currentUser, setCurrentUser] = useState({
+    user_uuid: sessionUid || null
+  })
   const [register, setRegister] = useState(false)
   const [channels, setChannels] = useState(null)
 
@@ -25,7 +27,7 @@ const Application = () => {
   // conditionally render components of our app here
   if (!currentUser.user_uuid && !register) {
     return (
-      <div>
+      <>
         <Header
           buttonStatus='Register'
           setRegister={setRegister}
@@ -36,16 +38,13 @@ const Application = () => {
           currentState={currentState}
         />
         <section>
-          <SignIn
-            setRegister={setRegister}
-            setCurrentUser={setCurrentUser}
-          />
+          <SignIn setRegister={setRegister} setCurrentUser={setCurrentUser} />
         </section>
-      </div>
+      </>
     )
   } else if (!currentUser.user_uuid && register) {
     return (
-      <div>
+      <>
         <Header
           buttonStatus='Login'
           setRegister={setRegister}
@@ -56,16 +55,13 @@ const Application = () => {
           currentState={currentState}
         />
         <section>
-          <SignUp
-            setCurrentUser={setCurrentUser}
-            setRegister={setRegister}
-          />
+          <SignUp setCurrentUser={setCurrentUser} setRegister={setRegister} />
         </section>
-      </div>
+      </>
     )
   } else {
     return (
-      <div>
+      <>
         <Header
           buttonStatus='Logout'
           setRegister={setRegister}
@@ -75,16 +71,15 @@ const Application = () => {
           setCurrentState={setCurrentState}
           currentState={currentState}
         />
-        <section>
-          <ChatRoom
-            currentUser={currentUser}
-            setCurrentUser={setCurrentUser}
-            setChannels={setChannels}
-            currentState={currentState}
-            setCurrentState={setCurrentState}
-          />
-        </section>
-      </div>
+
+        <ChatRoom
+          currentUser={currentUser}
+          setCurrentUser={setCurrentUser}
+          setChannels={setChannels}
+          currentState={currentState}
+          setCurrentState={setCurrentState}
+        />
+      </>
     )
   }
 }

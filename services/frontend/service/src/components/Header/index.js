@@ -13,7 +13,11 @@ import ChannelNavigator from '../ChannelNavigator'
 const useStyles = makeStyles((theme) => ({
   root: {
     position: 'fixed',
-    zIndex: 1201
+    zIndex: 1201,
+    height: '56px'
+  },
+  toolbar: {
+    height: '56px'
   },
   menuButton: {
     marginRight: theme.spacing(2)
@@ -24,7 +28,7 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 /* helper function - takes in button status and setUserToken setter
- * has a saftey check - the trigger for the firebase SignOut can only be called if the current buttonStatus == logout
+ * has a safety check - the trigger for the firebase SignOut can only be called if the current buttonStatus == logout
  * also handle button clicks for switching between login and register pages */
 const buttonClick = function (buttonStatus, setRegister, setCurrentUser) {
   if (buttonStatus === 'Logout') {
@@ -59,8 +63,9 @@ function Header ({
   const classes = useStyles()
   return (
     <>
+      <div className={classes.toolbar} />
       <AppBar className={classes.root}>
-        <Toolbar>
+        <Toolbar className={classes.toolbar}>
           {currentUser.id && (
             <IconButton
               edge='start'

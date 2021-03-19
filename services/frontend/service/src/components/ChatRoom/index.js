@@ -24,12 +24,17 @@ const MAKE_USER = gql`
   }
 `
 const useStyles = makeStyles(() => ({
+  root: {
+    display: 'flex'
+    // flexDirection: 'column',
+    // alignItems: 'center'
+  },
   sidebar: {
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center'
   },
-  messagesBody: {
+  body: {
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
@@ -72,31 +77,31 @@ function ChatRoom ({
   }
 
   return (
-    <section>
-      <div>
+    <div className={classes.root}>
+      <div className={classes.sidebar}>
         {currentUser.id && (
           <Sidebar
-            className={classes.sidebar}
+            // className={classes.sidebar}
             currentUser={currentUser}
-            display='flex'
+            // display='flex'
             currentState={currentState}
             setCurrentState={setCurrentState}
             setChannels={setChannels}
           />
         )}
       </div>
-      <div>
+      <div className={classes.body}>
         {currentState.channel && currentState.conversation && (
           <MessagesBody
-            className={classes.messagesBody}
-            display='flex'
+            // className={classes.messagesBody}
+            // display='flex'
             currentState={currentState}
-            setCurrentState={setCurrentState}
+            // setCurrentState={setCurrentState}
             currentUser={currentUser}
           />
         )}
       </div>
-    </section>
+    </div>
   )
 }
 

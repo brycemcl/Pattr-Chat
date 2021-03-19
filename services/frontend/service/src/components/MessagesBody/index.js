@@ -9,15 +9,19 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'space-between',
-    height: '100vh'
+    width: '100%'
+    // height: '100vh'
   },
   body: {
-    marginTop: '80px',
-    maxHeight: '80vh',
-    overflowY: 'scroll'
+    // marginTop: '80px',
+    // maxHeight: '80vh',
+    // overflowY: 'scroll'
+    height: '100%',
+    flex: 1
   },
-  messageForm: {
-
+  sendMessageForm: {
+    maxHeight: '80vh',
+    minHeight: '80vh'
   }
 }))
 
@@ -32,10 +36,10 @@ function MessagesBody ({ currentState, currentUser }) {
           currentState={currentState}
           currentUser={currentUser}
           setSendingMessage={setSendingMessage}
-          sendingMessage={sendingMessage}
+          // sendingMessage={sendingMessage}
         />
       </div>
-      <div className={classes.messageForm}>
+      <div className={classes.sendMessageForm}>
         <SendMessageForm
           currentUser={currentUser}
           currentState={currentState}
