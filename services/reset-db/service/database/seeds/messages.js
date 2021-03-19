@@ -63,7 +63,7 @@ const createMessage = async ({ conversationId, userId, messageText }) => {
     variables: {
       conversationId,
       userId,
-      messageText
+      messageText: { text: messageText }
     }
   }
   const message = await graphqlApi

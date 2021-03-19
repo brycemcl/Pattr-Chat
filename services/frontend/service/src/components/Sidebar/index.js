@@ -12,24 +12,27 @@ import ListItemText from '@material-ui/core/ListItemText'
 import AccountCircleIcon from '@material-ui/icons/AccountCircle'
 import ForumIcon from '@material-ui/icons/Forum'
 import { gql, useSubscription } from '@apollo/client'
+import UserSelector from '../UserSelector'
 const drawerWidth = 260
 
 // graphql subscription to grab the current channels - server to client 1 way updating
 const GET_CHANNELS = gql`
-  subscription($id: Int!) {
-    users_by_pk(id: $id) {
+subscription($id: Int!) {
+  users_by_pk(id: $id) {
+    id
+  users_channels(order_by: { id: desc }){
+    channel{
+      name
       id
-      channels(order_by: { id: desc }) {
-        name
+      conversations(order_by: { id: desc }) {
         id
-        conversations(order_by: { id: desc }) {
-          id
-          name
-          public
-        }
+        name
+        public
       }
     }
   }
+}
+}
 `
 
 // style this component
@@ -70,12 +73,7 @@ const setClickedSidebarOption = (id, setCurrentState) => {
   })
 }
 // sidebar component
-const Sidebar = ({
-  currentUser,
-  currentState,
-  setCurrentState,
-  setChannels
-}) => {
+const Sidebar = ({ currentUser, currentState, setCurrentState, setChannels }) => {
   const classes = useStyles()
 
   // grab this hook, which stores the data back from graphql with live data of users current channels and conversations
@@ -88,6 +86,7 @@ const Sidebar = ({
   useEffect(() => {
     if (!loading && !error) {
       // setter for organization switcher component to show all orgs to switch between
+
       setChannels(data)
 
       /* use setCurrentState setter, passed from props to update the currentState, use a callback to modify this.
@@ -97,31 +96,31 @@ const Sidebar = ({
        * goes through the array of returned channel ids. checks if the array includes currentState.channel in our mutated state. */
       setCurrentState((cs) => {
         const mutatedState = { ...cs }
-        if (
-          !data.users_by_pk.channels
-            .map((channel) => {
-              return channel.id
-            })
-            .includes(mutatedState.channel)
-        ) {
+        try {
+          if (
+            !data.users_by_pk.users_channels
+              .map(({ channel }) => {
+                return channel.id
+              })
+              .includes(mutatedState.channel)
+          ) {
           /* if above evals to true, we reach this code. we check if that users data.users_by_pk.channels.length is more than 0
            * if it is, we then set the mutated states .channel property to = data.users_by_pk.channels[0].id, setting a default channel
            * else this logged in user is removed from the last channel they can see in their list */
-          if (data.users_by_pk.channels.length > 0) {
-            mutatedState.channel = data.users_by_pk.channels[0].id
-          } else {
-            mutatedState.channel = null
+            if (data.users_by_pk.users_channels.length > 0) {
+              mutatedState.channel = data.users_by_pk.users_channels[0].channel.id
+            } else {
+              mutatedState.channel = null
+            }
           }
-        }
 
-        /* keep track of a clients valid conversations in their sidebar
+          /* keep track of a clients valid conversations in their sidebar
          * filter the conversations a user selects by the organization that is stored for this user in currentState */
-        try {
-          const currentConversations = data.users_by_pk.channels.find(
-            (channel) => {
+          const currentConversations = data.users_by_pk.users_channels.find(
+            ({ channel }) => {
               return channel.id === mutatedState.channel
             }
-          ).conversations
+          ).channel.conversations
 
           /* map through currentConversations array we collected above, on each iteration, return the conversation.id
            * on each passthrough of the loop in this map, ensure the conversation.id is included with the mutatedStates conversation */
@@ -133,15 +132,15 @@ const Sidebar = ({
               .includes(mutatedState.conversation)
           ) {
             /* if above evaluates to true, check if they have any valid conversations.
-             * setting a default channel, set the first conversation from currentConversations[0].id as their default selected
-             * else they don't have any conversations, don't show anything in the sidebar */
+         * setting a default channel, set the first conversation from currentConversations[0].id as their default selected
+         * else they don't have any conversations, don't show anything in the sidebar */
             if (currentConversations.length > 0) {
               mutatedState.conversation = currentConversations[0].id
             } else {
               mutatedState.conversation = null
             }
           }
-          // if they don't have any conversations on inital rendering/loading (or ever), show nothing
+        // if they don't have any conversations on inital rendering/loading (or ever), show nothing
         } catch {
           mutatedState.conversation = null
         }
@@ -170,10 +169,10 @@ const Sidebar = ({
   /* filter messages and push them to the private or public arrays based on their status
    * show our conversation for a users selected channel */
   try {
-    data.users_by_pk.channels
-      .find((channel) => {
+    data.users_by_pk.users_channels
+      .find(({ channel }) => {
         return channel.id === currentState.channel
-      })
+      }).channel
       .conversations.forEach((conversation) => {
         // if the conversation is public push to public array, else it is private, push to private array
         if (conversation.public) {
@@ -197,6 +196,7 @@ const Sidebar = ({
         <ForumIcon />
       </ListItemIcon>
       <ListItemText primary={name} />
+      <UserSelector />
     </ListItem>
   ))
 
@@ -211,6 +211,9 @@ const Sidebar = ({
         <AccountCircleIcon />
       </ListItemIcon>
       <ListItemText primary={name} />
+      <UserSelector
+        currentState={currentState}
+      />
     </ListItem>
   ))
   // return the component to render the sidebar. when a sidebar option is clicked, update the current state to record the last click

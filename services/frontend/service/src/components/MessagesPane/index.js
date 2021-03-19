@@ -39,7 +39,7 @@ function MessagesPane ({ currentState, currentUser, setSendingMessage }) {
       conversationId: currentState.conversation
     }
   })
-
+  console.log('data inside messagespane is: ', data)
   useEffect(() => {
     try {
       data.users_by_pk.channels[0].conversations[0].messages.forEach(
