@@ -1,13 +1,18 @@
 import { makeStyles } from '@material-ui/core/styles'
 import Avatar from './Avatar'
 import MessageMetadata from './MessageMetadata'
-import Message from './Message'
 import Paper from '@material-ui/core/Paper'
 
 // style MessageInThread component
 const useStyles = makeStyles({
+  messageContainer: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    gap: '1.25em',
+    width: '100%'
+  },
   root: {
-    maxWidth: 475,
+    maxWidth: '55%',
     padding: '1rem',
     marginTop: '20px',
     marginBottom: '15px',
@@ -23,6 +28,14 @@ const useStyles = makeStyles({
   },
   pos: {
     marginBottom: 12
+  },
+  messageContent: {
+    flex: 1,
+    overflow: 'auto',
+    overflowWrap: 'anywhere'
+  },
+  figure: {
+    margin: 1
   }
 })
 
@@ -35,14 +48,14 @@ const MessageInThread = ({
   const classes = useStyles()
   return (
     <Paper className={classes.root}>
-      <div>
-        <Avatar name='Bob' />
-      </div>
-      <div>
-        <div>
+      <div className={classes.messageContainer}>
+        <figure className={classes.figure}>
+          <Avatar name='Bob' />
+        </figure>
+        <div className={classes.messageContent}>
           <MessageMetadata name={messageName} date={date} />
+          {messageText}
         </div>
-        <Message>{messageText}</Message>
       </div>
     </Paper>
   )
