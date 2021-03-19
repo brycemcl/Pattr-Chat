@@ -22,11 +22,7 @@ const renderRegister = function (event, setRegister) {
 /* helper function that will be called when the user submits the form for the sign in button with email + pw info
  * Firebase auth to sign in then set the userToken in the parent component to true
  * otherwise catch and display errors - using material UI? */
-const loginAuth = function (
-  email,
-  password,
-  setCurrentUser
-) {
+const loginAuth = function (email, password, setCurrentUser) {
   firebase
     .auth()
     .signInWithEmailAndPassword(email, password)
@@ -44,27 +40,27 @@ const loginAuth = function (
 // style our component
 const useStyles = makeStyles((theme) => ({
   paper: {
-    marginTop: '120px',
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center'
+    // marginTop: '120px',
+    // display: 'flex',
+    // flexDirection: 'column',
+    // alignItems: 'center'
   },
   avatar: {
-    margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main
+    // margin: theme.spacing(1),
+    // backgroundColor: theme.palette.secondary.main
   },
   form: {
-    width: '100%', // Fix IE 11 issue.
-    marginTop: theme.spacing(1)
+    // width: '100%', // Fix IE 11 issue.
+    // marginTop: theme.spacing(1)
   },
   submit: {
-    margin: theme.spacing(3, 0, 2)
+    // margin: theme.spacing(3, 0, 2)
   },
   root: {
-    width: '100%',
-    '& > * + *': {
-      marginTop: theme.spacing(2)
-    }
+    // width: '100%',
+    // '& > * + *': {
+    //   marginTop: theme.spacing(2)
+    // }
   }
 }))
 
@@ -125,8 +121,7 @@ const SignIn = ({ setRegister, setCurrentUser }) => {
             variant='contained'
             color='primary'
             className={classes.submit}
-            onClick={() =>
-              loginAuth(email, password, setCurrentUser)}
+            onClick={() => loginAuth(email, password, setCurrentUser)}
           >
             Sign In
           </Button>

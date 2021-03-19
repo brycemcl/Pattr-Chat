@@ -6,22 +6,22 @@ import { makeStyles } from '@material-ui/core/styles'
 // style our components
 const useStyles = makeStyles((theme) => ({
   messageContainer: {
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'space-between',
-    width: '100%'
-    // height: '100vh'
+    // display: 'flex',
+    // flexDirection: 'column',
+    // justifyContent: 'space-between',
+    // width: '100%'
+    // // height: '100vh'
   },
   body: {
-    // marginTop: '80px',
-    // maxHeight: '80vh',
-    // overflowY: 'scroll'
-    height: '100%',
-    flex: 1
+    // // marginTop: '80px',
+    // // maxHeight: '80vh',
+    // // overflowY: 'scroll'
+    // height: '100%',
+    // flex: 1
   },
   sendMessageForm: {
-    maxHeight: '80vh',
-    minHeight: '80vh'
+    // maxHeight: '80vh',
+    // minHeight: '80vh'
   }
 }))
 

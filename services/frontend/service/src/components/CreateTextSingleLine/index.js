@@ -55,7 +55,7 @@ const MAKE_CHANNEL = gql`
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    width: '100%'
+    // width: '100%'
   }
 }))
 
@@ -114,24 +114,22 @@ const CreateTextSingleLine = ({
           }
         }}
         endAdornment={
-          !submitting
-            ? (
-              <InputAdornment position='end'>
-                <IconButton
-                  onClick={() => {
-                    submit(text)
-                  }}
-                  edge='end'
-                >
-                  <Check />
-                </IconButton>
-              </InputAdornment>
-              )
-            : (
-              <InputAdornment position='end'>
-                <CircularProgress />
-              </InputAdornment>
-              )
+          !submitting ? (
+            <InputAdornment position='end'>
+              <IconButton
+                onClick={() => {
+                  submit(text)
+                }}
+                edge='end'
+              >
+                <Check />
+              </IconButton>
+            </InputAdornment>
+          ) : (
+            <InputAdornment position='end'>
+              <CircularProgress />
+            </InputAdornment>
+          )
         }
         labelWidth={placeholder.length * 9}
       />

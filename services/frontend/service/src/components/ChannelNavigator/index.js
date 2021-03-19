@@ -14,10 +14,10 @@ import MenuIcon from '@material-ui/icons/Menu'
 // styles for our component
 const useStyles = makeStyles({
   list: {
-    width: 250
+    // width: 250
   },
   fullList: {
-    width: 'auto'
+    // width: 'auto'
   }
 })
 

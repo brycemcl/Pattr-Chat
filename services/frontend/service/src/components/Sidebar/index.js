@@ -34,26 +34,26 @@ const GET_CHANNELS = gql`
 // style this component
 const useStyles = makeStyles((theme) => ({
   root: {
-    display: 'flex'
+    // display: 'flex'
   },
   appBar: {
-    // width: `calc(100% - ${drawerWidth}px)`,
-    // marginLeft: drawerWidth
+    // // width: `calc(100% - ${drawerWidth}px)`,
+    // // marginLeft: drawerWidth
   },
   drawer: {
-    // width: drawerWidth,
-    minWidth: drawerWidth,
-    maxWidth: '100vw',
-    flexShrink: 0
+    // // width: drawerWidth,
+    // minWidth: drawerWidth,
+    // maxWidth: '100vw',
+    // flexShrink: 0
   },
   drawerPaper: {
     top: 'auto'
     // width: '100%'
   },
   content: {
-    flexGrow: 1,
-    backgroundColor: theme.palette.background.default,
-    padding: theme.spacing(3)
+    // flexGrow: 1,
+    // backgroundColor: theme.palette.background.default,
+    // padding: theme.spacing(3)
   }
 }))
 

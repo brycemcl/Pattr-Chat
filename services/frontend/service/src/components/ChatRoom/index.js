@@ -25,20 +25,20 @@ const MAKE_USER = gql`
 `
 const useStyles = makeStyles(() => ({
   root: {
-    display: 'flex'
+    // display: 'flex'
+    // // flexDirection: 'column',
+    // // alignItems: 'center'
+  },
+  sidebar: {
+    // display: 'flex',
     // flexDirection: 'column',
     // alignItems: 'center'
   },
-  sidebar: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center'
-  },
   body: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    marginLeft: '100px'
+    // display: 'flex',
+    // flexDirection: 'column',
+    // alignItems: 'center',
+    // marginLeft: '100px'
   }
 }))
 

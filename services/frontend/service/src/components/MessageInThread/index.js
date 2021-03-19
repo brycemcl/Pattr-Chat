@@ -7,22 +7,22 @@ import Paper from '@material-ui/core/Paper'
 // style MessageInThread component
 const useStyles = makeStyles({
   root: {
-    maxWidth: 475,
-    padding: '1rem',
-    marginTop: '20px',
-    marginBottom: '15px',
-    marginLeft: '275px'
+    // maxWidth: 475,
+    // padding: '1rem',
+    // marginTop: '20px',
+    // marginBottom: '15px',
+    // marginLeft: '275px'
   },
   bullet: {
-    display: 'inline-block',
-    margin: '0 2px',
-    transform: 'scale(0.8)'
+    // display: 'inline-block',
+    // margin: '0 2px',
+    // transform: 'scale(0.8)'
   },
   title: {
-    fontSize: 14
+    // fontSize: 14
   },
   pos: {
-    marginBottom: 12
+    // marginBottom: 12
   }
 })
 
