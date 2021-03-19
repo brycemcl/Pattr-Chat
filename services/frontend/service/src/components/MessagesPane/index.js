@@ -1,4 +1,5 @@
 /* eslint-disable camelcase */
+import { useEffect } from 'react'
 import MessageInThread from '../MessageInThread'
 import { gql, useSubscription } from '@apollo/client'
 
@@ -29,7 +30,7 @@ const GET_MESSAGES = gql`
 `
 
 // component to handle all the messages in the message pane
-function MessagesPane ({ currentState, currentUser }) {
+function MessagesPane ({ currentState, currentUser, setSendingMessage }) {
   // call and use graphql query to get messages via subscription/web socket
   const { loading, error, data } = useSubscription(GET_MESSAGES, {
     variables: {
@@ -39,6 +40,20 @@ function MessagesPane ({ currentState, currentUser }) {
     }
   })
 
+  useEffect(() => {
+    try {
+      data.users_by_pk.channels[0].conversations[0].messages.forEach(
+        (message) => {
+          setSendingMessage((cs) => {
+            const tempCs = [...cs]
+            const indexToReplace = tempCs.findIndex((e) => e === message.id)
+            tempCs.splice(indexToReplace, 1)
+            return tempCs
+          })
+        }
+      )
+    } catch {}
+  }, [data, setSendingMessage])
   // render out the array of messages from this MessagesPane component
   if (loading) return <p>Loading...</p>
   if (error) return <p>Error :(</p>
@@ -68,6 +83,7 @@ function MessagesPane ({ currentState, currentUser }) {
             dateStringDelimited[5]
           )
         )
+
         return message
       }
     )
