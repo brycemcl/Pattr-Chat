@@ -1,3 +1,4 @@
+/* eslint-disable multiline-ternary */
 import { useState } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import IconButton from '@material-ui/core/IconButton'
@@ -114,24 +115,22 @@ const CreateTextSingleLine = ({
           }
         }}
         endAdornment={
-          !submitting
-            ? (
-              <InputAdornment position='end'>
-                <IconButton
-                  onClick={() => {
-                    submit(text)
-                  }}
-                  edge='end'
-                >
-                  <Check />
-                </IconButton>
-              </InputAdornment>
-              )
-            : (
-              <InputAdornment position='end'>
-                <CircularProgress />
-              </InputAdornment>
-              )
+          !submitting ? (
+            <InputAdornment position='end'>
+              <IconButton
+                onClick={() => {
+                  submit(text)
+                }}
+                edge='end'
+              >
+                <Check />
+              </IconButton>
+            </InputAdornment>
+          ) : (
+            <InputAdornment position='end'>
+              <CircularProgress />
+            </InputAdornment>
+          )
         }
         labelWidth={placeholder.length * 9}
       />

@@ -8,16 +8,14 @@ const useStyles = makeStyles((theme) => ({
   messageContainer: {
     display: 'flex',
     flexDirection: 'column',
-    justifyContent: 'space-between',
-    height: '100vh'
+    justifyContent: 'space-between'
   },
   body: {
-    marginTop: '80px',
-    maxHeight: '80vh',
-    overflowY: 'scroll'
+    overflow: 'auto',
+    height: window.innerHeight - 56 - 150
   },
-  messageForm: {
-    width: '96%'
+  sendMessageForm: {
+    height: '150px'
   }
 }))
 
@@ -29,20 +27,23 @@ function MessagesBody ({ currentState, currentUser }) {
   /* https://stackoverflow.com/questions/61851659/chat-scroll-to-bottom-when-send-a-message-using-react
    * useeffect that triggers whenever our sendingMessage state changes & a message is sent to auto scroll our div to the bottom of the screen */
   useEffect(() => {
-    document.querySelector('#messages-scrollbar').scrollTop = document.querySelector('#messages-scrollbar').scrollHeight
+    document.querySelector(
+      '#messages-scrollbar'
+    ).scrollTop = document.querySelector('#messages-scrollbar').scrollHeight
   }, [sendingMessage])
 
   return (
     <div className={classes.messageContainer}>
-      <div id='messages-scrollbar' className={classes.body}>
-        <MessagesPane
-          currentState={currentState}
-          currentUser={currentUser}
-          setSendingMessage={setSendingMessage}
-          sendingMessage={sendingMessage}
-        />
+      <div>
+        <div id='messages-scrollbar' className={classes.body}>
+          <MessagesPane
+            currentState={currentState}
+            currentUser={currentUser}
+            setSendingMessage={setSendingMessage}
+          />
+        </div>
       </div>
-      <div className={classes.messageForm}>
+      <div className={classes.sendMessageForm}>
         <SendMessageForm
           currentUser={currentUser}
           currentState={currentState}

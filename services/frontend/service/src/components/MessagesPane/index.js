@@ -1,7 +1,17 @@
 /* eslint-disable camelcase */
+import { makeStyles } from '@material-ui/core/styles'
 import { useEffect } from 'react'
 import MessageInThread from '../MessageInThread'
+import Spinner from '../Spinner'
 import { gql, useSubscription } from '@apollo/client'
+
+// style MessageInThread component
+const useStyles = makeStyles((theme) => ({
+  root: {
+    display: 'flex',
+    flexDirection: 'column'
+  }
+}))
 
 // graphql query to get messages via subscription from our pg db :)
 const GET_MESSAGES = gql`
@@ -29,7 +39,7 @@ function MessagesPane ({ currentState, currentUser, setSendingMessage }) {
       conversationId: currentState.conversation
     }
   })
-
+  const classes = useStyles()
   useEffect(() => {
     try {
       data.conversations_by_pk.messages.forEach(
@@ -46,7 +56,7 @@ function MessagesPane ({ currentState, currentUser, setSendingMessage }) {
   }, [data, setSendingMessage])
 
   // render out the array of messages from this MessagesPane component
-  if (loading) return <p>Loading...</p>
+  if (loading) return <Spinner />
   if (error) return <p>Error :(</p>
 
   // array to store our collected messages in this component
@@ -90,15 +100,12 @@ function MessagesPane ({ currentState, currentUser, setSendingMessage }) {
         date={date_sent} // eslint-disable-line camelcase
         messageText={message.text}
         messageName={user.display_name}
+        currentUser={user.currentUser}
       />
     )
   })
 
-  return (
-    <main className='layout'>
-      <section className='messaged'>{mappedMessages}</section>
-    </main>
-  )
+  return <div className={classes.root}>{mappedMessages}</div>
 }
 
 export default MessagesPane

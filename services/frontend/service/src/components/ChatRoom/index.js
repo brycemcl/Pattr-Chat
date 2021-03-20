@@ -3,6 +3,7 @@ import Sidebar from '../Sidebar'
 import MessagesBody from '../MessagesBody'
 import { makeStyles } from '@material-ui/core/styles'
 import { gql, useQuery, useMutation } from '@apollo/client'
+import Spinner from '../Spinner'
 
 /*
     ⢀⣠⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠀⠀⠀⠀⣠⣤⣶⣶
@@ -43,16 +44,21 @@ const MAKE_USER = gql`
   }
 `
 const useStyles = makeStyles(() => ({
-  sidebar: {
+  root: {
     display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center'
+    height: '100%'
   },
-  messagesBody: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    marginLeft: '100px'
+
+  sidebar: {
+    minWidth: '300px',
+    maxWidth: '200px'
+
+    // display: 'flex',
+    // flexDirection: 'column',
+    // alignItems: 'center'
+  },
+  body: {
+    flex: '1 1 auto'
   }
 }))
 
@@ -75,7 +81,7 @@ function ChatRoom ({ currentUser, setCurrentUser, setChannels, currentState, set
   }, [data, setCurrentUser])
 
   // error checking
-  if (loading) return <p>Loading...</p>
+  if (loading) return <Spinner />
   if (error) return <p>Error :(</p>
   if (data && Array.isArray(data.users) && data.users.length === 0) {
     makeUser({
@@ -88,31 +94,31 @@ function ChatRoom ({ currentUser, setCurrentUser, setChannels, currentState, set
   }
 
   return (
-    <section>
-      <div>
+    <div className={classes.root}>
+      <div className={classes.sidebar}>
         {currentUser.id && (
           <Sidebar
-            className={classes.sidebar}
+            // className={classes.sidebar}
             currentUser={currentUser}
-            display='flex'
+            // display='flex'
             currentState={currentState}
             setCurrentState={setCurrentState}
             setChannels={setChannels}
           />
         )}
       </div>
-      <div>
+      <div className={classes.body}>
         {currentState.channel && currentState.conversation && (
           <MessagesBody
-            className={classes.messagesBody}
-            display='flex'
+            // className={classes.messagesBody}
+            // display='flex'
             currentState={currentState}
-            setCurrentState={setCurrentState}
+            // setCurrentState={setCurrentState}
             currentUser={currentUser}
           />
         )}
       </div>
-    </section>
+    </div>
   )
 }
 

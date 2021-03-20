@@ -3,7 +3,6 @@ import CreateTextSingleLine from '../CreateTextSingleLine'
 import { useEffect } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import Drawer from '@material-ui/core/Drawer'
-import CssBaseline from '@material-ui/core/CssBaseline'
 import List from '@material-ui/core/List'
 import Divider from '@material-ui/core/Divider'
 import ListItem from '@material-ui/core/ListItem'
@@ -12,8 +11,8 @@ import ListItemText from '@material-ui/core/ListItemText'
 import AccountCircleIcon from '@material-ui/icons/AccountCircle'
 import ForumIcon from '@material-ui/icons/Forum'
 import { gql, useSubscription } from '@apollo/client'
+import Spinner from '../Spinner'
 import UserSelector from '../UserSelector'
-const drawerWidth = 260
 
 // graphql query to get public channels for users to display to the client
 const GET_PUBLIC_CHANNELS = gql`
@@ -55,28 +54,13 @@ subscription ($userId: Int!) {
 // style this component
 const useStyles = makeStyles((theme) => ({
   root: {
-    display: 'flex'
-  },
-  appBar: {
-    width: `calc(100% - ${drawerWidth}px)`,
-    marginLeft: drawerWidth
+    height: '100%',
+    width: '100%'
   },
   drawer: {
-    width: drawerWidth,
-    flexShrink: 0
-  },
-  drawerPaper: {
-    width: drawerWidth,
-    marginTop: '64px',
-    marginLeft: '0px',
-    paddingLeft: '0px'
-  },
-  // necessary for content to be below app bar
-  toolbar: theme.mixins.toolbar,
-  content: {
-    flexGrow: 1,
-    backgroundColor: theme.palette.background.default,
-    padding: theme.spacing(3)
+    position: 'relative',
+    height: '100%',
+    width: '100%'
   }
 }))
 
@@ -206,7 +190,7 @@ const Sidebar = ({ currentUser, currentState, setCurrentState, setChannels }) =>
     }
   }, [data, currentState, error, loading, setChannels, setCurrentState, dataPrivate, errorPrivate, loadingPrivate])
 
-  if (loading) return <p>Loading...</p>
+  if (loading) return <Spinner />
   if (error) return <p>Error :(</p>
   if (loadingPrivate) return <p>Loading...</p>
   if (errorPrivate) return <p>Error :(</p>
@@ -267,15 +251,18 @@ const Sidebar = ({ currentUser, currentState, setCurrentState, setChannels }) =>
 
   // return the component to render the sidebar. when a sidebar option is clicked, update the current state to record the last click
   return (
-    <>
-      <CssBaseline />
+    <div className={classes.root}>
       <Drawer
         className={classes.drawer}
         variant='permanent'
-        classes={{
-          paper: classes.drawerPaper
+        PaperProps={{
+          style: { position: 'absolute', height: '100%', width: '100%' }
         }}
-        anchor='left'
+        BackdropProps={{ style: { position: 'absolute' } }}
+        ModalProps={{
+          container: document.getElementById('drawer-container'),
+          style: { position: 'absolute' }
+        }}
       >
         {currentState.channel ? (
           <>
@@ -300,8 +287,6 @@ const Sidebar = ({ currentUser, currentState, setCurrentState, setChannels }) =>
                 />
               </ListItem>
               {privateMessages}
-              {/* private */}
-              {/* currentState.channel && currentState.conversation */}
             </List>
             <Divider />
           </>
@@ -309,7 +294,7 @@ const Sidebar = ({ currentUser, currentState, setCurrentState, setChannels }) =>
           <p>You don't have any channels selected.</p>
         )}
       </Drawer>
-    </>
+    </div>
   )
 }
 

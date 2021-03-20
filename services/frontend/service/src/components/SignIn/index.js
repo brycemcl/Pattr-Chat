@@ -1,6 +1,5 @@
 import Avatar from '@material-ui/core/Avatar'
 import Button from '@material-ui/core/Button'
-import CssBaseline from '@material-ui/core/CssBaseline'
 import TextField from '@material-ui/core/TextField'
 import Link from '@material-ui/core/Link'
 import Grid from '@material-ui/core/Grid'
@@ -23,11 +22,7 @@ const renderRegister = function (event, setRegister) {
 /* helper function that will be called when the user submits the form for the sign in button with email + pw info
  * Firebase auth to sign in then set the userToken in the parent component to true
  * otherwise catch and display errors - using material UI? */
-const loginAuth = function (
-  email,
-  password,
-  setCurrentUser
-) {
+const loginAuth = function (email, password, setCurrentUser) {
   firebase
     .auth()
     .signInWithEmailAndPassword(email, password)
@@ -80,7 +75,6 @@ const SignIn = ({ setRegister, setCurrentUser }) => {
 
   return (
     <Container component='main' maxWidth='xs'>
-      <CssBaseline />
       <div>
         <ToastContainer position='bottom-center' />
       </div>
@@ -127,8 +121,7 @@ const SignIn = ({ setRegister, setCurrentUser }) => {
             variant='contained'
             color='primary'
             className={classes.submit}
-            onClick={() =>
-              loginAuth(email, password, setCurrentUser)}
+            onClick={() => loginAuth(email, password, setCurrentUser)}
           >
             Sign In
           </Button>

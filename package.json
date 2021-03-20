@@ -4,7 +4,8 @@
   "description": "",
   "scripts": {
     "prepare": "husky install",
-    "install-all": "find . -name 'package.json' ! -path '*/node_modules/*' -execdir npm install \\;"
+    "install-all": "find . -name 'package.json' ! -path '*/node_modules/*' -execdir npm install \\;",
+    "lint": ".husky/lint"
   },
   "repository": {
     "type": "git",
