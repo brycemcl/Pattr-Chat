@@ -40,26 +40,29 @@ export default function ChannelNavigator ({ currentUser, channels, setCurrentSta
   /* create mapped channels, on a render tbd. this defaults to the catch, because our channels
    * don't exist in state yet (passed as a prop from somehwere else in our app from a different component), when this  eventually re-renders
    * with the 'channel' prop finally, the code in the try block gets executed sucessfuly */
+
   try {
-    mapOfChannels = channels.users_by_pk.channels.map((channel) => (
-      <ListItem
-        button
-        key={channel.id}
-        onClick={(e) => {
-          setCurrentState((cs) => {
-            return {
-              ...cs,
-              channel: channel.id
-            }
-          })
-        }}
-      >
-        <ListItemIcon>
-          <WorkIcon />
-        </ListItemIcon>
-        <ListItemText primary={channel.name} />
-      </ListItem>
-    ))
+    mapOfChannels = channels.users_by_pk.users_channels.map(({ channel }) => {
+      return (
+        <ListItem
+          button
+          key={channel.id}
+          onClick={(e) => {
+            setCurrentState((cs) => {
+              return {
+                ...cs,
+                channel: channel.id
+              }
+            })
+          }}
+        >
+          <ListItemIcon>
+            <WorkIcon />
+          </ListItemIcon>
+          <ListItemText primary={channel.name} />
+        </ListItem>
+      )
+    })
   } catch {}
   // callback function that will
   const list = (anchor) => (
