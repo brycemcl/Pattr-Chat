@@ -12,7 +12,7 @@ const useStyles = makeStyles((theme) => ({
   },
   body: {
     overflow: 'auto',
-    height: window.innerHeight - 56 - 150
+    height: window.innerHeight - 64 - 150
   },
   sendMessageForm: {
     height: '150px'
