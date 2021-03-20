@@ -37,10 +37,10 @@ subscription($userId: Int!) {
 
 // graphql query to get private channels for users to display to the client
 const GET_PRIVATE_CHANNELS = gql`
-  subscription ($userId: Int!) {
+subscription ($userId: Int!) {
   users_by_pk(id: $userId) {
     id
-    users_conversations(where: {conversation: {public: {_eq: false}}}) {
+    users_conversations(where: {conversation: {public: {_eq: false}}}, order_by: {id: desc}) {
       id
       conversation {
         channel_id
@@ -98,8 +98,6 @@ const Sidebar = ({ currentUser, currentState, setCurrentState, setChannels }) =>
     variables: { userId: currentUser.id }
   })
 
-  console.log('Data from DB: ', data)
-
   // grab this hook, which stores the data back from graphql with live data of users current private channels and conversations
   const { loading: loadingPrivate, error: errorPrivate, data: dataPrivate } = useSubscription(GET_PRIVATE_CHANNELS, {
     variables: { userId: currentUser.id }
@@ -109,7 +107,7 @@ const Sidebar = ({ currentUser, currentState, setCurrentState, setChannels }) =>
    * https://stackoverflow.com/questions/62336340/cannot-update-a-component-while-rendering-a-different-component-warning */
   useEffect(() => {
     if (!loading && !error && !loadingPrivate && !errorPrivate) {
-      // setter for organization switcher component to show all public orgs to switch between
+      // setter for organization switcher component, to show all public orgs to switch between
       setChannels(data)
 
       /* use setCurrentState setter, passed from props to update the currentState, use a callback to modify this.
@@ -169,7 +167,8 @@ const Sidebar = ({ currentUser, currentState, setCurrentState, setChannels }) =>
 
           }
 
-          /* map through currentConversations array we collected above, on each iteration, return the conversation.id
+          /* this is to handle an instance where a user might delete a conversation
+           * map through currentConversations array we collected above, on each iteration, return the conversation.id
            * on each passthrough of the loop in this map, ensure the conversation.id is included with the mutatedStates conversation */
           if (
             !currentConversations
@@ -178,7 +177,7 @@ const Sidebar = ({ currentUser, currentState, setCurrentState, setChannels }) =>
               })
               .includes(mutatedState.conversation)
           ) {
-            /* if above evaluates to true, check if they have any valid conversations.
+            /* if above evaluates to false, check if they have any valid conversations.
             * setting a default channel, set the first conversation from currentConversations[0].id as their default selected
             * else they don't have any conversations, don't show anything in the sidebar */
             if (currentConversations.length > 0) {
@@ -209,6 +208,8 @@ const Sidebar = ({ currentUser, currentState, setCurrentState, setChannels }) =>
 
   if (loading) return <p>Loading...</p>
   if (error) return <p>Error :(</p>
+  if (loadingPrivate) return <p>Loading...</p>
+  if (errorPrivate) return <p>Error :(</p>
 
   /* filter messages and push them to the private or public arrays based on their status
    * show our conversation for a users selected channel */
@@ -263,6 +264,7 @@ const Sidebar = ({ currentUser, currentState, setCurrentState, setChannels }) =>
   } catch {
   // user has no conversations in the selected channel
   }
+
   // return the component to render the sidebar. when a sidebar option is clicked, update the current state to record the last click
   return (
     <>

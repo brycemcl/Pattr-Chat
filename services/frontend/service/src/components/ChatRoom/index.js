@@ -20,7 +20,7 @@ import { gql, useQuery, useMutation } from '@apollo/client'
     ⣿⣿⣿⣿⣿⣿⣿⣿⣧⠀⠀⠀⠀⠀⠀⠀⠈⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢹⣿⣿
     ⣿⣿⣿⣿⣿⣿⣿⣿⣿⠃⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⣿⣿
 
-    > me when I find another im bug
+    > me when I find another instant messaging bug
 */
 
 // fetch graphql query which when used, will retrieve a user who just logged in
