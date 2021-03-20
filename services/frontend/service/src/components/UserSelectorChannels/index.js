@@ -40,6 +40,10 @@ const useStyles = makeStyles({
   avatar: {
     backgroundColor: blue[100],
     color: blue[600]
+  },
+  button: {
+    height: '32px',
+    width: '56px'
   }
 })
 
@@ -90,6 +94,8 @@ function SimpleDialog ({ onClose, selectedValue, open, allUsers, channel }) {
 export default function UserSelectorChannels ({ channel }) {
   const allUsers = []
 
+  const classes = useStyles()
+
   // usestate in this component that
   const [open, setOpen] = useState(false)
   const [selectedValue, setSelectedValue] = useState('')
@@ -117,13 +123,15 @@ export default function UserSelectorChannels ({ channel }) {
 
   // https://developer.mozilla.org/en-US/docs/Web/API/Event/stopPropagation
   return (
-    <div>
+    <>
       {/* <Typography variant="subtitle1">Selected: {selectedValue}</Typography> */}
       <br />
-      <Button onClick={(event) => {
-        event.stopPropagation()
-        handleClickOpen()
-      }}
+      <Button
+        onClick={(event) => {
+          event.stopPropagation()
+          handleClickOpen()
+        }}
+        className={classes.button}
       >
         <PersonAddIcon />
       </Button>
@@ -134,6 +142,6 @@ export default function UserSelectorChannels ({ channel }) {
         onClose={handleClose}
         channel={channel}
       />
-    </div>
+    </>
   )
 }

@@ -44,9 +44,12 @@ const useStyles = makeStyles({
   avatar: {
     backgroundColor: blue[100],
     color: blue[600]
+  },
+  button: {
+    height: '32px',
+    width: '56px'
   }
 })
-
 // simple dialog component to render the user click options
 function SimpleDialog ({ onClose, selectedValue, open, usersForChats, currentState }) {
   // declare our useMutation to add users to conversations here, pass the setter down later
@@ -92,6 +95,7 @@ function SimpleDialog ({ onClose, selectedValue, open, usersForChats, currentSta
 
 // exportour UserSelector component
 export default function UserSelector ({ currentState }) {
+  const classes = useStyles()
   const usersForChats = []
 
   // usestate in this component that
@@ -121,10 +125,10 @@ export default function UserSelector ({ currentState }) {
   }
 
   return (
-    <div>
+    <>
       {/* <Typography variant="subtitle1">Selected: {selectedValue}</Typography> */}
       <br />
-      <Button onClick={handleClickOpen}>
+      <Button onClick={handleClickOpen} className={classes.button}>
         <PersonAddIcon />
       </Button>
       <SimpleDialog
@@ -134,6 +138,6 @@ export default function UserSelector ({ currentState }) {
         onClose={handleClose}
         currentState={currentState}
       />
-    </div>
+    </>
   )
 }
