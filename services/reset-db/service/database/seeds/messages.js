@@ -3,11 +3,14 @@ const {
   fakerSeed,
   numberOfMessagesPerConversationPerPerson
 } = require('../../scale')
+
 // setup faker
 const faker = require('faker')
 faker.seed(fakerSeed)
+
 // reuse api settings
 const { graphqlApi } = require('../apiConnection')
+
 // we are going to be exporting this
 const messages = []
 

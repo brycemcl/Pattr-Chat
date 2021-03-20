@@ -5,28 +5,20 @@ import { gql, useSubscription } from '@apollo/client'
 
 // graphql query to get messages via subscription from our pg db :)
 const GET_MESSAGES = gql`
-  subscription($userId: Int!, $channelId: Int!, $conversationId: Int!) {
-    users_by_pk(id: $userId) {
+subscription ($conversationId: Int!) {
+  conversations_by_pk(id: $conversationId) {
+    messages {
       id
-      channels(where: { id: { _eq: $channelId } }) {
+      message
+      date_sent
+      user {
         id
-        conversations(
-          where: { id: { _eq: $conversationId }, messages: { user: {} } }
-        ) {
-          id
-          messages(order_by: { id: asc }) {
-            id
-            message
-            date_sent
-            user {
-              display_name
-              id
-            }
-          }
-        }
+        display_name
       }
     }
+    id
   }
+}
 `
 
 // component to handle all the messages in the message pane
@@ -34,15 +26,13 @@ function MessagesPane ({ currentState, currentUser, setSendingMessage }) {
   // call and use graphql query to get messages via subscription/web socket
   const { loading, error, data } = useSubscription(GET_MESSAGES, {
     variables: {
-      userId: currentUser.id,
-      channelId: currentState.channel,
       conversationId: currentState.conversation
     }
   })
-  console.log('data inside messagespane is: ', data)
+
   useEffect(() => {
     try {
-      data.users_by_pk.channels[0].conversations[0].messages.forEach(
+      data.conversations_by_pk.messages.forEach(
         (message) => {
           setSendingMessage((cs) => {
             const tempCs = [...cs]
@@ -52,8 +42,9 @@ function MessagesPane ({ currentState, currentUser, setSendingMessage }) {
           })
         }
       )
-    } catch {}
+    } catch { }
   }, [data, setSendingMessage])
+
   // render out the array of messages from this MessagesPane component
   if (loading) return <p>Loading...</p>
   if (error) return <p>Error :(</p>
@@ -63,9 +54,9 @@ function MessagesPane ({ currentState, currentUser, setSendingMessage }) {
 
   /* loop through + render out messages back from graphql subscription
    * set the currently logged in user for each message so we can style them conditonally later
-   * convert messages date from string to JS date */
+   * convert messages date from string to JS date (black magic idk how this works) */
   try {
-    messages = data.users_by_pk.channels[0].conversations[0].messages.map(
+    messages = data.conversations_by_pk.messages.map(
       ({ ...message }) => {
         message.user.currentUser = message.user.id === currentUser.id
         const dateString = String(message.date_sent)
