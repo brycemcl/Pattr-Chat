@@ -40,7 +40,6 @@ function MessagesBody ({ currentState, currentUser }) {
             currentState={currentState}
             currentUser={currentUser}
             setSendingMessage={setSendingMessage}
-            // sendingMessage={sendingMessage}
           />
         </div>
       </div>

@@ -14,7 +14,6 @@ import { gql, useSubscription } from '@apollo/client'
 import Spinner from '../Spinner'
 import UserSelector from '../UserSelector'
 
-
 // graphql query to get public channels for users to display to the client
 const GET_PUBLIC_CHANNELS = gql`
 subscription($userId: Int!) {

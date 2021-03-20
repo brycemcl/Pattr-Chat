@@ -5,7 +5,6 @@ import { makeStyles } from '@material-ui/core/styles'
 import { gql, useQuery, useMutation } from '@apollo/client'
 import Spinner from '../Spinner'
 
-
 /*
     ⢀⣠⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠀⠀⠀⠀⣠⣤⣶⣶
     ⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠀⠀⠀⢰⣿⣿⣿⣿
@@ -24,7 +23,6 @@ import Spinner from '../Spinner'
 
     > me when I find another instant messaging bug
 */
-
 
 // fetch graphql query which when used, will retrieve a user who just logged in
 const FETCH_USER = gql`
