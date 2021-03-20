@@ -8,6 +8,7 @@ import ListItemIcon from '@material-ui/core/ListItemIcon'
 import ListItemText from '@material-ui/core/ListItemText'
 import WorkIcon from '@material-ui/icons/Work'
 import MenuIcon from '@material-ui/icons/Menu'
+import UserSelectorChannels from '../UserSelectorChannels'
 
 // this is our ChannelNavigator component
 export default function ChannelNavigator ({
@@ -30,7 +31,6 @@ export default function ChannelNavigator ({
   /* create mapped channels, on a render tbd. this defaults to the catch, because our channels
    * don't exist in state yet (passed as a prop from somehwere else in our app from a different component), when this  eventually re-renders
    * with the 'channel' prop finally, the code in the try block gets executed sucessfuly */
-
   try {
     mapOfChannels = channels.users_by_pk.users_channels.map(({ channel }) => {
       return (
@@ -50,6 +50,9 @@ export default function ChannelNavigator ({
             <WorkIcon />
           </ListItemIcon>
           <ListItemText primary={channel.name} />
+          <UserSelectorChannels
+            channel={channel}
+          />
         </ListItem>
       )
     })

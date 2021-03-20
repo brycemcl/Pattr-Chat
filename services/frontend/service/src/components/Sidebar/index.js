@@ -144,8 +144,7 @@ const Sidebar = ({ currentUser, currentState, setCurrentState, setChannels }) =>
           try {
             const currentConversationsPrivate = dataPrivate.users_by_pk.users_conversations.map(({ conversation }) => {
               return conversation
-            })
-
+            }).filter(conversation => { return conversation.channel_id === mutatedState.channel })
             currentConversations = [...currentConversations, ...currentConversationsPrivate]
           } catch {
 
