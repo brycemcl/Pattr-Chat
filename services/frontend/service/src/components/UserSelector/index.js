@@ -12,6 +12,7 @@ import Dialog from '@material-ui/core/Dialog'
 import PersonIcon from '@material-ui/icons/Person'
 import PersonAddIcon from '@material-ui/icons/PersonAdd'
 import { blue } from '@material-ui/core/colors'
+import { gql, useQuery } from '@apollo/client'
 
 // graphQL stuff here!
 
@@ -19,13 +20,21 @@ import { blue } from '@material-ui/core/colors'
  * first query to find all users in a channel
  * this needs to refer to currentStates .users elected channel to show the user all users ONLY in the currently selected organization
  * they can add to the desired conversation */
+const GET_USERS_IN_CHANNEL = gql`
+query ($channelId: Int!) {
+  users_channels(where: {channels_id: {_eq: $channelId}}) {
+    user {
+      display_name
+      id
+    }
+  }
+}
+`
 
 /* step 2
  * second mutator to use currentState.conversation and currentState.channel to add user to the specific conversation selected.
  * this needs to refer to currentStates .users elected conversation to update the selected user into */
-
-// an array of fake data
-const emails = ['username@gmail.com', 'user02@gmail.com']
+const emails = ['bobby@hi.com']
 
 // appling styles to component
 const useStyles = makeStyles({
@@ -52,14 +61,14 @@ function SimpleDialog (props) {
     <Dialog onClose={handleClose} aria-labelledby='simple-dialog-title' open={open}>
       <DialogTitle id='simple-dialog-title'>Add user</DialogTitle>
       <List>
-        {emails.map((email) => (
-          <ListItem button onClick={() => handleListItemClick(email)} key={email}>
+        {props.usersForChats.map((user) => (
+          <ListItem button onClick={() => handleListItemClick(user.user.id)} key={user.user.id}>
             <ListItemAvatar>
               <Avatar className={classes.avatar}>
                 <PersonIcon />
               </Avatar>
             </ListItemAvatar>
-            <ListItemText primary={email} />
+            <ListItemText primary={user.user.display_name} />
           </ListItem>
         ))}
       </List>
@@ -76,11 +85,26 @@ SimpleDialog.propTypes = {
 
 // exportour UserSelector component
 export default function UserSelector ({ currentState }) {
-  console.log('currentState in UserSelector component: ', currentState)
+  // an array of fake data
+  const usersForChats = []
 
   // usestate in this component that
   const [open, setOpen] = React.useState(false)
   const [selectedValue, setSelectedValue] = React.useState(emails[1])
+
+  // grab this hook, which stores the data back from graphql with users that are in the users orginzation
+  const { loading, error, data } = useQuery(GET_USERS_IN_CHANNEL, {
+    variables: { channelId: currentState.channel }
+  })
+
+  // useEffect in this component that should only fire off whenever data changes and comes back from
+  // out graphQL db
+  if (!loading && !error) {
+    data.users_channels.map((user) => {
+      console.log('users HERE', user)
+      return usersForChats.push(user)
+    })
+  }
 
   const handleClickOpen = () => {
     setOpen(true)
@@ -98,7 +122,12 @@ export default function UserSelector ({ currentState }) {
       <Button onClick={handleClickOpen}>
         <PersonAddIcon />
       </Button>
-      <SimpleDialog selectedValue={selectedValue} open={open} onClose={handleClose} />
+      <SimpleDialog
+        usersForChats={usersForChats}
+        selectedValue={selectedValue}
+        open={open}
+        onClose={handleClose}
+      />
     </div>
   )
 }
