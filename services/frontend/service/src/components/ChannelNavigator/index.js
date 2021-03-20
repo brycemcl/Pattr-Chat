@@ -41,7 +41,6 @@ export default function ChannelNavigator ({ currentUser, channels, setCurrentSta
    * don't exist in state yet (passed as a prop from somehwere else in our app from a different component), when this  eventually re-renders
    * with the 'channel' prop finally, the code in the try block gets executed sucessfuly */
 
-  // NEEDTOFIX
   try {
     mapOfChannels = channels.users_by_pk.users_channels.map(({ channel }) => {
       return (
