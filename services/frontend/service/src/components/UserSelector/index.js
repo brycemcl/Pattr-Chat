@@ -60,9 +60,6 @@ function SimpleDialog ({ onClose, selectedValue, open, usersForChats, currentSta
 
   // helper function to handle a user click and add a person to a conversation
   const handleListItemClick = (userId, currentState, addUserConversation) => {
-    console.log('userId inside handle click: ', userId)
-    console.log('currentState conversation inside callback is: ', currentState.conversation)
-
     // call addUserConversation adding the current conversation selected in state to the
     addUserConversation({
       variables: {

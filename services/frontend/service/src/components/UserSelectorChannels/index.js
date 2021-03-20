@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import Button from '@material-ui/core/Button'
 import Avatar from '@material-ui/core/Avatar'
@@ -56,9 +56,6 @@ function SimpleDialog ({ onClose, selectedValue, open, allUsers, channel }) {
 
   // helper function to handle a user click and add a person to a conversation
   const handleListItemClick = (userId, channel, addUserChannel) => {
-    // console.log("userId inside handle click: ", userId)
-    // console.log("channel conversation inside callback is: ", channel.id)
-
     // call addUserConversation adding the current conversation selected in state to the
     addUserChannel({
       variables: {
@@ -94,7 +91,7 @@ export default function UserSelectorChannels ({ channel }) {
   const allUsers = []
 
   // usestate in this component that
-  const [open, setOpen] = React.useState(false)
+  const [open, setOpen] = useState(false)
   const [selectedValue, setSelectedValue] = useState('')
 
   // grab this hook, which stores the data back from graphql with users that are in the users orginzation
