@@ -107,7 +107,7 @@ export default function UserSelector ({ currentState }) {
   const { loading, error, data, refetch } = useQuery(GET_USERS_IN_CHANNEL, {
     variables: { channelId: currentState.channel, conversationId: currentState.conversation }
   })
-  console.table({ channelId: currentState.channel, conversationId: currentState.conversation, data })
+
   // useEffect in this component that should only fire off whenever data changes and comes back from
   // out graphQL db
   if (!loading && !error) {
