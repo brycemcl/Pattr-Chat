@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import Button from '@material-ui/core/Button'
 import Avatar from '@material-ui/core/Avatar'
@@ -17,12 +17,12 @@ import { gql, useQuery, useMutation } from '@apollo/client'
  * first query to find all users in Pattr
  * they can add to the desired conversation */
 const GET_ALL_USERS = gql`
-  query {
-    users {
-      id
-      display_name
-    }
+query ($channelId: Int!) {
+  users(where: {_not: {users_channels: {channels_id: {_eq: $channelId}}}}) {
+    id
+    display_name
   }
+}
 `
 
 /* step 2
@@ -40,6 +40,10 @@ const useStyles = makeStyles({
   avatar: {
     backgroundColor: blue[100],
     color: blue[600]
+  },
+  button: {
+    height: '32px',
+    width: '56px'
   }
 })
 
@@ -86,18 +90,23 @@ function SimpleDialog ({ onClose, selectedValue, open, allUsers, channel }) {
   )
 }
 
-// exportour UserSelector component
+// export our UserSelector component
 export default function UserSelectorChannels ({ channel }) {
   const allUsers = []
 
-  // usestate in this component that
+  const classes = useStyles()
+
+  // usestate in this component
   const [open, setOpen] = useState(false)
   const [selectedValue, setSelectedValue] = useState('')
 
   // grab this hook, which stores the data back from graphql with users that are in the users orginzation
-  const { loading, error, data } = useQuery(GET_ALL_USERS)
-
-  // useEffect in this component that should only fire off whenever data changes and comes back from
+  const { loading, error, data, refetch } = useQuery(GET_ALL_USERS, {
+    variables: { channelId: channel.id }
+  })
+  useEffect(() => {
+    refetch()
+  }, [refetch])
   // out graphQL db
   if (!loading && !error) {
     data.users.map((user) => {
@@ -116,13 +125,14 @@ export default function UserSelectorChannels ({ channel }) {
 
   // https://developer.mozilla.org/en-US/docs/Web/API/Event/stopPropagation
   return (
-    <div>
-      {/* <Typography variant="subtitle1">Selected: {selectedValue}</Typography> */}
+    <>
       <br />
-      <Button onClick={(event) => {
-        event.stopPropagation()
-        handleClickOpen()
-      }}
+      <Button
+        onClick={(event) => {
+          event.stopPropagation()
+          handleClickOpen()
+        }}
+        className={classes.button}
       >
         <PersonAddIcon />
       </Button>
@@ -133,6 +143,6 @@ export default function UserSelectorChannels ({ channel }) {
         onClose={handleClose}
         channel={channel}
       />
-    </div>
+    </>
   )
 }
