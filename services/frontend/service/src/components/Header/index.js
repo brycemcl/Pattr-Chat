@@ -14,10 +14,10 @@ const useStyles = makeStyles((theme) => ({
   root: {
     position: 'fixed',
     zIndex: 1201,
-    height: '56px'
+    height: '64px'
   },
   toolbar: {
-    height: '56px'
+    height: '64px'
   },
   menuButton: {
     marginRight: theme.spacing(2)

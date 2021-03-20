@@ -35,7 +35,8 @@ const useStyles = makeStyles((theme) => ({
     overflowWrap: 'anywhere'
   },
   figure: {
-    margin: 1
+    margin: 0,
+    marginRight: theme.spacing(2)
   }
 }))
 
