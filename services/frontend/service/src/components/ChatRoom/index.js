@@ -4,6 +4,28 @@ import MessagesBody from '../MessagesBody'
 import { makeStyles } from '@material-ui/core/styles'
 import { gql, useQuery, useMutation } from '@apollo/client'
 import Spinner from '../Spinner'
+
+
+/*
+    ⢀⣠⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠀⠀⠀⠀⣠⣤⣶⣶
+    ⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠀⠀⠀⢰⣿⣿⣿⣿
+    ⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿75⣿⣿⣿⣿⣿⣿⣧⣀⣀⣾⣿⣿⣿⣿
+    ⣿⣿⣿⣿⣿⡏⠉⠛37⢿px⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⣿
+    ⣿⣿⣿⣿⣿⣿⠀⠀⠀⠈⠛⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠿⠛⠉⠁⠀⣿
+    ⣿⣿⣿⣿⣿⣿⣧⡀⠀⠀⠀⠀⠙⠿⠿⠿⠻⠿⠿⠟⠿⠛⠉⠀⠀⠀⠀⠀⣸⣿
+    ⣿⣿⣿⣿⣿⣿⣿⣷⣄⠀⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣴⣿⣿
+    ⣿⣿⣿⣿⣿⣿⣿⣿⣿⠏⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠠⣴⣿⣿⣿⣿
+    ⣿⣿⣿⣿⣿⣿⣿⣿⡟⠀⠀⢰⣹⡆⠀⠀⠀⠀⠀⠀⣭⣷⠀⠀⠀⠸⣿⣿⣿⣿
+    ⣿⣿⣿⣿⣿⣿⣿⣿⠃⠀⠀⠈⠉⠀⠀⠤⠄⠀⠀⠀⠉⠁⠀⠀⠀⠀⢿⣿⣿⣿
+    ⣿⣿⣿⣿⣿⣿⣿⣿⢾⣿⣷⠀⠀⠀⠀⡠⠤⢄⠀⠀⠀⠠⣿⣿⣷⠀⢸⣿⣿⣿
+    ⣿⣿⣿⣿⣿⣿⣿⣿⡀⠉⠀⠀⠀⠀⠀⢄⠀⢀⠀⠀⠀⠀⠉⠉⠁⠀⠀⣿⣿⣿
+    ⣿⣿⣿⣿⣿⣿⣿⣿⣧⠀⠀⠀⠀⠀⠀⠀⠈⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢹⣿⣿
+    ⣿⣿⣿⣿⣿⣿⣿⣿⣿⠃⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⣿⣿
+
+    > me when I find another instant messaging bug
+*/
+
+
 // fetch graphql query which when used, will retrieve a user who just logged in
 const FETCH_USER = gql`
   query($uuid: String!) {
@@ -44,18 +66,15 @@ const useStyles = makeStyles(() => ({
 
 /* chatroom component
  * also has a useQuery hook which uses our above graphql query we wrote */
-function ChatRoom ({
-  currentUser,
-  setCurrentUser,
-  setChannels,
-  currentState,
-  setCurrentState
-}) {
+function ChatRoom ({ currentUser, setCurrentUser, setChannels, currentState, setCurrentState }) {
   const classes = useStyles()
+
   const { loading, error, data, refetch } = useQuery(FETCH_USER, {
     variables: { uuid: currentUser.user_uuid }
   })
+
   const [makeUser] = useMutation(MAKE_USER)
+
   // this useeffect on this component will only fire off when the value of "data" from our useQuery changes
   useEffect(() => {
     if (data && Array.isArray(data.users) && data.users.length > 0) {
