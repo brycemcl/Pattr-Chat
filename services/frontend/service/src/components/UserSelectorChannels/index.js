@@ -17,12 +17,12 @@ import { gql, useQuery, useMutation } from '@apollo/client'
  * first query to find all users in Pattr
  * they can add to the desired conversation */
 const GET_ALL_USERS = gql`
-  query {
-    users {
-      id
-      display_name
-    }
+query ($channelId: Int!) {
+  users(where: {_not: {users_channels: {channels_id: {_eq: $channelId}}}}) {
+    id
+    display_name
   }
+}
 `
 
 /* step 2
@@ -90,21 +90,23 @@ function SimpleDialog ({ onClose, selectedValue, open, allUsers, channel }) {
   )
 }
 
-// exportour UserSelector component
+// export our UserSelector component
 export default function UserSelectorChannels ({ channel }) {
   const allUsers = []
 
   const classes = useStyles()
 
-  // usestate in this component that
+  // usestate in this component
   const [open, setOpen] = useState(false)
   const [selectedValue, setSelectedValue] = useState('')
 
   // grab this hook, which stores the data back from graphql with users that are in the users orginzation
-  const { loading, error, data, refetch } = useQuery(GET_ALL_USERS)
+  const { loading, error, data, refetch } = useQuery(GET_ALL_USERS, {
+    variables: { channelId: channel.id }
+  })
   useEffect(() => {
     refetch()
-  }, [])
+  }, [refetch])
   // out graphQL db
   if (!loading && !error) {
     data.users.map((user) => {
@@ -124,7 +126,6 @@ export default function UserSelectorChannels ({ channel }) {
   // https://developer.mozilla.org/en-US/docs/Web/API/Event/stopPropagation
   return (
     <>
-      {/* <Typography variant="subtitle1">Selected: {selectedValue}</Typography> */}
       <br />
       <Button
         onClick={(event) => {
