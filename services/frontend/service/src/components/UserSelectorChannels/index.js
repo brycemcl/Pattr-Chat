@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import Button from '@material-ui/core/Button'
 import Avatar from '@material-ui/core/Avatar'
@@ -95,9 +95,10 @@ export default function UserSelectorChannels ({ channel }) {
   const [selectedValue, setSelectedValue] = useState('')
 
   // grab this hook, which stores the data back from graphql with users that are in the users orginzation
-  const { loading, error, data } = useQuery(GET_ALL_USERS)
-
-  // useEffect in this component that should only fire off whenever data changes and comes back from
+  const { loading, error, data, refetch } = useQuery(GET_ALL_USERS)
+  useEffect(() => {
+    refetch()
+  }, [])
   // out graphQL db
   if (!loading && !error) {
     data.users.map((user) => {
