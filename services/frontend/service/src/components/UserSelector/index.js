@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import PropTypes from 'prop-types'
 import { makeStyles } from '@material-ui/core/styles'
 import Button from '@material-ui/core/Button'
 import Avatar from '@material-ui/core/Avatar'
@@ -12,9 +11,7 @@ import Dialog from '@material-ui/core/Dialog'
 import PersonIcon from '@material-ui/icons/Person'
 import PersonAddIcon from '@material-ui/icons/PersonAdd'
 import { blue } from '@material-ui/core/colors'
-import { gql, useQuery } from '@apollo/client'
-
-// graphQL stuff here!
+import { gql, useQuery, useMutation } from '@apollo/client'
 
 /* step 1
  * first query to find all users in a channel
@@ -32,8 +29,15 @@ const GET_USERS_IN_CHANNEL = gql`
 `
 
 /* step 2
- * second mutator to use currentState.conversation and currentState.channel to add user to the specific conversation selected.
+ * second mutator to use currentState.conversation and currentState.conversation to add user to the specific conversation selected.
  * this needs to refer to currentStates .users elected conversation to update the selected user into */
+const ADD_USERS_TO_CONVERSATION = gql`
+  mutation($userId: Int!, $conversationId: Int!) {
+    insert_users_conversations_one(object: {user_id: $userId, conversation_id: $conversationId}) {
+      id
+    }
+  }
+`
 
 // appling styles to component
 const useStyles = makeStyles({
@@ -43,25 +47,39 @@ const useStyles = makeStyles({
   }
 })
 
-// simple dialog helper function that
-function SimpleDialog (props) {
+// simple dialog component to render the user click options
+function SimpleDialog ({ onClose, selectedValue, open, usersForChats, currentState }) {
+  // declare our useMutation to add users to conversations here, pass the setter down later
+  const [addUserConversation] = useMutation(ADD_USERS_TO_CONVERSATION)
+
   const classes = useStyles()
-  const { onClose, selectedValue, open } = props
 
   const handleClose = () => {
     onClose(selectedValue)
   }
 
-  const handleListItemClick = (value) => {
-    onClose(value)
+  // helper function to handle a user click and add a person to a conversation
+  const handleListItemClick = (userId, currentState, addUserConversation) => {
+    console.log('userId inside handle click: ', userId)
+    console.log('currentState conversation inside callback is: ', currentState.conversation)
+
+    // call addUserConversation adding the current conversation selected in state to the
+    addUserConversation({
+      variables: {
+        userId: userId,
+        conversationId: currentState.conversation
+      }
+    })
+    onClose(userId)
   }
 
+  // jsx returned from SimpleDialog component
   return (
     <Dialog onClose={handleClose} aria-labelledby='simple-dialog-title' open={open}>
       <DialogTitle id='simple-dialog-title'>Add user</DialogTitle>
       <List>
-        {props.usersForChats.map((user) => (
-          <ListItem button onClick={() => handleListItemClick(user.user.id)} key={user.user.id}>
+        {usersForChats.map((user) => (
+          <ListItem button onClick={() => handleListItemClick(user.user.id, currentState, addUserConversation)} key={user.user.id}>
             <ListItemAvatar>
               <Avatar className={classes.avatar}>
                 <PersonIcon />
@@ -75,16 +93,8 @@ function SimpleDialog (props) {
   )
 }
 
-// ?
-SimpleDialog.propTypes = {
-  onClose: PropTypes.func.isRequired,
-  open: PropTypes.bool.isRequired,
-  selectedValue: PropTypes.string.isRequired
-}
-
 // exportour UserSelector component
 export default function UserSelector ({ currentState }) {
-  // an array of fake data
   const usersForChats = []
 
   // usestate in this component that
@@ -125,6 +135,7 @@ export default function UserSelector ({ currentState }) {
         selectedValue={selectedValue}
         open={open}
         onClose={handleClose}
+        currentState={currentState}
       />
     </div>
   )

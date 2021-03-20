@@ -15,21 +15,20 @@ const useStyles = makeStyles((theme) => ({
 
 // graphql query to get messages via subscription from our pg db :)
 const GET_MESSAGES = gql`
-subscription ($conversationId: Int!) {
-  conversations_by_pk(id: $conversationId) {
-    messages(order_by: {id: asc}) {
-      id
-      message
-      date_sent
-      user {
+  subscription ($conversationId: Int!) {
+    conversations_by_pk(id: $conversationId) {
+      messages(order_by: {id: asc}) {
         id
-        display_name
+        message
+        date_sent
+        user {
+          id
+          display_name
+        }
       }
+      id
     }
-    id
   }
-}
-
 `
 
 // component to handle all the messages in the message pane
