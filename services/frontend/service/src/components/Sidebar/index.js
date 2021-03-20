@@ -196,7 +196,6 @@ const Sidebar = ({ currentUser, currentState, setCurrentState, setChannels }) =>
         <ForumIcon />
       </ListItemIcon>
       <ListItemText primary={name} />
-      <UserSelector />
     </ListItem>
   ))
 
