@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
 const GET_MESSAGES = gql`
 subscription ($conversationId: Int!) {
   conversations_by_pk(id: $conversationId) {
-    messages {
+    messages(order_by: {id: asc}) {
       id
       message
       date_sent
@@ -29,6 +29,7 @@ subscription ($conversationId: Int!) {
     id
   }
 }
+
 `
 
 // component to handle all the messages in the message pane
