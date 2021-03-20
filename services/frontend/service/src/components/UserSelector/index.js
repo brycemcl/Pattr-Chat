@@ -18,14 +18,14 @@ import { gql, useQuery, useMutation } from '@apollo/client'
  * this needs to refer to currentStates .users elected channel to show the user all users ONLY in the currently selected organization
  * they can add to the desired conversation */
 const GET_USERS_IN_CHANNEL = gql`
-  query ($channelId: Int!) {
-    users_channels(where: {channels_id: {_eq: $channelId}}) {
-      user {
-        display_name
-        id
-      }
+query ($channelId: Int!, $conversationId: Int!) {
+  users_channels(where: {channels_id: {_eq: $channelId}, _and: {_not: {user: {users_conversations: {conversation_id: {_eq: $conversationId}}}}}}) {
+    user {
+      display_name
+      id
     }
   }
+}
 `
 
 /* step 2
@@ -51,7 +51,7 @@ const useStyles = makeStyles({
   }
 })
 // simple dialog component to render the user click options
-function SimpleDialog ({ onClose, selectedValue, open, usersForChats, currentState }) {
+function SimpleDialog ({ onClose, selectedValue, open, usersForChats, currentState, refetch }) {
   // declare our useMutation to add users to conversations here, pass the setter down later
   const [addUserConversation] = useMutation(ADD_USERS_TO_CONVERSATION)
 
@@ -69,7 +69,8 @@ function SimpleDialog ({ onClose, selectedValue, open, usersForChats, currentSta
         userId: userId,
         conversationId: currentState.conversation
       }
-    })
+    }).then(() => refetch())
+
     onClose(userId)
   }
 
@@ -103,10 +104,10 @@ export default function UserSelector ({ currentState }) {
   const [selectedValue, setSelectedValue] = useState('')
 
   // grab this hook, which stores the data back from graphql with users that are in the users orginzation
-  const { loading, error, data } = useQuery(GET_USERS_IN_CHANNEL, {
-    variables: { channelId: currentState.channel }
+  const { loading, error, data, refetch } = useQuery(GET_USERS_IN_CHANNEL, {
+    variables: { channelId: currentState.channel, conversationId: currentState.conversation }
   })
-
+  console.table({ channelId: currentState.channel, conversationId: currentState.conversation, data })
   // useEffect in this component that should only fire off whenever data changes and comes back from
   // out graphQL db
   if (!loading && !error) {
@@ -133,6 +134,7 @@ export default function UserSelector ({ currentState }) {
       </Button>
       <SimpleDialog
         usersForChats={usersForChats}
+        refetch={refetch}
         selectedValue={selectedValue}
         open={open}
         onClose={handleClose}
