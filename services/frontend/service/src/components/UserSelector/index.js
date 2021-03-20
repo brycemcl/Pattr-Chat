@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import { makeStyles } from '@material-ui/core/styles'
 import Button from '@material-ui/core/Button'
@@ -21,20 +21,19 @@ import { gql, useQuery } from '@apollo/client'
  * this needs to refer to currentStates .users elected channel to show the user all users ONLY in the currently selected organization
  * they can add to the desired conversation */
 const GET_USERS_IN_CHANNEL = gql`
-query ($channelId: Int!) {
-  users_channels(where: {channels_id: {_eq: $channelId}}) {
-    user {
-      display_name
-      id
+  query ($channelId: Int!) {
+    users_channels(where: {channels_id: {_eq: $channelId}}) {
+      user {
+        display_name
+        id
+      }
     }
   }
-}
 `
 
 /* step 2
  * second mutator to use currentState.conversation and currentState.channel to add user to the specific conversation selected.
  * this needs to refer to currentStates .users elected conversation to update the selected user into */
-const emails = ['bobby@hi.com']
 
 // appling styles to component
 const useStyles = makeStyles({
@@ -90,7 +89,7 @@ export default function UserSelector ({ currentState }) {
 
   // usestate in this component that
   const [open, setOpen] = React.useState(false)
-  const [selectedValue, setSelectedValue] = React.useState(emails[1])
+  const [selectedValue, setSelectedValue] = useState('')
 
   // grab this hook, which stores the data back from graphql with users that are in the users orginzation
   const { loading, error, data } = useQuery(GET_USERS_IN_CHANNEL, {
@@ -101,7 +100,6 @@ export default function UserSelector ({ currentState }) {
   // out graphQL db
   if (!loading && !error) {
     data.users_channels.map((user) => {
-      console.log('users HERE', user)
       return usersForChats.push(user)
     })
   }
