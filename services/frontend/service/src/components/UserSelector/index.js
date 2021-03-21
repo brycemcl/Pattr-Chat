@@ -10,6 +10,7 @@ import DialogTitle from '@material-ui/core/DialogTitle'
 import Dialog from '@material-ui/core/Dialog'
 import PersonIcon from '@material-ui/icons/Person'
 import PersonAddIcon from '@material-ui/icons/PersonAdd'
+import { ToastContainer, toast } from 'react-toastify'
 import { blue } from '@material-ui/core/colors'
 import { gql, useQuery, useMutation } from '@apollo/client'
 
@@ -54,7 +55,6 @@ const useStyles = makeStyles({
 function SimpleDialog ({ onClose, selectedValue, open, usersForChats, currentState, refetch }) {
   // declare our useMutation to add users to conversations here, pass the setter down later
   const [addUserConversation] = useMutation(ADD_USERS_TO_CONVERSATION)
-
   const classes = useStyles()
 
   const handleClose = () => {
@@ -100,7 +100,7 @@ export default function UserSelector ({ currentState }) {
   const usersForChats = []
 
   // usestate in this component that
-  const [open, setOpen] = React.useState(false)
+  const [open, setOpen] = useState(false)
   const [selectedValue, setSelectedValue] = useState('')
 
   // grab this hook, which stores the data back from graphql with users that are in the users orginzation
@@ -116,8 +116,19 @@ export default function UserSelector ({ currentState }) {
     })
   }
 
-  const handleClickOpen = () => {
-    setOpen(true)
+  console.log('usersForChats array in usersForChats component: ', usersForChats)
+  console.log('usersForChats array length in usersForChats component: ', usersForChats.length)
+
+  // conditonal render for when the users chats to add has no people left in an org
+  const handleClickOpen = (usersForChats, currentState) => {
+    // currentstate here is too old on inital render
+    console.log('currentState in handleClickOpen: ', currentState)
+
+    if (usersForChats.length === 0) {
+      toast.error('No users left in this channel to add to conversation!')
+    } else {
+      setOpen(true)
+    }
   }
 
   const handleClose = (value) => {
@@ -129,9 +140,12 @@ export default function UserSelector ({ currentState }) {
     <>
       {/* <Typography variant="subtitle1">Selected: {selectedValue}</Typography> */}
       <br />
-      <Button onClick={handleClickOpen} className={classes.button}>
+      <Button onClick={() => handleClickOpen(usersForChats, currentState)} className={classes.button}>
         <PersonAddIcon />
       </Button>
+      <div>
+        <ToastContainer position='bottom-center' />
+      </div>
       <SimpleDialog
         usersForChats={usersForChats}
         refetch={refetch}
