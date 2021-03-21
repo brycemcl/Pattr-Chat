@@ -13,16 +13,17 @@ const useStyles = makeStyles((theme) => ({
   },
   body: {
     overflow: 'auto',
-    height: '72vh'
+    height: '70vh'
   },
   sendMessageForm: {
     height: '150px',
     paddingBottom: '10vh'
   },
   UsersInChatsBar: {
-    flexDirection: 'row',
-    height: '6vh',
-    backgroundColor: '#f2f0f0'
+    display: 'flex',
+    height: '10%',
+    backgroundColor: '#f5f5f5',
+    padding: '5px'
   }
 }))
 

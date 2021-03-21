@@ -76,12 +76,12 @@ const UsersInChatsBar = ({ currentState }) => {
   // return all of our mapped icons to a div
   const mappedUsersInChat = usersInChat.map((username) => {
     return (
-      <div key={username}>
+      <div style={{ padding: '15px' }} key={username}>
         <Avatar name={username} />
       </div>
     )
   })
-  return <div style={{ display: 'flex' }}>{mappedUsersInChat}</div>
+  return mappedUsersInChat
 }
 
 export default UsersInChatsBar
