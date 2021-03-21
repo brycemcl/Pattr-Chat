@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import MessagesPane from '../MessagesPane/index'
 import SendMessageForm from '../SendMessageForm'
 import { makeStyles } from '@material-ui/core/styles'
+import UsersInChatsBar from '../UsersInChatsBar'
 
 // style our components
 const useStyles = makeStyles((theme) => ({
@@ -12,10 +13,16 @@ const useStyles = makeStyles((theme) => ({
   },
   body: {
     overflow: 'auto',
-    height: window.innerHeight - 64 - 150
+    height: '72vh'
   },
   sendMessageForm: {
-    height: '150px'
+    height: '150px',
+    paddingBottom: '10vh'
+  },
+  UsersInChatsBar: {
+    flexDirection: 'row',
+    height: '6vh',
+    backgroundColor: '#f2f0f0'
   }
 }))
 
@@ -34,6 +41,12 @@ function MessagesBody ({ currentState, currentUser }) {
 
   return (
     <div className={classes.messageContainer}>
+      <div className={classes.UsersInChatsBar}>
+        <UsersInChatsBar
+          currentState={currentState}
+          currentUser={currentUser}
+        />
+      </div>
       <div>
         <div id='messages-scrollbar' className={classes.body}>
           <MessagesPane
