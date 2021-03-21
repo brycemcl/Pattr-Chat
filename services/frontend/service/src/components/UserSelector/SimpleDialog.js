@@ -35,7 +35,6 @@ const useStyles = makeStyles({
 
 // simple dialog component to render the user click options
 function SimpleDialog ({ setOpen, open, usersForChats, currentState }) {
-  // function SimpleDialog ({ onClose, selectedValue, open, usersForChats, currentState, refetch }) {
   // declare our useMutation to add users to conversations here, pass the setter down later
   const [addUserConversation] = useMutation(ADD_USERS_TO_CONVERSATION)
   const classes = useStyles()
@@ -48,9 +47,8 @@ function SimpleDialog ({ setOpen, open, usersForChats, currentState }) {
         userId: userId,
         conversationId: currentState.conversation
       }
-    }).then(() => {
-      setOpen(false)
     })
+    setOpen(false)
   }
 
   // jsx returned from SimpleDialog component
