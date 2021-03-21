@@ -23,7 +23,8 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     height: '10%',
     backgroundColor: '#f5f5f5',
-    padding: '5px'
+    padding: '5px',
+    borderBottom: '1px solid #e0e0e0'
   }
 }))
 
