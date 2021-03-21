@@ -106,7 +106,7 @@ export default function UserSelectorChannels ({ channel }) {
   })
   useEffect(() => {
     refetch()
-  }, [refetch])
+  })
   // out graphQL db
   if (!loading && !error) {
     data.users.map((user) => {
