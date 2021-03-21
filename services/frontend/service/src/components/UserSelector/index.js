@@ -16,7 +16,11 @@ const useStyles = makeStyles({
   }
 })
 
+// UserSelector component - has open/Setopen hook which stores a boolean value
+// this component returns the user selector button, which when clicked, conditionally
+// returns a component inside, to pull up a list of users to add to a chat (if avalible)
 const UserSelector = ({ currentState }) => {
+  // this hook keeps track of if the user selector dialog box should open or not conditonally
   const [open, setOpen] = useState(false)
   const classes = useStyles()
 
@@ -29,6 +33,7 @@ const UserSelector = ({ currentState }) => {
           <ToastContainer position='bottom-center' />
         </div>
       </Button>
+      {/* conditonally render the DataWrapper component when open === true, to avoid it rendering all the time in this component */}
       {open && (
         <DataWrapper
           open={open}
