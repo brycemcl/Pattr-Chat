@@ -60,14 +60,14 @@ const UsersInChatsBar = ({ currentState }) => {
     const isPublicData = dataPubOrPriv.conversations[0].public
     if (isPublicData) {
       if (!errorPublic && !loadingPublic) {
-        dataPublic.users.map((user) => {
-          return usersInChat.push(user.display_name)
+        dataPublic.users.forEach((user) => {
+          usersInChat.push(user.display_name)
         })
       }
     } else {
       if (!loading && !error) {
-        data.users.map((user) => {
-          return usersInChat.push(user.display_name)
+        data.users.forEach((user) => {
+          usersInChat.push(user.display_name)
         })
       }
     }
