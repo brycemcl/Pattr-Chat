@@ -40,8 +40,8 @@ const DataWrapper = ({ currentState, setOpen, open }) => {
     fetchPolicy: 'network-only'
   })
 
-  // this hook is eithe rnull or an array, it stores all of the users that come back from our network call
-  // into an array, in this hook to be referenced to later
+  /* this hook is either null or an array, it stores all of the users that come back from our network call
+   * into an array, in this hook to be referenced to later */
   const [usersForChats, setUsersForChats] = useState(null)
 
   // this useEffect hook in this component only fires off when the data changes come back from graphql (error, data, loading)
