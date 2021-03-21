@@ -7,22 +7,36 @@ import SimpleDialog from './SimpleDialog'
  * this needs to refer to currentStates .users elected channel to show the user all users ONLY in the currently selected organization
  * they can add to the desired conversation */
 const GET_USERS_IN_CHANNEL = gql`
-query ($channelId: Int!, $conversationId: Int!) {
-  users_channels(where: {channels_id: {_eq: $channelId}, _and: {_not: {user: {users_conversations: {conversation_id: {_eq: $conversationId}}}}}}) {
-    id
-    user {
-      display_name
+  query($channelId: Int!, $conversationId: Int!) {
+    users_channels(
+      where: {
+        channels_id: { _eq: $channelId }
+        _and: {
+          _not: {
+            user: {
+              users_conversations: { conversation_id: { _eq: $conversationId } }
+            }
+          }
+        }
+      }
+    ) {
       id
+      user {
+        display_name
+        id
+      }
     }
   }
-}
 `
 
 // higher order component
 const DataWrapper = ({ currentState, setOpen, open }) => {
   // grab this hook, which stores the data back from graphql with users that are in the users orginzation
   const { loading, error, data } = useQuery(GET_USERS_IN_CHANNEL, {
-    variables: { channelId: currentState.channel, conversationId: currentState.conversation },
+    variables: {
+      channelId: currentState.channel,
+      conversationId: currentState.conversation
+    },
     fetchPolicy: 'network-only'
   })
   const [usersForChats, setUsersForChats] = useState(null)
@@ -30,7 +44,7 @@ const DataWrapper = ({ currentState, setOpen, open }) => {
     if (!loading && !error) {
       try {
         setUsersForChats(data.users_channels.map(({ user }) => user))
-      } catch {}
+      } catch { }
     }
   }, [data, error, loading])
   useEffect(() => {
@@ -45,19 +59,18 @@ const DataWrapper = ({ currentState, setOpen, open }) => {
   if (!loading && !error && usersForChats && usersForChats.length > 0) {
     return (
       <>
-
-        {open && <SimpleDialog
-          setOpen={setOpen}
-          open={open}
-          usersForChats={usersForChats}
-          currentState={currentState}
-                 />}
+        {open && (
+          <SimpleDialog
+            setOpen={setOpen}
+            open={open}
+            usersForChats={usersForChats}
+            currentState={currentState}
+          />
+        )}
       </>
     )
   } else {
-    return (
-      <div />
-    )
+    return <div />
   }
 }
 

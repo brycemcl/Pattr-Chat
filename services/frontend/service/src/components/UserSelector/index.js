@@ -29,8 +29,13 @@ const UserSelector = ({ currentState }) => {
           <ToastContainer position='bottom-center' />
         </div>
       </Button>
-      {open &&
-        <DataWrapper open={open} setOpen={setOpen} currentState={currentState} />}
+      {open && (
+        <DataWrapper
+          open={open}
+          setOpen={setOpen}
+          currentState={currentState}
+        />
+      )}
     </>
   )
 }

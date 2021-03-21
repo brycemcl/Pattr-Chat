@@ -11,14 +11,16 @@ import { blue } from '@material-ui/core/colors'
 import { gql, useMutation } from '@apollo/client'
 
 /* step 2
-* second mutator to use currentState.conversation and currentState.conversation to add user to the specific conversation selected.
-* this needs to refer to currentStates .users elected conversation to update the selected user into */
+ * second mutator to use currentState.conversation and currentState.conversation to add user to the specific conversation selected.
+ * this needs to refer to currentStates .users elected conversation to update the selected user into */
 const ADD_USERS_TO_CONVERSATION = gql`
- mutation($userId: Int!, $conversationId: Int!) {
-   insert_users_conversations_one(object: {user_id: $userId, conversation_id: $conversationId}) {
-     id
-   }
- }
+  mutation($userId: Int!, $conversationId: Int!) {
+    insert_users_conversations_one(
+      object: { user_id: $userId, conversation_id: $conversationId }
+    ) {
+      id
+    }
+  }
 `
 const useStyles = makeStyles({
   avatar: {
@@ -33,7 +35,7 @@ const useStyles = makeStyles({
 
 // simple dialog component to render the user click options
 function SimpleDialog ({ setOpen, open, usersForChats, currentState }) {
-// function SimpleDialog ({ onClose, selectedValue, open, usersForChats, currentState, refetch }) {
+  // function SimpleDialog ({ onClose, selectedValue, open, usersForChats, currentState, refetch }) {
   // declare our useMutation to add users to conversations here, pass the setter down later
   const [addUserConversation] = useMutation(ADD_USERS_TO_CONVERSATION)
   const classes = useStyles()
@@ -56,12 +58,19 @@ function SimpleDialog ({ setOpen, open, usersForChats, currentState }) {
     <Dialog
       onClose={() => {
         setOpen(false)
-      }} aria-labelledby='simple-dialog-title' open={open}
+      }}
+      aria-labelledby='simple-dialog-title'
+      open={open}
     >
       <DialogTitle id='simple-dialog-title'>Add user</DialogTitle>
       <List>
         {usersForChats.map((user) => (
-          <ListItem button onClick={() => handleListItemClick(user.id, currentState, addUserConversation)} key={user.id}>
+          <ListItem
+            button
+            onClick={() =>
+              handleListItemClick(user.id, currentState, addUserConversation)}
+            key={user.id}
+          >
             <ListItemAvatar>
               <Avatar className={classes.avatar}>
                 <PersonIcon />
