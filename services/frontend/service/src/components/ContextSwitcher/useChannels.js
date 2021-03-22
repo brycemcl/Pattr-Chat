@@ -70,12 +70,7 @@ const useChannels = ({ currentState, setCurrentState, currentUser }) => {
   // sets all the conversations that the user can access
   useEffect(() => {
     if (ready) {
-      try {
-        setCurrentConversations([
-          ...publicConversations,
-          ...privateConversations
-        ])
-      } catch {}
+      setCurrentConversations([...publicConversations, ...privateConversations])
     }
   }, [
     ready,
@@ -125,16 +120,6 @@ const useChannels = ({ currentState, setCurrentState, currentUser }) => {
     /* show our conversation for a users selected channel */
     if (ready) {
       try {
-        setPublicConversations(
-          channels.find((channel) => {
-            return channel.id === currentState.channel
-          }).conversations
-        )
-      } catch {
-        // user has no conversations in the selected channel
-        setPublicConversations([])
-      }
-      try {
         setPrivateConversations(
           dataPrivate.users_by_pk.users_conversations
             .map(({ conversation }) => conversation)
@@ -146,7 +131,22 @@ const useChannels = ({ currentState, setCurrentState, currentUser }) => {
         setPrivateConversations([])
       }
     }
-  }, [ready, currentState.channel, dataPrivate, dataPublic, channels])
+  }, [ready, currentState.channel, dataPrivate])
+  useEffect(() => {
+    /* show our conversation for a users selected channel */
+    if (ready) {
+      try {
+        setPublicConversations(
+          channels.find((channel) => {
+            return channel.id === currentState.channel
+          }).conversations
+        )
+      } catch {
+        // user has no conversations in the selected channel
+        setPublicConversations([])
+      }
+    }
+  }, [ready, currentState.channel, channels])
 
   return {
     channels,
