@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
   UsersInChatsBar: {
     display: 'flex',
     height: '80px',
-    backgroundColor: '#f5f5f5',
+    backgroundColor: '#fafafa',
     padding: '5px',
     borderBottom: '1px solid #e0e0e0'
   }

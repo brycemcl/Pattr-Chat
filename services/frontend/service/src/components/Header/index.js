@@ -23,11 +23,12 @@ const useStyles = makeStyles((theme) => ({
     marginRight: theme.spacing(2)
   },
   title: {
-    flexGrow: 1
+    flexGrow: 1,
+    fontSize: '24px'
   },
   hello: {
-    marginRight: '16px',
-    fontSize: '14px'
+    marginRight: '20px',
+    fontSize: '13.75px'
   }
 }))
 

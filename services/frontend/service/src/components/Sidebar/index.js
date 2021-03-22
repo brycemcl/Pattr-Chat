@@ -1,6 +1,6 @@
 /* eslint-disable multiline-ternary */
 import CreateTextSingleLine from '../CreateTextSingleLine'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import Drawer from '@material-ui/core/Drawer'
 import List from '@material-ui/core/List'
@@ -61,6 +61,19 @@ const useStyles = makeStyles((theme) => ({
     position: 'relative',
     height: '100%',
     width: '100%'
+  },
+  company: {
+    height: '79px',
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  companyName: {
+    justifyContent: 'center',
+    fontSize: '20px',
+    color: '#343333',
+    fontFamily: 'Sans-serif'
   }
 }))
 
@@ -73,9 +86,26 @@ const setClickedSidebarOption = (id, setCurrentState) => {
     }
   })
 }
+
+// helper function to return a found channel
+const selectedChannel = (channelsArr, currentStateChannel) => {
+  let foundChannel
+
+  channelsArr.users_by_pk.users_channels.forEach((channel) => {
+    if (currentStateChannel === channel.channel.id) {
+      foundChannel = channel.channel.name
+    }
+  })
+
+  return foundChannel
+}
+
 // sidebar component - dis hurt my brain brain :((
-const Sidebar = ({ currentUser, currentState, setCurrentState, setChannels }) => {
+const Sidebar = ({ currentUser, currentState, setCurrentState, setChannels, channels }) => {
   const classes = useStyles()
+  let foundChannelName
+
+  const [foundName, setFoundName] = useState('')
 
   // grab this hook, which stores the data back from graphql with live data of users current public channels and conversations
   const { loading, error, data } = useSubscription(GET_PUBLIC_CHANNELS, {
@@ -146,6 +176,10 @@ const Sidebar = ({ currentUser, currentState, setCurrentState, setChannels }) =>
               return conversation
             }).filter(conversation => { return conversation.channel_id === mutatedState.channel })
             currentConversations = [...currentConversations, ...currentConversationsPrivate]
+
+            // get the users currently selected channel name, u[date our hook
+            foundChannelName = selectedChannel(channels, currentState.channel)
+            setFoundName(foundChannelName)
           } catch {
 
           }
@@ -265,6 +299,10 @@ const Sidebar = ({ currentUser, currentState, setCurrentState, setChannels }) =>
       >
         {currentState.channel ? (
           <>
+            <div className={classes.company}>
+              <h2 className={classes.companyName}>{foundName}</h2>
+            </div>
+            <Divider />
             <List>
               <ListItem>
                 <CreateTextSingleLine

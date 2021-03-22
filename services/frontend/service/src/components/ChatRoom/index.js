@@ -64,7 +64,7 @@ const useStyles = makeStyles(() => ({
 
 /* chatroom component
  * also has a useQuery hook which uses our above graphql query we wrote */
-function ChatRoom ({ currentUser, setCurrentUser, setChannels, currentState, setCurrentState }) {
+function ChatRoom ({ currentUser, setCurrentUser, setChannels, currentState, setCurrentState, channels }) {
   const classes = useStyles()
 
   const { loading, error, data, refetch } = useQuery(FETCH_USER, {
@@ -104,6 +104,7 @@ function ChatRoom ({ currentUser, setCurrentUser, setChannels, currentState, set
             currentState={currentState}
             setCurrentState={setCurrentState}
             setChannels={setChannels}
+            channels={channels}
           />
         )}
       </div>

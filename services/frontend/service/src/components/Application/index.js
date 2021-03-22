@@ -93,6 +93,7 @@ const Application = () => {
             setChannels={setChannels}
             currentState={currentState}
             setCurrentState={setCurrentState}
+            channels={channels}
           />
         </div>
       </div>

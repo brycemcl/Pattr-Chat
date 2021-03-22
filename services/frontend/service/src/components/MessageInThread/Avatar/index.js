@@ -5,25 +5,29 @@ import initialsFromName from './initialsFromName'
 // helper function to generate a random color for the names
 function randomColor () {
   const colors = [
-    '#db3b69',
-    '#9839db',
-    '#1e65d6',
-    '#20ba9b',
-    '#129659',
-    '#732a44',
-    '#911489',
-    '#348531',
-    '#eda413',
-    '#ed7411',
+    '#d12154',
+    '#6c1da3',
+    '#0446b0',
+    '#203a63',
+    '#11ad65',
+    '#6e394c',
+    '#570505',
+    '#58ab48',
+    '#e0951b',
+    '#944709',
     '#d94a0d',
-    '#14b58d',
+    '#33bda6',
     '#0c9ea6',
     '#0c82a6',
-    '#a60c47',
-    '#d49f02',
-    '#6c4fd1',
-    '#c722b1',
-    '#10a123'
+    '#b55178',
+    '#bf9b08',
+    '#4d4fdb',
+    '#822e69',
+    '#00bf19',
+    '#b3b3b3',
+    '#637a77',
+    '#160066',
+    '#201d21'
   ]
   const random = Math.floor(Math.random() * colors.length)
   return colors[random]
