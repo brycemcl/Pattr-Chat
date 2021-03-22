@@ -25,8 +25,8 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1
   },
   hello: {
-    marginRight: '16px',
-    fontSize: '14px'
+    marginRight: '20px',
+    fontSize: '13.45px'
   }
 }))
 
