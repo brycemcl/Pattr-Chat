@@ -32,7 +32,7 @@ const GET_MESSAGES = gql`
 `
 
 // component to handle all the messages in the message pane
-function MessagesPane ({ currentState, currentUser, setSendingMessage }) {
+function MessagesPane ({ currentState, currentUser, setSendingMessage, avatarColor, setAvatarColor }) {
   // call and use graphql query to get messages via subscription/web socket
   const { loading, error, data } = useSubscription(GET_MESSAGES, {
     variables: {
@@ -97,6 +97,8 @@ function MessagesPane ({ currentState, currentUser, setSendingMessage }) {
         messageText={message.text}
         messageName={user.display_name}
         currentUser={user.currentUser}
+        avatarColor={avatarColor}
+        setAvatarColor={setAvatarColor}
       />
     )
   })

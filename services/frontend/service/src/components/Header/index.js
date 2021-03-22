@@ -23,6 +23,10 @@ const useStyles = makeStyles((theme) => ({
   },
   title: {
     flexGrow: 1
+  },
+  hello: {
+    marginRight: '16px',
+    fontSize: '14px'
   }
 }))
 
@@ -68,6 +72,11 @@ function Header ({ buttonStatus, setRegister, setCurrentUser, currentUser }) {
           <Typography variant='h6' className={classes.title}>
             Pattr
           </Typography>
+          {currentUser.id && (
+            <Typography className={classes.hello}>
+              Hello {currentUser.display_name}
+            </Typography>
+          )}
           <Button
             color='inherit'
             onClick={() =>
