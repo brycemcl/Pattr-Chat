@@ -13,15 +13,14 @@ const useStyles = makeStyles((theme) => ({
   },
   body: {
     overflow: 'auto',
-    height: '70vh'
+    height: window.innerHeight - 64 - 150 - 80
   },
   sendMessageForm: {
-    height: '150px',
-    paddingBottom: '10vh'
+    height: '150px'
   },
   UsersInChatsBar: {
     display: 'flex',
-    height: '10%',
+    height: '80px',
     backgroundColor: '#f5f5f5',
     padding: '5px',
     borderBottom: '1px solid #e0e0e0'
@@ -46,7 +45,6 @@ function MessagesBody ({ currentState, currentUser }) {
       <div className={classes.UsersInChatsBar}>
         <UsersInChatsBar
           currentState={currentState}
-          currentUser={currentUser}
         />
       </div>
       <div>
