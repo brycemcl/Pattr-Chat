@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    keel.sh/policy: all
+    keel.sh/trigger: poll
+  labels:
+    service: pattr-frontend
+  name: pattr-frontend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      service: pattr-frontend
+  template:
+    metadata:
+      labels:
+        service: pattr-frontend
+    spec:
+      containers:
+        - image: brycemclachlan/pattr-frontend
+          name: pattr-frontend
+          ports:
+            - containerPort: 3001
+      restartPolicy: Always

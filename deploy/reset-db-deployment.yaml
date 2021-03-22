@@ -1,0 +1,50 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    service: reset-db
+  name: reset-db
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      service: reset-db
+  template:
+    metadata:
+      labels:
+        service: reset-db
+    spec:
+      containers:
+        - env:
+            - name: HASURA_GRAPHQL_ADMIN_SECRET
+              valueFrom:
+                configMapKeyRef:
+                  key: HASURA_GRAPHQL_ADMIN_SECRET
+                  name: db-secret-env
+            - name: HASURA_GRAPHQL_DATABASE_URL
+              valueFrom:
+                configMapKeyRef:
+                  key: HASURA_GRAPHQL_DATABASE_URL
+                  name: db-secret-env
+            - name: NODE_ENV
+              value: production
+            - name: POSTGRES_DB
+              valueFrom:
+                configMapKeyRef:
+                  key: POSTGRES_DB
+                  name: db-secret-env
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                configMapKeyRef:
+                  key: POSTGRES_PASSWORD
+                  name: db-secret-env
+            - name: POSTGRES_USER
+              valueFrom:
+                configMapKeyRef:
+                  key: POSTGRES_USER
+                  name: db-secret-env
+          image: brycemclachlan/pattr-resetdb
+          name: reset-db
+          # ports:
+          #   - containerPort: 3000
+      restartPolicy: Always

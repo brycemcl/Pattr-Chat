@@ -1,12 +1,12 @@
 const resetSchema = (db) => {
   return db.query(`
   CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
-  DROP TABLE IF EXISTS "users_channels" CASCADE;
-  DROP TABLE IF EXISTS "users_conversations" CASCADE;
-  DROP TABLE IF EXISTS "conversations" CASCADE;
-  DROP TABLE IF EXISTS "channels" CASCADE;
-  DROP TABLE IF EXISTS "messages" CASCADE;
-  DROP TABLE IF EXISTS "users" CASCADE;
+  -- DROP TABLE IF EXISTS "users_channels" CASCADE;
+  -- DROP TABLE IF EXISTS "users_conversations" CASCADE;
+  -- DROP TABLE IF EXISTS "conversations" CASCADE;
+  -- DROP TABLE IF EXISTS "channels" CASCADE;
+  -- DROP TABLE IF EXISTS "messages" CASCADE;
+  -- DROP TABLE IF EXISTS "users" CASCADE;
 
   CREATE TABLE "users"( "id" SERIAL PRIMARY KEY NOT NULL, "user_uuid" VARCHAR(255) DEFAULT uuid_generate_v4 () NOT NULL, "display_name" VARCHAR(255) NOT NULL );
   CREATE TABLE "messages"( "id" SERIAL PRIMARY KEY NOT NULL, "conversation_id" INTEGER NOT NULL, "user_id" INTEGER NOT NULL, "message" JSON NOT NULL, "date_sent" TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP);
