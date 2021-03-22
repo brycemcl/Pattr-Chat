@@ -30,7 +30,7 @@ const GET_USERS_IN_PUBLIC_CHATS = gql`
 `
 
 // sign up component in this app
-const UsersInChatsBar = ({ currentState }) => {
+const UsersInChatsBar = ({ currentState, avatarColor, setAvatarColor }) => {
   // array to store the users in a chat
   const usersInChat = []
 
@@ -61,23 +61,27 @@ const UsersInChatsBar = ({ currentState }) => {
     if (isPublicData) {
       if (!errorPublic && !loadingPublic) {
         dataPublic.users.forEach((user) => {
-          usersInChat.push(user.display_name)
+          usersInChat.push(user)
         })
       }
     } else {
       if (!loading && !error) {
         data.users.forEach((user) => {
-          usersInChat.push(user.display_name)
+          usersInChat.push(user)
         })
       }
     }
   }
 
   // return all of our mapped icons to a div
-  const mappedUsersInChat = usersInChat.map((username) => {
+  const mappedUsersInChat = usersInChat.map((user) => {
     return (
-      <div style={{ padding: '15px' }} key={username}>
-        <Avatar name={username} />
+      <div style={{ padding: '15px' }} key={user.id}>
+        <Avatar
+          name={user.display_name}
+          avatarColor={avatarColor}
+          setAvatarColor={setAvatarColor}
+        />
       </div>
     )
   })

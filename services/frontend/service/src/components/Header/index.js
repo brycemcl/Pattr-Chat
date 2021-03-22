@@ -89,7 +89,7 @@ function Header ({
             Pattr
           </Typography>
           {currentUser.id && (
-            <Typography variant='h8' className={classes.hello}>
+            <Typography className={classes.hello}>
               Hello {currentUser.display_name}
             </Typography>
           )}

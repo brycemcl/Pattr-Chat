@@ -41,13 +41,17 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 // MessageinThread component
-const MessageInThread = ({ date, messageName, messageText, currentUser }) => {
+const MessageInThread = ({ date, messageName, messageText, currentUser, avatarColor, setAvatarColor }) => {
   const classes = useStyles()
   return (
     <Paper className={clsx(classes.root, currentUser && classes.currentUser)}>
       <div className={classes.messageContainer}>
         <figure className={classes.figure}>
-          <Avatar name={messageName} />
+          <Avatar
+            name={messageName}
+            avatarColor={avatarColor}
+            setAvatarColor={setAvatarColor}
+          />
         </figure>
         <div className={classes.messageContent}>
           <MessageMetadata name={messageName} date={date} />
