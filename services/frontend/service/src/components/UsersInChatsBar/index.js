@@ -61,24 +61,24 @@ const UsersInChatsBar = ({ currentState, avatarColor, setAvatarColor }) => {
     if (isPublicData) {
       if (!errorPublic && !loadingPublic) {
         dataPublic.users.forEach((user) => {
-          usersInChat.push(user.display_name)
+          usersInChat.push(user)
         })
       }
     } else {
       if (!loading && !error) {
         data.users.forEach((user) => {
-          usersInChat.push(user.display_name)
+          usersInChat.push(user)
         })
       }
     }
   }
 
   // return all of our mapped icons to a div
-  const mappedUsersInChat = usersInChat.map((username) => {
+  const mappedUsersInChat = usersInChat.map((user) => {
     return (
-      <div style={{ padding: '15px' }} key={username}>
+      <div style={{ padding: '15px' }} key={user.id}>
         <Avatar
-          name={username}
+          name={user.display_name}
           avatarColor={avatarColor}
           setAvatarColor={setAvatarColor}
         />
