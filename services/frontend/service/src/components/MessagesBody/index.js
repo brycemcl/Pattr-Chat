@@ -12,8 +12,7 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'space-between'
   },
   body: {
-    overflow: 'auto',
-    height: window.innerHeight - 64 - 150 - 80
+    overflow: 'auto'
   },
   sendMessageForm: {
     height: '150px'
@@ -43,6 +42,24 @@ function MessagesBody ({ currentState, currentUser }) {
     ).scrollTop = document.querySelector('#messages-scrollbar').scrollHeight
   }, [sendingMessage])
 
+  const [dimensions, setDimensions] = useState({
+    height: window.innerHeight,
+    width: window.innerWidth
+  })
+  useEffect(() => {
+    const size = () => {
+      setDimensions({
+        height: window.innerHeight,
+        width: window.innerWidth
+      })
+    }
+    window.addEventListener('resize', size)
+
+    return () => {
+      window.removeEventListener('resize', size)
+    }
+  })
+
   return (
     <div className={classes.messageContainer}>
       <div className={classes.UsersInChatsBar}>
@@ -53,7 +70,11 @@ function MessagesBody ({ currentState, currentUser }) {
         />
       </div>
       <div>
-        <div id='messages-scrollbar' className={classes.body}>
+        <div
+          id='messages-scrollbar'
+          className={classes.body}
+          style={{ height: dimensions.height - 64 - 150 - 80 }}
+        >
           <MessagesPane
             currentState={currentState}
             currentUser={currentUser}
