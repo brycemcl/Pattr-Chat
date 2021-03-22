@@ -10,8 +10,8 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     flexDirection: 'column',
     width: '100vw',
-    height: '100vh',
-    overflow: 'hidden'
+    height: '100vh'
+    // overflow: 'hidden'
   },
   body: {
     flex: 1
@@ -30,7 +30,6 @@ const Application = () => {
     user_uuid: sessionUid || null
   })
   const [register, setRegister] = useState(false)
-  const [channels, setChannels] = useState(null)
 
   // usestate hook - keeps track of the currently selected channels + conversations
   const [currentState, setCurrentState] = useState({
@@ -47,7 +46,6 @@ const Application = () => {
           setRegister={setRegister}
           setCurrentUser={setCurrentUser}
           currentUser={currentUser}
-          channels={channels}
           setCurrentState={setCurrentState}
           currentState={currentState}
         />
@@ -64,7 +62,6 @@ const Application = () => {
           setRegister={setRegister}
           setCurrentUser={setCurrentUser}
           currentUser={currentUser}
-          channels={channels}
           setCurrentState={setCurrentState}
           currentState={currentState}
         />
@@ -81,7 +78,6 @@ const Application = () => {
           setRegister={setRegister}
           setCurrentUser={setCurrentUser}
           currentUser={currentUser}
-          channels={channels}
           setCurrentState={setCurrentState}
           currentState={currentState}
         />
@@ -90,7 +86,6 @@ const Application = () => {
           <ChatRoom
             currentUser={currentUser}
             setCurrentUser={setCurrentUser}
-            setChannels={setChannels}
             currentState={currentState}
             setCurrentState={setCurrentState}
           />
