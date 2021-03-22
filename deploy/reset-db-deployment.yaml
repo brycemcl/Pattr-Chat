@@ -1,6 +1,9 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
+  annotations:
+    keel.sh/policy: all
+    keel.sh/trigger: poll
   labels:
     service: reset-db
   name: reset-db
@@ -43,7 +46,7 @@ spec:
                 configMapKeyRef:
                   key: POSTGRES_USER
                   name: db-secret-env
-          image: brycemclachlan/pattr-resetdb
+          image: brycemclachlan/pattr-resetdb:production
           name: reset-db
           # ports:
           #   - containerPort: 3000
