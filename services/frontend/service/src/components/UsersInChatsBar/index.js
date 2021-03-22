@@ -30,7 +30,7 @@ const GET_USERS_IN_PUBLIC_CHATS = gql`
 `
 
 // sign up component in this app
-const UsersInChatsBar = ({ currentState }) => {
+const UsersInChatsBar = ({ currentState, avatarColor, setAvatarColor }) => {
   // array to store the users in a chat
   const usersInChat = []
 
@@ -77,7 +77,11 @@ const UsersInChatsBar = ({ currentState }) => {
   const mappedUsersInChat = usersInChat.map((username) => {
     return (
       <div style={{ padding: '15px' }} key={username}>
-        <Avatar name={username} />
+        <Avatar
+          name={username}
+          avatarColor={avatarColor}
+          setAvatarColor={setAvatarColor}
+        />
       </div>
     )
   })
