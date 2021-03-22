@@ -3,7 +3,6 @@ import { makeStyles } from '@material-ui/core/styles'
 import Button from '@material-ui/core/Button'
 import PersonAddIcon from '@material-ui/icons/PersonAdd'
 import { blue } from '@material-ui/core/colors'
-import { ToastContainer } from 'react-toastify'
 import DataWrapper from './DataWrapper'
 const useStyles = makeStyles({
   avatar: {
@@ -29,9 +28,6 @@ const UserSelector = ({ currentState }) => {
       <br />
       <Button onClick={() => setOpen(true)} className={classes.button}>
         <PersonAddIcon />
-        <div>
-          <ToastContainer position='bottom-center' />
-        </div>
       </Button>
       {/* conditonally render the DataWrapper component when open === true, to avoid it rendering all the time in this component */}
       {open && (

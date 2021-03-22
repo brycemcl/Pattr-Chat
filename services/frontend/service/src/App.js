@@ -1,6 +1,8 @@
 import React from 'react'
 import Application from './components/Application'
 import CssBaseline from '@material-ui/core/CssBaseline'
+import { ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 import { WebSocketLink } from '@apollo/client/link/ws'
 import {
@@ -69,6 +71,9 @@ function App () {
     <ApolloProvider client={client}>
       <CssBaseline />
       <Application />
+      <div>
+        <ToastContainer position='bottom-center' />
+      </div>
     </ApolloProvider>
   )
 }

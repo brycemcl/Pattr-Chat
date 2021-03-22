@@ -7,7 +7,7 @@ import Box from '@material-ui/core/Box'
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined'
 import Typography from '@material-ui/core/Typography'
 import { makeStyles } from '@material-ui/core/styles'
-import { ToastContainer, toast } from 'react-toastify'
+import { toast } from 'react-toastify'
 import Container from '@material-ui/core/Container'
 import firebase from '../../firebase'
 import { useState } from 'react'
@@ -98,9 +98,6 @@ const SignUp = ({ setRegister, setCurrentUser }) => {
 
   return (
     <Container component='main' maxWidth='xs'>
-      <div>
-        <ToastContainer position='bottom-center' />
-      </div>
       <div className={classes.paper}>
         <Avatar className={classes.avatar}>
           <LockOutlinedIcon />
