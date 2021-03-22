@@ -7,7 +7,6 @@ import {
   Button
 } from '@material-ui/core'
 import firebase from '../../firebase'
-import ChannelNavigator from '../ChannelNavigator'
 
 // style our component
 const useStyles = makeStyles((theme) => ({
@@ -55,15 +54,7 @@ const buttonClick = function (buttonStatus, setRegister, setCurrentUser) {
 }
 
 // component for our header
-function Header ({
-  buttonStatus,
-  setRegister,
-  setCurrentUser,
-  currentUser,
-  channels,
-  setCurrentState,
-  currentState
-}) {
+function Header ({ buttonStatus, setRegister, setCurrentUser, currentUser }) {
   const classes = useStyles()
   return (
     <div>
@@ -76,14 +67,7 @@ function Header ({
               className={classes.menuButton}
               color='inherit'
               aria-label='menu'
-            >
-              <ChannelNavigator
-                currentUser={currentUser}
-                channels={channels}
-                setCurrentState={setCurrentState}
-                currentState={currentState}
-              />
-            </IconButton>
+            />
           )}
           <Typography variant='h6' className={classes.title}>
             Pattr

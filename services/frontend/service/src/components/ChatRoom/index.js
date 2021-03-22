@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import Sidebar from '../Sidebar'
+import ContextSwitcher from '../ContextSwitcher'
 import MessagesBody from '../MessagesBody'
 import { makeStyles } from '@material-ui/core/styles'
 import { gql, useQuery, useMutation } from '@apollo/client'
@@ -43,16 +43,18 @@ const MAKE_USER = gql`
     }
   }
 `
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
     height: '100%'
   },
 
   sidebar: {
-    minWidth: '300px',
-    maxWidth: '200px'
-
+    minWidth: '350px',
+    maxWidth: '350px',
+    borderRight: '1px solid',
+    borderRightColor: theme.palette.divider,
+    backgroundColor: theme.palette.background.paper
     // display: 'flex',
     // flexDirection: 'column',
     // alignItems: 'center'
@@ -64,7 +66,12 @@ const useStyles = makeStyles(() => ({
 
 /* chatroom component
  * also has a useQuery hook which uses our above graphql query we wrote */
-function ChatRoom ({ currentUser, setCurrentUser, setChannels, currentState, setCurrentState }) {
+function ChatRoom ({
+  currentUser,
+  setCurrentUser,
+  currentState,
+  setCurrentState
+}) {
   const classes = useStyles()
 
   const { loading, error, data, refetch } = useQuery(FETCH_USER, {
@@ -97,25 +104,18 @@ function ChatRoom ({ currentUser, setCurrentUser, setChannels, currentState, set
     <div className={classes.root}>
       <div className={classes.sidebar}>
         {currentUser.id && (
-          <Sidebar
-            // className={classes.sidebar}
-            currentUser={currentUser}
-            // display='flex'
-            currentState={currentState}
-            setCurrentState={setCurrentState}
-            setChannels={setChannels}
-          />
+          <>
+            <ContextSwitcher
+              currentUser={currentUser}
+              currentState={currentState}
+              setCurrentState={setCurrentState}
+            />
+          </>
         )}
       </div>
       <div className={classes.body}>
         {currentState.channel && currentState.conversation && (
-          <MessagesBody
-            // className={classes.messagesBody}
-            // display='flex'
-            currentState={currentState}
-            // setCurrentState={setCurrentState}
-            currentUser={currentUser}
-          />
+          <MessagesBody currentState={currentState} currentUser={currentUser} />
         )}
       </div>
     </div>

@@ -15,9 +15,9 @@ const useStyles = makeStyles((theme) => ({
 
 // graphql query to get messages via subscription from our pg db :)
 const GET_MESSAGES = gql`
-  subscription ($conversationId: Int!) {
+  subscription($conversationId: Int!) {
     conversations_by_pk(id: $conversationId) {
-      messages(order_by: {id: asc}) {
+      messages(order_by: { id: asc }) {
         id
         message
         date_sent
@@ -42,17 +42,15 @@ function MessagesPane ({ currentState, currentUser, setSendingMessage, avatarCol
   const classes = useStyles()
   useEffect(() => {
     try {
-      data.conversations_by_pk.messages.forEach(
-        (message) => {
-          setSendingMessage((cs) => {
-            const tempCs = [...cs]
-            const indexToReplace = tempCs.findIndex((e) => e === message.id)
-            tempCs.splice(indexToReplace, 1)
-            return tempCs
-          })
-        }
-      )
-    } catch { }
+      data.conversations_by_pk.messages.forEach((message) => {
+        setSendingMessage((cs) => {
+          const tempCs = [...cs]
+          const indexToReplace = tempCs.findIndex((e) => e === message.id)
+          tempCs.splice(indexToReplace, 1)
+          return tempCs
+        })
+      })
+    } catch {}
   }, [data, setSendingMessage])
 
   // render out the array of messages from this MessagesPane component
@@ -66,28 +64,26 @@ function MessagesPane ({ currentState, currentUser, setSendingMessage, avatarCol
    * set the currently logged in user for each message so we can style them conditonally later
    * convert messages date from string to JS date (black magic idk how this works) */
   try {
-    messages = data.conversations_by_pk.messages.map(
-      ({ ...message }) => {
-        message.user.currentUser = message.user.id === currentUser.id
-        const dateString = String(message.date_sent)
-        const dateStringDelimited = dateString
-          .split(/[-,:.T]+/)
-          .map((s) => Number(s))
+    messages = data.conversations_by_pk.messages.map(({ ...message }) => {
+      message.user.currentUser = message.user.id === currentUser.id
+      const dateString = String(message.date_sent)
+      const dateStringDelimited = dateString
+        .split(/[-,:.T]+/)
+        .map((s) => Number(s))
 
-        message.date_sent = new Date(
-          Date.UTC(
-            dateStringDelimited[0],
-            dateStringDelimited[1] - 1,
-            dateStringDelimited[2],
-            dateStringDelimited[3],
-            dateStringDelimited[4],
-            dateStringDelimited[5]
-          )
+      message.date_sent = new Date(
+        Date.UTC(
+          dateStringDelimited[0],
+          dateStringDelimited[1] - 1,
+          dateStringDelimited[2],
+          dateStringDelimited[3],
+          dateStringDelimited[4],
+          dateStringDelimited[5]
         )
+      )
 
-        return message
-      }
-    )
+      return message
+    })
   } catch {
     // if conversation doesn't have any messages
   }
