@@ -72,8 +72,7 @@ const useStyles = makeStyles((theme) => ({
   companyName: {
     justifyContent: 'center',
     fontSize: '20px',
-    color: '#343333',
-    fontFamily: 'Sans-serif'
+    color: '#343333'
   }
 }))
 
