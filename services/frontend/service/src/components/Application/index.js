@@ -1,9 +1,9 @@
-import { useState } from 'react'
+import React, { useState, Suspense } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import Header from '../Header'
-import ChatRoom from '../ChatRoom'
 import SignIn from '../SignIn'
 import SignUp from '../Signup'
+const ChatRoom = React.lazy(() => import('../ChatRoom'))
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -82,12 +82,14 @@ const Application = () => {
         />
 
         <div className={classes.body}>
-          <ChatRoom
-            currentUser={currentUser}
-            setCurrentUser={setCurrentUser}
-            currentState={currentState}
-            setCurrentState={setCurrentState}
-          />
+          <Suspense fallback={<></>}>
+            <ChatRoom
+              currentUser={currentUser}
+              setCurrentUser={setCurrentUser}
+              currentState={currentState}
+              setCurrentState={setCurrentState}
+            />
+          </Suspense>
         </div>
       </div>
     )
