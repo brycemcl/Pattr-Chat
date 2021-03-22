@@ -5,7 +5,7 @@ import {
   Toolbar,
   IconButton,
   Typography,
-  Button,
+  Button
 } from '@material-ui/core'
 import firebase from '../../firebase'
 
@@ -14,21 +14,21 @@ const useStyles = makeStyles((theme) => ({
   root: {
     position: 'fixed',
     zIndex: 1201,
-    height: '64px',
+    height: '64px'
   },
   toolbar: {
-    height: '64px',
+    height: '64px'
   },
   menuButton: {
-    marginRight: theme.spacing(2),
+    marginRight: theme.spacing(2)
   },
   title: {
-    flexGrow: 1,
+    flexGrow: 1
   },
   hello: {
     marginRight: '20px',
-    fontSize: '13.45px',
-  },
+    fontSize: '13.45px'
+  }
 }))
 
 /* helper function - takes in button status and setUserToken setter
@@ -55,7 +55,7 @@ const buttonClick = function (buttonStatus, setRegister, setCurrentUser) {
 }
 
 // component for our header
-function Header({ buttonStatus, setRegister, setCurrentUser, currentUser }) {
+function Header ({ buttonStatus, setRegister, setCurrentUser, currentUser }) {
   const classes = useStyles()
   return (
     <div>
@@ -82,8 +82,8 @@ function Header({ buttonStatus, setRegister, setCurrentUser, currentUser }) {
           <Button
             color='inherit'
             onClick={() =>
-              buttonClick(buttonStatus, setRegister, setCurrentUser)
-            }>
+              buttonClick(buttonStatus, setRegister, setCurrentUser)}
+          >
             {buttonStatus}
           </Button>
         </Toolbar>

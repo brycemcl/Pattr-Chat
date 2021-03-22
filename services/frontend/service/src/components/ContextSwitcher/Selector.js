@@ -40,7 +40,7 @@ const Selector = ({
     if (!currentChannel) {
       setValue(true)
     }
-  }, [currentChannel])
+  }, [currentChannel, channels])
   return (
     <div>
       <AppBar position='static' color='default' elevation={0}>
