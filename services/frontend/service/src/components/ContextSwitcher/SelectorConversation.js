@@ -4,6 +4,7 @@ import AppBar from '@material-ui/core/AppBar'
 import Tabs from '@material-ui/core/Tabs'
 import Tab from '@material-ui/core/Tab'
 import { useState } from 'react'
+import Divider from '@material-ui/core/Divider'
 
 const SelectorConversation = ({
   publicConversations,
@@ -16,7 +17,7 @@ const SelectorConversation = ({
   return (
     <>
       <div>
-        <AppBar position='static' color='default'>
+        <AppBar position='static' color='default' elevation={0}>
           <Tabs
             value={value}
             onChange={(event, newValue) => {
@@ -29,6 +30,7 @@ const SelectorConversation = ({
             <Tab label='Public' />
             <Tab label='Private' />
           </Tabs>
+          <Divider />
         </AppBar>
         {value === 0 && (
           <SelectorConversationPublic

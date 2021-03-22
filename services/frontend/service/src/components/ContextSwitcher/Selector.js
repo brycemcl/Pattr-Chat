@@ -6,10 +6,11 @@ import AppBar from '@material-ui/core/AppBar'
 import Tabs from '@material-ui/core/Tabs'
 import Tab from '@material-ui/core/Tab'
 import { makeStyles } from '@material-ui/core/styles'
+import Divider from '@material-ui/core/Divider'
 
 const useStyles = makeStyles((theme) => ({
   channelSelector: {
-    height: '80px',
+    height: '79px',
     fontSize: '18px'
   }
 }))
@@ -42,11 +43,16 @@ const Selector = ({
   }, [currentChannel])
   return (
     <div>
-      <AppBar position='static' color='default'>
+      <AppBar position='static' color='default' elevation={0}>
         <Tabs
           className={classes.channelSelector}
           value={0}
           onChange={() => toggleChannelSelectorOpen()}
+          TabIndicatorProps={{
+            style: {
+              display: 'none'
+            }
+          }}
           indicatorColor='primary'
           textColor='primary'
           variant='fullWidth'
@@ -60,13 +66,14 @@ const Selector = ({
                   ? currentChannel
                       ? 'Select a Channel'
                       : 'Create a Channel'
-                  : `${currentChannel?.name} Channel`}
+                  : `${currentChannel?.name}`}
                 &nbsp;
                 <ExpandMoreIcon fontSize='inherit' />
               </div>
             }
           />
         </Tabs>
+        <Divider />
       </AppBar>
       {value && (
         <SelectorChannel
