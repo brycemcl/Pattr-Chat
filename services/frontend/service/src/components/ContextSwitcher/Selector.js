@@ -1,15 +1,16 @@
 import SelectorChannel from './SelectorChannel'
 import SelectorConversation from './SelectorConversation'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import AppBar from '@material-ui/core/AppBar'
 import Tabs from '@material-ui/core/Tabs'
 import Tab from '@material-ui/core/Tab'
 import { makeStyles } from '@material-ui/core/styles'
+import Divider from '@material-ui/core/Divider'
 
 const useStyles = makeStyles((theme) => ({
   channelSelector: {
-    height: '80px',
+    height: '79px',
     fontSize: '18px'
   }
 }))
@@ -29,30 +30,50 @@ const Selector = ({
     return channel.id === currentState.channel
   })?.[0]
   const toggleChannelSelectorOpen = () => {
-    setValue((cs) => !cs)
+    if (currentChannel) {
+      setValue((cs) => !cs)
+    } else {
+      setValue(true)
+    }
   }
+  useEffect(() => {
+    if (!currentChannel) {
+      setValue(true)
+    }
+  }, [currentChannel])
   return (
     <div>
-      <AppBar position='static' color='default'>
+      <AppBar position='static' color='default' elevation={0}>
         <Tabs
           className={classes.channelSelector}
           value={0}
           onChange={() => toggleChannelSelectorOpen()}
+          TabIndicatorProps={{
+            style: {
+              display: 'none'
+            }
+          }}
           indicatorColor='primary'
           textColor='primary'
           variant='fullWidth'
         >
           <Tab
+            disabled={!currentChannel}
             className={classes.channelSelector}
             label={
               <div>
-                {value ? 'Select a Channel' : `${currentChannel?.name} Channel`}
+                {value
+                  ? currentChannel
+                      ? 'Select a Channel'
+                      : 'Create a Channel'
+                  : `${currentChannel?.name}`}
                 &nbsp;
                 <ExpandMoreIcon fontSize='inherit' />
               </div>
             }
           />
         </Tabs>
+        <Divider />
       </AppBar>
       {value && (
         <SelectorChannel
