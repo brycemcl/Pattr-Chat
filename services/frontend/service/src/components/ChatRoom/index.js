@@ -45,11 +45,7 @@ const useStyles = makeStyles((theme) => ({
     minWidth: '350px',
     maxWidth: '350px',
     borderRight: '1px solid',
-    borderRightColor: theme.palette.divider,
-    backgroundColor: theme.palette.background.paper
-    // display: 'flex',
-    // flexDirection: 'column',
-    // alignItems: 'center'
+    borderRightColor: theme.palette.divider
   },
   body: {
     flex: '1 1 auto'
