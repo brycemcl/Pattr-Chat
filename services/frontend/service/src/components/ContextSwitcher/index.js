@@ -2,7 +2,8 @@ import { makeStyles } from '@material-ui/core/styles'
 import DataWrapper from './DataWrapper'
 const useStyles = makeStyles((theme) => ({
   root: {
-    backgroundColor: theme.palette.background.paper
+    backgroundColor: theme.palette.background.paper,
+    height: '100%'
   }
 }))
 
