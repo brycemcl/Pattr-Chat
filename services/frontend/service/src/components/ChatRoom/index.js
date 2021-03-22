@@ -2,7 +2,7 @@ import { useEffect } from 'react'
 import ContextSwitcher from '../ContextSwitcher'
 import MessagesBody from '../MessagesBody'
 import { makeStyles } from '@material-ui/core/styles'
-import { gql, useQuery, useMutation } from '@apollo/client'
+import { gql, useQuery } from '@apollo/client'
 import Spinner from '../Spinner'
 
 /*
@@ -34,15 +34,7 @@ const FETCH_USER = gql`
     }
   }
 `
-const MAKE_USER = gql`
-  mutation createUser($displayName: String!, $uuid: String!) {
-    insert_users_one(object: { display_name: $displayName, user_uuid: $uuid }) {
-      id
-      display_name
-      user_uuid
-    }
-  }
-`
+
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
@@ -74,11 +66,9 @@ function ChatRoom ({
 }) {
   const classes = useStyles()
 
-  const { loading, error, data, refetch } = useQuery(FETCH_USER, {
+  const { loading, error, data } = useQuery(FETCH_USER, {
     variables: { uuid: currentUser.user_uuid }
   })
-
-  const [makeUser] = useMutation(MAKE_USER)
 
   // this useeffect on this component will only fire off when the value of "data" from our useQuery changes
   useEffect(() => {
@@ -91,13 +81,7 @@ function ChatRoom ({
   if (loading) return <Spinner />
   if (error) return <p>Error :(</p>
   if (data && Array.isArray(data.users) && data.users.length === 0) {
-    makeUser({
-      variables: {
-        displayName: 'Unknown',
-        uuid: currentUser.user_uuid
-      }
-    }).then(() => refetch())
-    return null
+    return <p>I can't verify who you are.</p>
   }
 
   return (
