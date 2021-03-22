@@ -5,7 +5,6 @@ resources:
   - graphql-engine-deployment.yaml
   - graphql-engine-ingress.yaml
   - graphql-engine-service.yaml
-  - kustomization.yaml
   - pattr-frontend-deployment.yaml
   - pattr-frontend-ingress.yaml
   - pattr-frontend-service.yaml
@@ -13,3 +12,6 @@ resources:
   - postgres-service.yaml
   - postgres-volume-persistentvolumeclaim.yaml
   - reset-db-deployment.yaml
+  - pattr-namespace.yaml
+  - db-secret-env-configmap.yaml
+  - hasura-secret-env-configmap.yaml

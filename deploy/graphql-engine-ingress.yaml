@@ -1,7 +1,7 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: pattr
+  name: pattr-graphql-engine
   annotations:
     cert-manager.io/cluster-issuer: 'letsencrypt-issuer'
 spec:
@@ -18,6 +18,6 @@ spec:
             pathType: Prefix
             backend:
               service:
-                name: pattr
+                name: graphql-engine
                 port:
-                  number: 80
+                  number: 8080

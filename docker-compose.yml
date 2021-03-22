@@ -2,7 +2,7 @@ version: '3.4'
 
 services:
   pattr-frontend:
-    image: brycemclachlan/pattr-frontend
+    image: brycemclachlan/pattr-frontend:production
     build:
       context: services/frontend/service
       dockerfile: ./Dockerfile
@@ -10,7 +10,7 @@ services:
       - 80:3001
   reset-db:
     restart: always
-    image: brycemclachlan/pattr-resetdb
+    image: brycemclachlan/pattr-resetdb:production
     build:
       context: services/reset-db/service
       dockerfile: ./Dockerfile

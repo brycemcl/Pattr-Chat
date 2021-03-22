@@ -47,6 +47,7 @@ spec:
                   key: POSTGRES_USER
                   name: db-secret-env
           image: brycemclachlan/pattr-resetdb:production
+          imagePullPolicy: 'Always'
           name: reset-db
           # ports:
           #   - containerPort: 3000

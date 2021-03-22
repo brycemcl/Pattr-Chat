@@ -18,6 +18,6 @@ spec:
             pathType: Prefix
             backend:
               service:
-                name: pattr
+                name: pattr-frontend
                 port:
-                  number: 80
+                  number: 3001

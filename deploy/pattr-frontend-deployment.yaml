@@ -19,6 +19,7 @@ spec:
     spec:
       containers:
         - image: brycemclachlan/pattr-frontend:production
+          imagePullPolicy: 'Always'
           name: pattr-frontend
           ports:
             - containerPort: 3001
