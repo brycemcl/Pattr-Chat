@@ -1,4 +1,5 @@
 import { makeStyles } from '@material-ui/core/styles'
+import PetsIcon from '@material-ui/icons/Pets'
 import {
   AppBar,
   Toolbar,
@@ -70,7 +71,8 @@ function Header ({ buttonStatus, setRegister, setCurrentUser, currentUser }) {
             />
           )}
           <Typography variant='h6' className={classes.title}>
-            Pattr
+            <PetsIcon fontSize='inherit' />
+            &nbsp; Pattr
           </Typography>
           {currentUser.id && (
             <Typography className={classes.hello}>

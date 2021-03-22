@@ -45,8 +45,6 @@ const Application = () => {
           setRegister={setRegister}
           setCurrentUser={setCurrentUser}
           currentUser={currentUser}
-          setCurrentState={setCurrentState}
-          currentState={currentState}
         />
         <section>
           <SignIn setRegister={setRegister} setCurrentUser={setCurrentUser} />
@@ -61,8 +59,6 @@ const Application = () => {
           setRegister={setRegister}
           setCurrentUser={setCurrentUser}
           currentUser={currentUser}
-          setCurrentState={setCurrentState}
-          currentState={currentState}
         />
         <section>
           <SignUp setCurrentUser={setCurrentUser} setRegister={setRegister} />
@@ -77,8 +73,6 @@ const Application = () => {
           setRegister={setRegister}
           setCurrentUser={setCurrentUser}
           currentUser={currentUser}
-          setCurrentState={setCurrentState}
-          currentState={currentState}
         />
 
         <div className={classes.body}>

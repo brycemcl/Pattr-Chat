@@ -2,26 +2,15 @@ version: '3.4'
 
 services:
   pattr-frontend:
-    image: brycemclachlan/pattr-frontend
+    image: brycemclachlan/pattr-frontend:production
     build:
       context: services/frontend/service
       dockerfile: ./Dockerfile
     ports:
       - 80:3001
-  # pattr-backend:
-  #   image: brycemclachlan/pattr-backend
-  #   build:
-  #     context: services/backend/service
-  #     dockerfile: ./Dockerfile
-  #   environment:
-  #     NODE_ENV: production
-  #   env_file:
-  #     - db.secret.env
-  #   ports:
-  #     - 3000:3000
   reset-db:
     restart: always
-    image: brycemclachlan/pattr-resetdb
+    image: brycemclachlan/pattr-resetdb:production
     build:
       context: services/reset-db/service
       dockerfile: ./Dockerfile
@@ -47,18 +36,7 @@ services:
       - 5432:5432
     env_file:
       - db.secret.env
-    tmpfs:
-      - /var/lib/postgresql/data
-    # volumes:
-    #   - postgres_volume:/var/lib/postgresql/data
-  # firebase-emulator:
-  #   image: firebase-emulator
-  #   build:
-  #     context: services/auth/service
-  #     dockerfile: ./Dockerfile
-  #   ports:
-  #     - 9099:9099
-  #     - 8001:8001
-  #     - 8002:8002
-# volumes:
-#   postgres_volume:
+    volumes:
+      - postgres_volume:/var/lib/postgresql/data
+volumes:
+  postgres_volume:

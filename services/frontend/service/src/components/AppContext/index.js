@@ -17,8 +17,8 @@ import { getMainDefinition } from '@apollo/client/utilities'
 
 /* https://github.com/hasura/nodejs-graphql-subscriptions-boilerplate/issues/3
  * this is establishing urls to graphql from react for http & (full duplex) web sockets */
-const HTTPS_URL = `http${process.env.REACT_APP_GRAPHQL_URL}`
-const WSS_URL = `ws${process.env.REACT_APP_GRAPHQL_URL}`
+const HTTPS_URL = `https${process.env.REACT_APP_GRAPHQL_URL}`
+const WSS_URL = `wss${process.env.REACT_APP_GRAPHQL_URL}`
 
 // provides parameters for react to establish a http link to graphql later on
 const httpsLink = new HttpLink({

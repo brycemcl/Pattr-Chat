@@ -5,9 +5,8 @@ WORKDIR /usr/src/app
 COPY ["package.json", "package-lock.json*", "npm-shrinkwrap.json*", "./"]
 RUN npm install --production
 COPY . .
-ENV REACT_APP_GRAPHQL_URL='://api.pattr.chat/v1/graphql'
+ENV REACT_APP_GRAPHQL_URL='://pattr.chat/v1/graphql'
 ENV REACT_APP_ADMIN_SECRET='myadminsecretkey'
-# RUN cd './src/components/SendMessageForm' && ls && cd '../' && ls
 RUN npm run build
 FROM nginx as production
 COPY --from=build /usr/src/app/build/ /usr/share/nginx/html

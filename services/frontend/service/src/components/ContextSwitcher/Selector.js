@@ -1,6 +1,5 @@
 import SelectorChannel from './SelectorChannel'
 import SelectorConversation from './SelectorConversation'
-import { useState, useEffect } from 'react'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import AppBar from '@material-ui/core/AppBar'
 import Tabs from '@material-ui/core/Tabs'
@@ -16,6 +15,9 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const Selector = ({
+  value,
+  currentChannel,
+  toggleChannelSelectorOpen,
   channels,
   publicConversations,
   privateConversations,
@@ -25,22 +27,7 @@ const Selector = ({
   currentUser
 }) => {
   const classes = useStyles()
-  const [value, setValue] = useState(false)
-  const currentChannel = channels.filter((channel) => {
-    return channel.id === currentState.channel
-  })?.[0]
-  const toggleChannelSelectorOpen = () => {
-    if (currentChannel) {
-      setValue((cs) => !cs)
-    } else {
-      setValue(true)
-    }
-  }
-  useEffect(() => {
-    if (!currentChannel) {
-      setValue(true)
-    }
-  }, [currentChannel])
+
   return (
     <div>
       <AppBar position='static' color='default' elevation={0}>
