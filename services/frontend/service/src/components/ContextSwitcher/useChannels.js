@@ -71,43 +71,18 @@ const useChannels = ({ currentState, setCurrentState, currentUser }) => {
   useEffect(() => {
     if (ready) {
       try {
-        setCurrentConversations((cs) => {
-          /* this is an empty array that will store current (public) Conversations first (and private conversations second)
-           * both private and public conversations for this client will be stored in this single variable
-           * for the users selected channel in the application state */
-          let conversations = []
-          /* keep track of a clients valid PUBLIC (only) conversations in their sidebar
-           * filter the conversations a user selects by the organization that is stored for this user in currentState
-           * dump these public conversations into the currentConversations array */
-          try {
-            conversations = channels.find((channel) => {
-              return channel.id === currentState.channel
-            }).channel.conversations
-          } catch {}
-
-          /* this block takes the found conversations from an organization the user is currently looking at above
-           * then it spreads these conversations (to not mutate the original data)
-           * loop through each conversation in the dataPrivate.users_by_pk.users_conversations data structure and push each private conversation
-           * to our currentConversations arr */
-          try {
-            const conversationsPrivate = dataPrivate.users_by_pk.users_conversations
-              .map(({ conversation }) => {
-                return conversation
-              })
-              .filter((conversation) => {
-                return conversation.channel_id === currentState.channel
-              })
-            conversations = [...conversations, ...conversationsPrivate]
-          } catch {}
-          if (cs.length !== conversations.length) {
-            return conversations
-          } else {
-            return cs
-          }
-        })
+        setCurrentConversations([
+          ...publicConversations,
+          ...privateConversations
+        ])
       } catch {}
     }
-  }, [ready, channels, currentState, dataPrivate])
+  }, [
+    ready,
+    publicConversations,
+    privateConversations,
+    setCurrentConversations
+  ])
   // sets the currently selected conversation to be something the user has access to
   useEffect(() => {
     if (ready) {
