@@ -38,6 +38,11 @@ const Selector = ({
           className={classes.channelSelector}
           value={0}
           onChange={() => toggleChannelSelectorOpen()}
+          TabIndicatorProps={{
+            style: {
+              display: 'none'
+            }
+          }}
           indicatorColor='primary'
           textColor='primary'
           variant='fullWidth'
@@ -46,7 +51,7 @@ const Selector = ({
             className={classes.channelSelector}
             label={
               <div>
-                {value ? 'Select a Channel' : `${currentChannel?.name} Channel`}
+                {value ? 'Select a Channel' : `${currentChannel?.name}`}
                 &nbsp;
                 <ExpandMoreIcon fontSize='inherit' />
               </div>
