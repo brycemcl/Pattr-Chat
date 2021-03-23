@@ -1,0 +1,6 @@
+graph {
+  "frontend(React+Apollo)" -- "auth(firebase)" 
+  "frontend(React+Apollo)" -- "api(Hasura)"[label = "graphql"]
+  "backend(express)" -- "api(Hasura)"
+  "api(Hasura)" -- "database(Postgress)"
+}

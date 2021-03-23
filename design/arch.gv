@@ -1,7 +1,0 @@
-graph {
-
-  "frontend(React+Relay)" -- "auth(firebase jwt)" 
-  "frontend(React+Relay)" -- "api(Hasura)"[label = "graphql"]
-  "backend(express)" -- "api(Hasura)"
-  "api(Hasura)" -- "database(Postgress)"
-}
